@@ -1,3 +1,13 @@
-[gd_scene format=3 uid="uid://bxlcq8sk2fidb"]
+[gd_scene load_steps=2 format=3 uid="uid://bxlcq8sk2fidb"]
+
+[ext_resource type="PackedScene" uid="uid://d2eprpbq8ariu" path="res://Scenes/menu.tscn" id="1_52ud0"]
 
 [node name="Game" type="Node2D"]
+
+[node name="Menu" parent="." instance=ExtResource("1_52ud0")]
+offset_left = 597.0
+offset_top = 649.0
+offset_right = 597.0
+offset_bottom = 649.0
+size_flags_horizontal = 4
+metadata/_edit_use_anchors_ = true

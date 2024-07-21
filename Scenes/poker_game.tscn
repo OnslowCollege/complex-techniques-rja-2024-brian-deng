@@ -1,3 +1,9 @@
 [gd_scene format=3 uid="uid://b74uooyrcjjl1"]
 
 [node name="Poker_game" type="Node2D"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 651.0
