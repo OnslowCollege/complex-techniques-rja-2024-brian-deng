@@ -1,4 +1,19 @@
-[gd_scene format=3 uid="uid://bo8dj2v81ebh0"]
+[gd_scene load_steps=15 format=3 uid="uid://bo8dj2v81ebh0"]
+
+[ext_resource type="Texture2D" uid="uid://dxr8sji3a8rjt" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-1.png" id="1_w83p7"]
+[ext_resource type="Texture2D" uid="uid://jx2e3wa10mnt" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-13.png" id="2_gnu0h"]
+[ext_resource type="Texture2D" uid="uid://c4fdykktevipr" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-12.png" id="3_os0sg"]
+[ext_resource type="Texture2D" uid="uid://bkeqdrcp0a07r" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-11.png" id="4_xivaw"]
+[ext_resource type="Texture2D" uid="uid://dx181aio8nhda" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-10.png" id="5_q5m7o"]
+[ext_resource type="Texture2D" uid="uid://clqllvkhjvly3" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-hearts-10.png" id="6_xrirx"]
+[ext_resource type="Texture2D" uid="uid://bwcjnsxlchwtm" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-hearts-9.png" id="7_xb1d0"]
+[ext_resource type="Texture2D" uid="uid://defsoi8x4pwmn" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-hearts-8.png" id="8_3jj3v"]
+[ext_resource type="Texture2D" uid="uid://nlci4mqx82iu" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-hearts-7.png" id="9_5hfp2"]
+[ext_resource type="Texture2D" uid="uid://cpqijqcs6de2p" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-hearts-6.png" id="10_0h36y"]
+[ext_resource type="Texture2D" uid="uid://d4d10127fnfc5" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-spades-1.png" id="11_as05k"]
+[ext_resource type="Texture2D" uid="uid://bgcvk400c6vto" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-diamonds-1.png" id="12_ahb57"]
+[ext_resource type="Texture2D" uid="uid://cqqedyjsi43h5" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-hearts-1.png" id="13_13200"]
+[ext_resource type="Texture2D" uid="uid://bb3l5d1iykl5u" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-back1.png" id="14_vbooq"]
 
 [node name="Tutorial" type="Control"]
 layout_mode = 3
@@ -7,3 +22,240 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 323.0
+offset_top = 67.0
+offset_right = 363.0
+offset_bottom = 107.0
+
+[node name="Royal flush" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Ace" type="TextureRect" parent="VBoxContainer/Royal flush"]
+layout_mode = 2
+texture = ExtResource("1_w83p7")
+
+[node name="King" type="TextureRect" parent="VBoxContainer/Royal flush"]
+layout_mode = 2
+texture = ExtResource("2_gnu0h")
+
+[node name="Queen" type="TextureRect" parent="VBoxContainer/Royal flush"]
+layout_mode = 2
+texture = ExtResource("3_os0sg")
+
+[node name="Jack" type="TextureRect" parent="VBoxContainer/Royal flush"]
+layout_mode = 2
+texture = ExtResource("4_xivaw")
+
+[node name="10" type="TextureRect" parent="VBoxContainer/Royal flush"]
+layout_mode = 2
+texture = ExtResource("5_q5m7o")
+
+[node name="Straight flush" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="10 of hearts" type="TextureRect" parent="VBoxContainer/Straight flush"]
+layout_mode = 2
+texture = ExtResource("6_xrirx")
+
+[node name="9 of hearts" type="TextureRect" parent="VBoxContainer/Straight flush"]
+layout_mode = 2
+texture = ExtResource("7_xb1d0")
+
+[node name="8 of hearts" type="TextureRect" parent="VBoxContainer/Straight flush"]
+layout_mode = 2
+texture = ExtResource("8_3jj3v")
+
+[node name="7 of hearts" type="TextureRect" parent="VBoxContainer/Straight flush"]
+layout_mode = 2
+texture = ExtResource("9_5hfp2")
+
+[node name="6 of hearts" type="TextureRect" parent="VBoxContainer/Straight flush"]
+layout_mode = 2
+texture = ExtResource("10_0h36y")
+
+[node name="Four of a kind" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Ace4" type="TextureRect" parent="VBoxContainer/Four of a kind"]
+layout_mode = 2
+texture = ExtResource("11_as05k")
+
+[node name="Ace" type="TextureRect" parent="VBoxContainer/Four of a kind"]
+layout_mode = 2
+texture = ExtResource("1_w83p7")
+
+[node name="Ace2" type="TextureRect" parent="VBoxContainer/Four of a kind"]
+layout_mode = 2
+texture = ExtResource("12_ahb57")
+
+[node name="Ace3" type="TextureRect" parent="VBoxContainer/Four of a kind"]
+layout_mode = 2
+texture = ExtResource("13_13200")
+
+[node name="Any card" type="TextureRect" parent="VBoxContainer/Four of a kind"]
+layout_mode = 2
+texture = ExtResource("14_vbooq")
+
+[node name="Full house" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="King2" type="TextureRect" parent="VBoxContainer/Full house"]
+layout_mode = 2
+texture = ExtResource("1_w83p7")
+
+[node name="King" type="TextureRect" parent="VBoxContainer/Full house"]
+layout_mode = 2
+texture = ExtResource("2_gnu0h")
+
+[node name="King3" type="TextureRect" parent="VBoxContainer/Full house"]
+layout_mode = 2
+texture = ExtResource("3_os0sg")
+
+[node name="Jack" type="TextureRect" parent="VBoxContainer/Full house"]
+layout_mode = 2
+texture = ExtResource("4_xivaw")
+
+[node name="Jack2" type="TextureRect" parent="VBoxContainer/Full house"]
+layout_mode = 2
+texture = ExtResource("5_q5m7o")
+
+[node name="Flush" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Ace" type="TextureRect" parent="VBoxContainer/Flush"]
+layout_mode = 2
+texture = ExtResource("1_w83p7")
+
+[node name="King" type="TextureRect" parent="VBoxContainer/Flush"]
+layout_mode = 2
+texture = ExtResource("2_gnu0h")
+
+[node name="Queen" type="TextureRect" parent="VBoxContainer/Flush"]
+layout_mode = 2
+texture = ExtResource("3_os0sg")
+
+[node name="Jack" type="TextureRect" parent="VBoxContainer/Flush"]
+layout_mode = 2
+texture = ExtResource("4_xivaw")
+
+[node name="10" type="TextureRect" parent="VBoxContainer/Flush"]
+layout_mode = 2
+texture = ExtResource("5_q5m7o")
+
+[node name="Straight" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Ace" type="TextureRect" parent="VBoxContainer/Straight"]
+layout_mode = 2
+texture = ExtResource("1_w83p7")
+
+[node name="King" type="TextureRect" parent="VBoxContainer/Straight"]
+layout_mode = 2
+texture = ExtResource("2_gnu0h")
+
+[node name="Queen" type="TextureRect" parent="VBoxContainer/Straight"]
+layout_mode = 2
+texture = ExtResource("3_os0sg")
+
+[node name="Jack" type="TextureRect" parent="VBoxContainer/Straight"]
+layout_mode = 2
+texture = ExtResource("4_xivaw")
+
+[node name="10" type="TextureRect" parent="VBoxContainer/Straight"]
+layout_mode = 2
+texture = ExtResource("5_q5m7o")
+
+[node name="Three of a kind" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Ace" type="TextureRect" parent="VBoxContainer/Three of a kind"]
+layout_mode = 2
+texture = ExtResource("1_w83p7")
+
+[node name="King" type="TextureRect" parent="VBoxContainer/Three of a kind"]
+layout_mode = 2
+texture = ExtResource("2_gnu0h")
+
+[node name="Queen" type="TextureRect" parent="VBoxContainer/Three of a kind"]
+layout_mode = 2
+texture = ExtResource("3_os0sg")
+
+[node name="Jack" type="TextureRect" parent="VBoxContainer/Three of a kind"]
+layout_mode = 2
+texture = ExtResource("4_xivaw")
+
+[node name="10" type="TextureRect" parent="VBoxContainer/Three of a kind"]
+layout_mode = 2
+texture = ExtResource("5_q5m7o")
+
+[node name="Two pair" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Ace" type="TextureRect" parent="VBoxContainer/Two pair"]
+layout_mode = 2
+texture = ExtResource("1_w83p7")
+
+[node name="King" type="TextureRect" parent="VBoxContainer/Two pair"]
+layout_mode = 2
+texture = ExtResource("2_gnu0h")
+
+[node name="Queen" type="TextureRect" parent="VBoxContainer/Two pair"]
+layout_mode = 2
+texture = ExtResource("3_os0sg")
+
+[node name="Jack" type="TextureRect" parent="VBoxContainer/Two pair"]
+layout_mode = 2
+texture = ExtResource("4_xivaw")
+
+[node name="10" type="TextureRect" parent="VBoxContainer/Two pair"]
+layout_mode = 2
+texture = ExtResource("5_q5m7o")
+
+[node name="Pair" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Ace" type="TextureRect" parent="VBoxContainer/Pair"]
+layout_mode = 2
+texture = ExtResource("1_w83p7")
+
+[node name="King" type="TextureRect" parent="VBoxContainer/Pair"]
+layout_mode = 2
+texture = ExtResource("2_gnu0h")
+
+[node name="Queen" type="TextureRect" parent="VBoxContainer/Pair"]
+layout_mode = 2
+texture = ExtResource("3_os0sg")
+
+[node name="Jack" type="TextureRect" parent="VBoxContainer/Pair"]
+layout_mode = 2
+texture = ExtResource("4_xivaw")
+
+[node name="10" type="TextureRect" parent="VBoxContainer/Pair"]
+layout_mode = 2
+texture = ExtResource("5_q5m7o")
+
+[node name="High card" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Ace" type="TextureRect" parent="VBoxContainer/High card"]
+layout_mode = 2
+texture = ExtResource("1_w83p7")
+
+[node name="King" type="TextureRect" parent="VBoxContainer/High card"]
+layout_mode = 2
+texture = ExtResource("2_gnu0h")
+
+[node name="Queen" type="TextureRect" parent="VBoxContainer/High card"]
+layout_mode = 2
+texture = ExtResource("3_os0sg")
+
+[node name="Jack" type="TextureRect" parent="VBoxContainer/High card"]
+layout_mode = 2
+texture = ExtResource("4_xivaw")
+
+[node name="10" type="TextureRect" parent="VBoxContainer/High card"]
+layout_mode = 2
+texture = ExtResource("5_q5m7o")
