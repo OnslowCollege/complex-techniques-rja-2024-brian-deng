@@ -1,6 +1,7 @@
-[gd_scene load_steps=30 format=3 uid="uid://bo8dj2v81ebh0"]
+[gd_scene load_steps=31 format=3 uid="uid://bo8dj2v81ebh0"]
 
 [ext_resource type="Texture2D" uid="uid://dxr8sji3a8rjt" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-1.png" id="1_w83p7"]
+[ext_resource type="Script" path="res://Scenes/tutorial.gd" id="1_wfw7p"]
 [ext_resource type="Texture2D" uid="uid://jx2e3wa10mnt" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-13.png" id="2_gnu0h"]
 [ext_resource type="Texture2D" uid="uid://c4fdykktevipr" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-12.png" id="3_os0sg"]
 [ext_resource type="Texture2D" uid="uid://bkeqdrcp0a07r" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-11.png" id="4_xivaw"]
@@ -37,6 +38,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_wfw7p")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0

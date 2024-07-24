@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://n4ytpf00pbu8"]
+
+[ext_resource type="Script" path="res://Game.gd" id="1_taujt"]
+[ext_resource type="PackedScene" uid="uid://d2eprpbq8ariu" path="res://Scenes/menu.tscn" id="2_fa8y2"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_taujt")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Menu" parent="Camera2D" instance=ExtResource("2_fa8y2")]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+grow_vertical = 0
+size_flags_horizontal = 8
+size_flags_vertical = 4
