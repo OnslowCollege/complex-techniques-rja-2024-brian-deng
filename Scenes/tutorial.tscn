@@ -41,10 +41,10 @@ grow_vertical = 2
 script = ExtResource("1_wfw7p")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-offset_left = 3.0
-offset_top = -2.0
-offset_right = 1091.0
-offset_bottom = 734.0
+offset_left = 173.0
+offset_top = 76.0
+offset_right = 1261.0
+offset_bottom = 812.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
