@@ -41,10 +41,18 @@ grow_vertical = 2
 script = ExtResource("1_wfw7p")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-offset_left = 173.0
-offset_top = 76.0
-offset_right = 1261.0
-offset_bottom = 812.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -626.0
+offset_top = -283.0
+offset_right = 626.0
+offset_bottom = 453.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
@@ -53,6 +61,14 @@ layout_mode = 2
 
 [node name="Royal flush" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
+
+[node name="Royal Flush" type="Label" parent="HBoxContainer/VBoxContainer/Royal flush"]
+layout_mode = 2
+text = "1.
+Royal Flush
+Flush + Straight
+From Ace down
+__________________"
 
 [node name="Ace" type="TextureRect" parent="HBoxContainer/VBoxContainer/Royal flush"]
 layout_mode = 2
@@ -74,13 +90,15 @@ texture = ExtResource("4_xivaw")
 layout_mode = 2
 texture = ExtResource("5_q5m7o")
 
-[node name="Royal Flush" type="Label" parent="HBoxContainer/VBoxContainer/Royal flush"]
-layout_mode = 2
-text = "Royal Flush
-"
-
 [node name="Straight flush" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
+
+[node name="Straight Flush" type="Label" parent="HBoxContainer/VBoxContainer/Straight flush"]
+layout_mode = 2
+text = "2.
+Straight Flush
+Flush + Straight
+__________________"
 
 [node name="10 of hearts" type="TextureRect" parent="HBoxContainer/VBoxContainer/Straight flush"]
 layout_mode = 2
@@ -105,6 +123,13 @@ texture = ExtResource("10_0h36y")
 [node name="Four of a kind" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 
+[node name="Quads" type="Label" parent="HBoxContainer/VBoxContainer/Four of a kind"]
+layout_mode = 2
+text = "3.
+Four of a kind
+4 of a number
+__________________"
+
 [node name="Ace4" type="TextureRect" parent="HBoxContainer/VBoxContainer/Four of a kind"]
 layout_mode = 2
 texture = ExtResource("11_as05k")
@@ -128,6 +153,15 @@ texture = ExtResource("14_vbooq")
 [node name="Full house" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 
+[node name="Full house" type="Label" parent="HBoxContainer/VBoxContainer/Full house"]
+layout_mode = 2
+text = "4.
+Full House
+3 of a kind +
+2 pair
+__________________
+"
+
 [node name="King" type="TextureRect" parent="HBoxContainer/VBoxContainer/Full house"]
 layout_mode = 2
 texture = ExtResource("2_gnu0h")
@@ -150,6 +184,15 @@ texture = ExtResource("17_awevc")
 
 [node name="Flush" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
+
+[node name="Flush" type="Label" parent="HBoxContainer/VBoxContainer/Flush"]
+layout_mode = 2
+text = "5.
+Flush
+5 cards of 
+same suit
+__________________
+"
 
 [node name="club" type="TextureRect" parent="HBoxContainer/VBoxContainer/Flush"]
 layout_mode = 2
@@ -177,6 +220,14 @@ layout_mode = 2
 [node name="Straight" type="HBoxContainer" parent="HBoxContainer/VBoxContainer2"]
 layout_mode = 2
 
+[node name="Straight" type="Label" parent="HBoxContainer/VBoxContainer2/Straight"]
+layout_mode = 2
+text = "6.
+Straight
+5 consecutive
+cards
+__________________"
+
 [node name="two" type="TextureRect" parent="HBoxContainer/VBoxContainer2/Straight"]
 layout_mode = 2
 texture = ExtResource("21_bjsxu")
@@ -199,6 +250,13 @@ texture = ExtResource("10_0h36y")
 
 [node name="Three of a kind" type="HBoxContainer" parent="HBoxContainer/VBoxContainer2"]
 layout_mode = 2
+
+[node name="Three of a Kind" type="Label" parent="HBoxContainer/VBoxContainer2/Three of a kind"]
+layout_mode = 2
+text = "7. 
+Three of a Kind
+3 of a number
+__________________"
 
 [node name="four" type="TextureRect" parent="HBoxContainer/VBoxContainer2/Three of a kind"]
 layout_mode = 2
@@ -223,6 +281,13 @@ texture = ExtResource("14_vbooq")
 [node name="Two pair" type="HBoxContainer" parent="HBoxContainer/VBoxContainer2"]
 layout_mode = 2
 
+[node name="2 Pair" type="Label" parent="HBoxContainer/VBoxContainer2/Two pair"]
+layout_mode = 2
+text = "8.
+2 Pair
+Any 2 pairs
+__________________"
+
 [node name="seven" type="TextureRect" parent="HBoxContainer/VBoxContainer2/Two pair"]
 layout_mode = 2
 texture = ExtResource("27_wjlvh")
@@ -245,6 +310,13 @@ texture = ExtResource("14_vbooq")
 
 [node name="Pair" type="HBoxContainer" parent="HBoxContainer/VBoxContainer2"]
 layout_mode = 2
+
+[node name="Pair" type="Label" parent="HBoxContainer/VBoxContainer2/Pair"]
+layout_mode = 2
+text = "9.
+Pair
+2 of a number
+__________________"
 
 [node name="Ace" type="TextureRect" parent="HBoxContainer/VBoxContainer2/Pair"]
 layout_mode = 2
@@ -269,6 +341,14 @@ texture = ExtResource("14_vbooq")
 [node name="High card" type="HBoxContainer" parent="HBoxContainer/VBoxContainer2"]
 layout_mode = 2
 
+[node name="High card" type="Label" parent="HBoxContainer/VBoxContainer2/High card"]
+layout_mode = 2
+text = "10.
+High Card
+A to 2 
+Highest card
+__________________"
+
 [node name="Ace" type="TextureRect" parent="HBoxContainer/VBoxContainer2/High card"]
 layout_mode = 2
 texture = ExtResource("1_w83p7")
@@ -288,3 +368,34 @@ texture = ExtResource("14_vbooq")
 [node name="Any card4" type="TextureRect" parent="HBoxContainer/VBoxContainer2/High card"]
 layout_mode = 2
 texture = ExtResource("14_vbooq")
+
+[node name="Next" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1652.0
+offset_top = 891.0
+offset_right = 1868.0
+offset_bottom = 970.0
+theme_override_font_sizes/font_size = 40
+text = "Next"
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -359.0
+offset_top = 91.0
+offset_right = 359.0
+offset_bottom = 171.0
+grow_horizontal = 2
+
+[node name="Tutorial" type="Label" parent="Panel"]
+layout_mode = 1
+offset_left = 12.0
+offset_right = 726.0
+offset_bottom = 73.0
+theme_override_font_sizes/font_size = 25
+text = "The Hands below are the 10 hands possible in poker with 
+royal flush as the best and high card as the worst."
+
+[connection signal="pressed" from="Next" to="." method="_on_next_pressed"]

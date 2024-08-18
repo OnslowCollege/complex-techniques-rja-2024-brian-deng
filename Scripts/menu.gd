@@ -15,6 +15,7 @@ func _ready():
 	$title.text = "Poker Game"
 	$title.size.x 
 	
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
