@@ -10,7 +10,8 @@ func _ready():
 	#title.horizontal_alignment = 1
 	#title.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	#add_child(title)
-	
+	get_window().mode = Window.MODE_MAXIMIZED
+
 	$title.text = "Poker Game"
 	$title.size.x 
 	
