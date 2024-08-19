@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://uf83jug67p44"]
 
-[ext_resource type="Texture2D" uid="uid://3erkxdj5bj1l" path="res://Assets/pixil-frame-0.png" id="1_bvxx7"]
+[ext_resource type="Texture2D" uid="uid://b62lr8vq6afa" path="res://Assets/poker-table-removebg-removebg.png" id="1_0o5pu"]
 [ext_resource type="Texture2D" uid="uid://jx2e3wa10mnt" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-13.png" id="1_qrlt5"]
 [ext_resource type="Texture2D" uid="uid://ctayoxbhaki6t" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-spades-4.png" id="2_a1bn6"]
 [ext_resource type="Texture2D" uid="uid://c0vtw132qj77b" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-diamonds-9.png" id="3_40sb5"]
@@ -15,11 +15,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 0
-offset_right = 1920.0
-offset_bottom = 1152.0
-texture = ExtResource("1_bvxx7")
+[node name="TextureRect2" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.009375
+anchor_right = -0.352604
+anchor_bottom = -0.333333
+offset_right = 2584.0
+offset_bottom = 1440.0
+texture = ExtResource("1_0o5pu")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -28,12 +34,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -248.0
-offset_top = -72.0
-offset_right = 248.0
-offset_bottom = 72.0
+offset_left = -284.0
+offset_top = -68.0
+offset_right = 284.0
+offset_bottom = 76.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 22
 
 [node name="King_club" type="TextureRect" parent="HBoxContainer"]
 layout_mode = 2
