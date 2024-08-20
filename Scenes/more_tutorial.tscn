@@ -1,11 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://uf83jug67p44"]
+[gd_scene load_steps=10 format=3 uid="uid://uf83jug67p44"]
 
-[ext_resource type="Texture2D" uid="uid://b62lr8vq6afa" path="res://Assets/poker-table-removebg-removebg.png" id="1_0o5pu"]
+[ext_resource type="Script" path="res://Scenes/more_tutorial.gd" id="1_cpalm"]
 [ext_resource type="Texture2D" uid="uid://jx2e3wa10mnt" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-13.png" id="1_qrlt5"]
+[ext_resource type="Texture2D" uid="uid://cx551k4civ2h7" path="res://Assets/Poker table.png" id="1_tyk0j"]
 [ext_resource type="Texture2D" uid="uid://ctayoxbhaki6t" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-spades-4.png" id="2_a1bn6"]
 [ext_resource type="Texture2D" uid="uid://c0vtw132qj77b" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-diamonds-9.png" id="3_40sb5"]
 [ext_resource type="Texture2D" uid="uid://11uidg5jree" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-diamonds-13.png" id="4_ydexb"]
 [ext_resource type="Texture2D" uid="uid://bye8ohxl8ljh3" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-spades-8.png" id="5_idasx"]
+[ext_resource type="Texture2D" uid="uid://ccqmqd6f2cmeg" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-9.png" id="7_hvgvp"]
+[ext_resource type="Texture2D" uid="uid://dx181aio8nhda" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-10.png" id="8_gyiqh"]
 
 [node name="More Tutorial" type="Control"]
 layout_mode = 3
@@ -14,20 +17,15 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_cpalm")
 
-[node name="TextureRect2" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -0.009375
-anchor_right = -0.352604
-anchor_bottom = -0.333333
-offset_right = 2584.0
-offset_bottom = 1440.0
-texture = ExtResource("1_0o5pu")
-expand_mode = 1
-metadata/_edit_use_anchors_ = true
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1917.0
+offset_bottom = 1078.0
+texture = ExtResource("1_tyk0j")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="river" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -42,22 +40,77 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 22
 
-[node name="King_club" type="TextureRect" parent="HBoxContainer"]
+[node name="King_club" type="TextureRect" parent="river"]
 layout_mode = 2
 texture = ExtResource("1_qrlt5")
 
-[node name="4_spades" type="TextureRect" parent="HBoxContainer"]
+[node name="4_spades" type="TextureRect" parent="river"]
 layout_mode = 2
 texture = ExtResource("2_a1bn6")
 
-[node name="9_diamonds" type="TextureRect" parent="HBoxContainer"]
+[node name="9_diamonds" type="TextureRect" parent="river"]
 layout_mode = 2
 texture = ExtResource("3_40sb5")
 
-[node name="King_Diamond" type="TextureRect" parent="HBoxContainer"]
+[node name="King_Diamond" type="TextureRect" parent="river"]
 layout_mode = 2
 texture = ExtResource("4_ydexb")
 
-[node name="8_spades" type="TextureRect" parent="HBoxContainer"]
+[node name="8_spades" type="TextureRect" parent="river"]
 layout_mode = 2
 texture = ExtResource("5_idasx")
+
+[node name="Hand" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -98.0
+offset_top = -263.0
+offset_right = 98.0
+offset_bottom = -119.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="9_clubs" type="TextureRect" parent="Hand"]
+layout_mode = 2
+texture = ExtResource("7_hvgvp")
+
+[node name="10_clubs" type="TextureRect" parent="Hand"]
+layout_mode = 2
+texture = ExtResource("8_gyiqh")
+
+[node name="Community" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -322.0
+offset_top = -121.0
+offset_right = 322.0
+offset_bottom = -93.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 20
+text = "The Community Cards are these Five and can be used by everyone."
+
+[node name="Hand2" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -228.5
+offset_top = 197.5
+offset_right = 228.5
+offset_bottom = 256.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 20
+text = "This is your hand which you can use for making 
+the best 5 cards including the community cards"
