@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://ccqmqd6f2cmeg" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-9.png" id="7_hvgvp"]
 [ext_resource type="Texture2D" uid="uid://dx181aio8nhda" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-10.png" id="8_gyiqh"]
 
-[node name="More Tutorial" type="Control"]
+[node name="More_Tutorial" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -114,3 +114,14 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 20
 text = "This is your hand which you can use for making 
 the best 5 cards including the community cards"
+
+[node name="Next" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1363.0
+offset_top = 865.0
+offset_right = 1441.0
+offset_bottom = 915.0
+theme_override_font_sizes/font_size = 30
+text = "Next"
+
+[connection signal="pressed" from="Next" to="." method="_on_next_pressed"]
