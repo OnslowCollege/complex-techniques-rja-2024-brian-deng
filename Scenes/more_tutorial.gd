@@ -10,15 +10,29 @@ func _ready():
 func _process(delta):
 	pass
 
-var Button_presses = 0
+# prevent errors for more button presses
+var button_presses = 0
 func _on_next_pressed():
-	if Button_presses == 0:
+	if button_presses == 0:
+		# removes previous labels
 		$Community.queue_free()
 		$Hand2.queue_free()
-		var Hand3 = Label.new()
-		Hand3.set_name("Hand3")
-		Hand3.text = "penis"
-		$More_Tutorial.add_child("Hand3")
-		Button_presses += 1
+		
+		# creates new label on first button press 
+		var hand3 = Label.new()
+		hand3.set_name("Hand3")
+		hand3.text = "This specific hand can be matched with the 5 community
+			cards "
+
+		# positioning of label
+		var window_x = get_viewport().size[0]
+		var window_y = get_viewport().size[1]
+		var hand3_length = hand3.get_rect().size
+		print(hand3_length)
+		hand3.position = Vector2((window_x/2),(window_y/2+100))
+		$".".add_child(hand3)
+		
+		# Makes so that only first button press does anything
+		button_presses += 1
 	
 	

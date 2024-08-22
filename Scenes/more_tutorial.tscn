@@ -19,7 +19,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_cpalm")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="Table" type="TextureRect" parent="."]
 layout_mode = 0
 offset_right = 1917.0
 offset_bottom = 1078.0
