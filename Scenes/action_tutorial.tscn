@@ -1,0 +1,67 @@
+[gd_scene load_steps=3 format=3 uid="uid://d0om3sbhbfxbi"]
+
+[ext_resource type="Script" path="res://Scripts/action_tutorial.gd" id="1_ls1u0"]
+[ext_resource type="Texture2D" uid="uid://cx551k4civ2h7" path="res://Assets/Poker table.png" id="1_wqxfc"]
+
+[node name="Action_tutorial" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ls1u0")
+
+[node name="Table" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -1776.0
+offset_top = -539.0
+offset_right = 144.0
+offset_bottom = 541.0
+grow_horizontal = 0
+grow_vertical = 2
+scale = Vector2(0.85, 0.85)
+texture = ExtResource("1_wqxfc")
+
+[node name="Button_bg" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -505.0
+offset_top = -150.0
+offset_right = 505.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="buttons" type="HBoxContainer" parent="Button_bg"]
+layout_mode = 1
+offset_left = 17.0
+offset_right = 421.0
+offset_bottom = 40.0
+scale = Vector2(2.5, 2.5)
+theme_override_constants/separation = 28
+
+[node name="Fold" type="Button" parent="Button_bg/buttons"]
+layout_mode = 2
+text = " Fold "
+
+[node name="Bet" type="Button" parent="Button_bg/buttons"]
+layout_mode = 2
+text = "  Bet  "
+
+[node name="Check" type="Button" parent="Button_bg/buttons"]
+layout_mode = 2
+text = "Check"
+
+[node name="Call" type="Button" parent="Button_bg/buttons"]
+layout_mode = 2
+text = " Call "

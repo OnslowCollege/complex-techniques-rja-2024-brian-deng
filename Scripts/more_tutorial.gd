@@ -47,7 +47,7 @@ func _on_next_pressed():
 		# Removes the label on the second button press
 		if handtext != null:
 			handtext.queue_free()
-			handtext = null  # Optional: reset the reference to null
+			handtext = null
 		button_presses += 1
-		#get_tree().quit()
+		get_tree().change_scene_to_file("res://Scenes/action_tutorial.tscn")
 

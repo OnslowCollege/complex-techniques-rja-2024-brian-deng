@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://uf83jug67p44"]
 
-[ext_resource type="Script" path="res://Scenes/more_tutorial.gd" id="1_cpalm"]
+[ext_resource type="Script" path="res://Scripts/more_tutorial.gd" id="1_cpalm"]
 [ext_resource type="Texture2D" uid="uid://jx2e3wa10mnt" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-13.png" id="1_qrlt5"]
 [ext_resource type="Texture2D" uid="uid://cx551k4civ2h7" path="res://Assets/Poker table.png" id="1_tyk0j"]
 [ext_resource type="Texture2D" uid="uid://ctayoxbhaki6t" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-spades-4.png" id="2_a1bn6"]
