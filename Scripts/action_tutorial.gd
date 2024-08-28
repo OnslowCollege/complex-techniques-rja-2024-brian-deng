@@ -1,5 +1,7 @@
 extends Control
 
+# make node for arrow at start and then function to change properties 
+
 func arrow(start_point: Vector2, end_point: Vector2, color: Color, width: float):
 	# Create the Line2D for the arrow shaft
 	var arrow_line = Line2D.new()
@@ -30,23 +32,47 @@ func arrow(start_point: Vector2, end_point: Vector2, color: Color, width: float)
 	arrowhead.color = color  # Set arrowhead color
 	# Add the Polygon2D to the scene
 	$".".add_child(arrowhead)
+
+func arrow_change(start: Vector2, end: Vector2, width: float):
+	$arrow/Line.clear_points()
+	$arrow/Line.add_point(start)
+	$arrow/Line.add_point(end)
+	$arrow/Line.width = width
+	
+	var direction = (end - start).normalized()
+	var perpendicular = Vector2(-direction.y, direction.x) * (width * 2)
+	var arrowhead_base_left = end + perpendicular
+	var arrowhead_base_right = end - perpendicular 
+	
+	var points = PackedVector2Array()
+	points.append(end + direction * (width * 4)) # Tip of the arrow
+	points.append(arrowhead_base_left) #+ Vector2(-100, -100))    # Left base
+	points.append(arrowhead_base_right)   # Right base
+	$arrow/head.polygon = points
+	$arrow/head.position = Vector2(0,0)
+
+	print(start, end)
+	print(points)
+	print(arrowhead_base_left)
+	
+
 var fold_arrow: Line2D = null
 # prevent errors for more button presses
 var button_presses = 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	arrow_change(Vector2(1000,500), Vector2(1100, 700), 10)
+	#fold_arrow = arrow($Fold_text.position + (Vector2(200, 60)), 
+	#$Button_bg.position + (Vector2(150, -30)), Color.WHITE, 9)
+	#if button_presses == 2:
+		#fold_arrow.queue_free()
+		#fold_arrow = null
+	
 # label defined here so can be altered properly
 var handtext: Label = null
 
 func _on_next_button_pressed():
-	fold_arrow = arrow($Fold_text.position + (Vector2(200, 60)), 
-	$Button_bg.position + (Vector2(150, -30)), Color.WHITE, 9)
-	if button_presses == 2:
-		fold_arrow.queue_free()
-		fold_arrow = null
-	
 	if button_presses == 1:
 		# removes previous labels
 		$Fold_text.queue_free()
