@@ -32,7 +32,7 @@ func _on_option_button_pressed():
 func _on_tutorial_button_pressed():
 	#get_tree().root.add_child(simultaneous_scene)
 #	get_tree().change_scene("res://Scenes/tutorial.tscn")
-	get_tree().change_scene_to_file("res://Scenes/tutorial.tscn")
+	get_tree().change_scene_to_file("res://Scenes/Info/tutorial.tscn")
 
 
 func _on_quit_button_pressed():

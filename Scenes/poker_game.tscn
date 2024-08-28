@@ -1,9 +1,141 @@
-[gd_scene format=3 uid="uid://b74uooyrcjjl1"]
+[gd_scene load_steps=8 format=3 uid="uid://b74uooyrcjjl1"]
+
+[ext_resource type="PackedScene" uid="uid://c0e6rchh8d7b" path="res://Scenes/Info/hand_button.tscn" id="1_rra4x"]
+[ext_resource type="Script" path="res://Scripts/poker_game.gd" id="1_vsng2"]
+[ext_resource type="Texture2D" uid="uid://cx551k4civ2h7" path="res://Assets/Poker table.png" id="3_pdkpr"]
+[ext_resource type="Texture2D" uid="uid://bb3l5d1iykl5u" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-back1.png" id="4_nt88o"]
+
+[sub_resource type="Animation" id="Animation_0esi1"]
+resource_name = "Dealing"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Dealing/card:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(960, 72), Vector2(911, 743)]
+}
+
+[sub_resource type="Animation" id="Animation_57k13"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Dealing/card:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(960, 72)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fihqx"]
+_data = {
+"Dealing": SubResource("Animation_0esi1"),
+"RESET": SubResource("Animation_57k13")
+}
 
 [node name="Poker_game" type="Node2D"]
+script = ExtResource("1_vsng2")
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 1152.0
-offset_bottom = 651.0
+[node name="hand_button" parent="." instance=ExtResource("1_rra4x")]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_bottom = 0.0
+offset_left = 1740.0
+offset_right = 1740.0
+grow_horizontal = 0
+grow_vertical = 1
+size_flags_horizontal = 8
+
+[node name="Menu" type="Button" parent="."]
+offset_right = 180.0
+offset_bottom = 60.0
+theme_override_font_sizes/font_size = 30
+text = "Menu"
+
+[node name="Table" type="TextureRect" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 144.0
+offset_right = 2064.0
+offset_bottom = 1080.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.85, 0.85)
+texture = ExtResource("3_pdkpr")
+metadata/_edit_use_anchors_ = true
+
+[node name="Button_bg" type="Panel" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 455.0
+offset_top = 930.0
+offset_right = 1465.0
+offset_bottom = 1030.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="buttons" type="HBoxContainer" parent="Button_bg"]
+layout_mode = 1
+offset_left = 17.0
+offset_right = 421.0
+offset_bottom = 40.0
+scale = Vector2(2.5, 2.5)
+theme_override_constants/separation = 28
+
+[node name="Fold" type="Button" parent="Button_bg/buttons"]
+layout_mode = 2
+text = " Fold "
+
+[node name="Bet" type="Button" parent="Button_bg/buttons"]
+layout_mode = 2
+text = "  Bet  "
+
+[node name="Check" type="Button" parent="Button_bg/buttons"]
+layout_mode = 2
+text = "Check"
+
+[node name="Call" type="Button" parent="Button_bg/buttons"]
+layout_mode = 2
+text = " Call "
+
+[node name="Card_back" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 912.0
+offset_right = 1008.0
+offset_bottom = 144.0
+grow_horizontal = 2
+texture = ExtResource("4_nt88o")
+
+[node name="Dealing" type="AnimatableBody2D" parent="."]
+
+[node name="card" type="Sprite2D" parent="Dealing"]
+position = Vector2(960, 72)
+scale = Vector2(0.85, 0.85)
+texture = ExtResource("4_nt88o")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Dealing"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_fihqx")
+}
+
+[connection signal="pressed" from="Menu" to="." method="_on_menu_pressed"]

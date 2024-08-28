@@ -43,6 +43,7 @@ func _ready():
 var tutorial_text: Label = null
 
 func _on_next_button_pressed():
+	# Tutorial text for betting button
 	if button_presses == 1:
 		# removes previous labels
 		$Fold_text.visible = false
@@ -58,13 +59,11 @@ func _on_next_button_pressed():
 		players have to call to continue playing 
 		for the pot."
 
+		# changing font size of tutorial
 		tutorial_text.add_theme_font_size_override("font_size",20)
 		
-		# positioning of label
+		# positioning of label and putting text on screen
 		$".".add_child(tutorial_text)
-		var window_x = get_viewport().size[0]
-		var window_y = get_viewport().size[1]
-		var tutorial_text_length = tutorial_text.get_rect().size[0]
 		tutorial_text.position = Vector2(650,640)
 		
 		# Arrow
@@ -99,6 +98,10 @@ func _on_next_button_pressed():
 		arrow_change($Fold_text.position + (Vector2(400, 80)), 
 			$Button_bg.position - Vector2(-800, 50), 10)
 		button_presses += 1
+		
+	# For final press which leads back to main screen
+	elif button_presses == 4:
+		get_tree().change_scene_to_file("res://Scenes/menu.tscn")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

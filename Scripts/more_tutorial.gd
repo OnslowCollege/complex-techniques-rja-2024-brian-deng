@@ -49,5 +49,5 @@ func _on_next_pressed():
 			handtext.queue_free()
 			handtext = null
 		button_presses += 1
-		get_tree().change_scene_to_file("res://Scenes/action_tutorial.tscn")
+		get_tree().change_scene_to_file("res://Scenes/Info/action_tutorial.tscn")
 

@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://c0e6rchh8d7b"]
+
+[ext_resource type="Script" path="res://Scripts/hand_button.gd" id="1_brea2"]
+
+[node name="hand_button" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_brea2")
+
+[node name="Hands" type="Button" parent="."]
+layout_mode = 0
+offset_right = 180.0
+offset_bottom = 60.0
+theme_override_font_sizes/font_size = 30
+text = "Hands"
+
+[connection signal="pressed" from="Hands" to="." method="_on_hands_pressed"]

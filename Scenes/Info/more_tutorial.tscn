@@ -1,14 +1,14 @@
 [gd_scene load_steps=10 format=3 uid="uid://uf83jug67p44"]
 
-[ext_resource type="Script" path="res://Scripts/more_tutorial.gd" id="1_cpalm"]
-[ext_resource type="Texture2D" uid="uid://jx2e3wa10mnt" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-13.png" id="1_qrlt5"]
-[ext_resource type="Texture2D" uid="uid://cx551k4civ2h7" path="res://Assets/Poker table.png" id="1_tyk0j"]
-[ext_resource type="Texture2D" uid="uid://ctayoxbhaki6t" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-spades-4.png" id="2_a1bn6"]
-[ext_resource type="Texture2D" uid="uid://c0vtw132qj77b" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-diamonds-9.png" id="3_40sb5"]
-[ext_resource type="Texture2D" uid="uid://11uidg5jree" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-diamonds-13.png" id="4_ydexb"]
-[ext_resource type="Texture2D" uid="uid://bye8ohxl8ljh3" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-spades-8.png" id="5_idasx"]
-[ext_resource type="Texture2D" uid="uid://ccqmqd6f2cmeg" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-9.png" id="7_hvgvp"]
-[ext_resource type="Texture2D" uid="uid://dx181aio8nhda" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-10.png" id="8_gyiqh"]
+[ext_resource type="Script" path="res://Scripts/more_tutorial.gd" id="1_abjyu"]
+[ext_resource type="Texture2D" uid="uid://cx551k4civ2h7" path="res://Assets/Poker table.png" id="2_mv85o"]
+[ext_resource type="Texture2D" uid="uid://jx2e3wa10mnt" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-13.png" id="3_oxwd8"]
+[ext_resource type="Texture2D" uid="uid://ctayoxbhaki6t" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-spades-4.png" id="4_6uvd2"]
+[ext_resource type="Texture2D" uid="uid://c0vtw132qj77b" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-diamonds-9.png" id="5_wywr2"]
+[ext_resource type="Texture2D" uid="uid://11uidg5jree" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-diamonds-13.png" id="6_ljkwd"]
+[ext_resource type="Texture2D" uid="uid://bye8ohxl8ljh3" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-spades-8.png" id="7_rdy61"]
+[ext_resource type="Texture2D" uid="uid://ccqmqd6f2cmeg" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-9.png" id="8_j7lgd"]
+[ext_resource type="Texture2D" uid="uid://dx181aio8nhda" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-10.png" id="9_0p1el"]
 
 [node name="More_Tutorial" type="Control"]
 layout_mode = 3
@@ -17,13 +17,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_cpalm")
+script = ExtResource("1_abjyu")
 
 [node name="Table" type="TextureRect" parent="."]
 layout_mode = 0
 offset_right = 1917.0
 offset_bottom = 1078.0
-texture = ExtResource("1_tyk0j")
+texture = ExtResource("2_mv85o")
 
 [node name="river" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -42,23 +42,23 @@ theme_override_constants/separation = 22
 
 [node name="King_club" type="TextureRect" parent="river"]
 layout_mode = 2
-texture = ExtResource("1_qrlt5")
+texture = ExtResource("3_oxwd8")
 
 [node name="4_spades" type="TextureRect" parent="river"]
 layout_mode = 2
-texture = ExtResource("2_a1bn6")
+texture = ExtResource("4_6uvd2")
 
 [node name="9_diamonds" type="TextureRect" parent="river"]
 layout_mode = 2
-texture = ExtResource("3_40sb5")
+texture = ExtResource("5_wywr2")
 
 [node name="King_Diamond" type="TextureRect" parent="river"]
 layout_mode = 2
-texture = ExtResource("4_ydexb")
+texture = ExtResource("6_ljkwd")
 
 [node name="8_spades" type="TextureRect" parent="river"]
 layout_mode = 2
-texture = ExtResource("5_idasx")
+texture = ExtResource("7_rdy61")
 
 [node name="Hand" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -76,11 +76,11 @@ grow_vertical = 0
 
 [node name="9_clubs" type="TextureRect" parent="Hand"]
 layout_mode = 2
-texture = ExtResource("7_hvgvp")
+texture = ExtResource("8_j7lgd")
 
 [node name="10_clubs" type="TextureRect" parent="Hand"]
 layout_mode = 2
-texture = ExtResource("8_gyiqh")
+texture = ExtResource("9_0p1el")
 
 [node name="Community" type="Label" parent="."]
 layout_mode = 1

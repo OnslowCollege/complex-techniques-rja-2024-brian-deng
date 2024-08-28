@@ -1,0 +1,381 @@
+[gd_scene load_steps=31 format=3 uid="uid://c7ifmgm6viv2w"]
+
+[ext_resource type="Script" path="res://Scripts/hands.gd" id="1_8w7bv"]
+[ext_resource type="Texture2D" uid="uid://dxr8sji3a8rjt" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-1.png" id="2_4lnyw"]
+[ext_resource type="Texture2D" uid="uid://jx2e3wa10mnt" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-13.png" id="3_i5ry7"]
+[ext_resource type="Texture2D" uid="uid://c4fdykktevipr" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-12.png" id="4_udmta"]
+[ext_resource type="Texture2D" uid="uid://bkeqdrcp0a07r" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-11.png" id="5_vblhd"]
+[ext_resource type="Texture2D" uid="uid://dx181aio8nhda" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-10.png" id="6_pnkdv"]
+[ext_resource type="Texture2D" uid="uid://clqllvkhjvly3" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-hearts-10.png" id="7_dljkx"]
+[ext_resource type="Texture2D" uid="uid://bwcjnsxlchwtm" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-hearts-9.png" id="8_nj367"]
+[ext_resource type="Texture2D" uid="uid://defsoi8x4pwmn" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-hearts-8.png" id="9_kub4y"]
+[ext_resource type="Texture2D" uid="uid://nlci4mqx82iu" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-hearts-7.png" id="10_qdsj1"]
+[ext_resource type="Texture2D" uid="uid://cpqijqcs6de2p" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-hearts-6.png" id="11_noyt0"]
+[ext_resource type="Texture2D" uid="uid://d4d10127fnfc5" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-spades-1.png" id="12_atonr"]
+[ext_resource type="Texture2D" uid="uid://bgcvk400c6vto" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-diamonds-1.png" id="13_eb0bm"]
+[ext_resource type="Texture2D" uid="uid://cqqedyjsi43h5" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-hearts-1.png" id="14_8bp0j"]
+[ext_resource type="Texture2D" uid="uid://bb3l5d1iykl5u" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-back1.png" id="15_xxh3p"]
+[ext_resource type="Texture2D" uid="uid://11uidg5jree" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-diamonds-13.png" id="16_70mjl"]
+[ext_resource type="Texture2D" uid="uid://bl8ddysmv2pf4" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-hearts-13.png" id="17_lmdwv"]
+[ext_resource type="Texture2D" uid="uid://dlvg5y6j8dbpd" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-hearts-11.png" id="18_jsixo"]
+[ext_resource type="Texture2D" uid="uid://brbw2ogdcrq2t" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-3.png" id="19_4famu"]
+[ext_resource type="Texture2D" uid="uid://sf0tpnlln1sv" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-7.png" id="20_6qxuj"]
+[ext_resource type="Texture2D" uid="uid://ccqmqd6f2cmeg" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-9.png" id="21_f1crq"]
+[ext_resource type="Texture2D" uid="uid://s2gl3c0owbc2" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-2.png" id="22_3sv5v"]
+[ext_resource type="Texture2D" uid="uid://dano3fjew00ax" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-diamonds-3.png" id="23_dqhas"]
+[ext_resource type="Texture2D" uid="uid://xi66s8w7apyu" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-diamonds-4.png" id="24_dad5x"]
+[ext_resource type="Texture2D" uid="uid://bqvbjbaxukxis" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-spades-5.png" id="25_aspo1"]
+[ext_resource type="Texture2D" uid="uid://csemftx4lqk34" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-4.png" id="26_yy37l"]
+[ext_resource type="Texture2D" uid="uid://ctayoxbhaki6t" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-spades-4.png" id="27_uwne1"]
+[ext_resource type="Texture2D" uid="uid://bqpgjyx0pabv0" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-spades-7.png" id="28_wxys0"]
+[ext_resource type="Texture2D" uid="uid://cfovypc2cn1h7" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-spades-9.png" id="29_wkgkx"]
+[ext_resource type="Texture2D" uid="uid://c0vtw132qj77b" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-diamonds-9.png" id="30_08340"]
+
+[node name="Hand" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8w7bv")
+
+[node name="Hands" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -702.0
+offset_top = -368.0
+offset_right = 702.0
+offset_bottom = 368.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="1 to 5" type="VBoxContainer" parent="Hands"]
+layout_mode = 2
+
+[node name="Royal flush" type="HBoxContainer" parent="Hands/1 to 5"]
+layout_mode = 2
+
+[node name="Royal Flush" type="Label" parent="Hands/1 to 5/Royal flush"]
+layout_mode = 2
+text = "1.
+Royal Flush
+Flush + Straight
+From Ace down
+_____________________"
+
+[node name="Ace" type="TextureRect" parent="Hands/1 to 5/Royal flush"]
+layout_mode = 2
+texture = ExtResource("2_4lnyw")
+
+[node name="King" type="TextureRect" parent="Hands/1 to 5/Royal flush"]
+layout_mode = 2
+texture = ExtResource("3_i5ry7")
+
+[node name="Queen" type="TextureRect" parent="Hands/1 to 5/Royal flush"]
+layout_mode = 2
+texture = ExtResource("4_udmta")
+
+[node name="Jack" type="TextureRect" parent="Hands/1 to 5/Royal flush"]
+layout_mode = 2
+texture = ExtResource("5_vblhd")
+
+[node name="10" type="TextureRect" parent="Hands/1 to 5/Royal flush"]
+layout_mode = 2
+texture = ExtResource("6_pnkdv")
+
+[node name="Straight flush" type="HBoxContainer" parent="Hands/1 to 5"]
+layout_mode = 2
+
+[node name="Straight Flush" type="Label" parent="Hands/1 to 5/Straight flush"]
+layout_mode = 2
+text = "2.
+Straight Flush
+Flush + Straight
+_____________________"
+
+[node name="10 of hearts" type="TextureRect" parent="Hands/1 to 5/Straight flush"]
+layout_mode = 2
+texture = ExtResource("7_dljkx")
+
+[node name="9 of hearts" type="TextureRect" parent="Hands/1 to 5/Straight flush"]
+layout_mode = 2
+texture = ExtResource("8_nj367")
+
+[node name="8 of hearts" type="TextureRect" parent="Hands/1 to 5/Straight flush"]
+layout_mode = 2
+texture = ExtResource("9_kub4y")
+
+[node name="7 of hearts" type="TextureRect" parent="Hands/1 to 5/Straight flush"]
+layout_mode = 2
+texture = ExtResource("10_qdsj1")
+
+[node name="6 of hearts" type="TextureRect" parent="Hands/1 to 5/Straight flush"]
+layout_mode = 2
+texture = ExtResource("11_noyt0")
+
+[node name="Four of a kind" type="HBoxContainer" parent="Hands/1 to 5"]
+layout_mode = 2
+
+[node name="Quads" type="Label" parent="Hands/1 to 5/Four of a kind"]
+layout_mode = 2
+text = "3.
+Four of a kind
+4 of a number
+_____________________"
+
+[node name="Ace4" type="TextureRect" parent="Hands/1 to 5/Four of a kind"]
+layout_mode = 2
+texture = ExtResource("12_atonr")
+
+[node name="Ace" type="TextureRect" parent="Hands/1 to 5/Four of a kind"]
+layout_mode = 2
+texture = ExtResource("2_4lnyw")
+
+[node name="Ace2" type="TextureRect" parent="Hands/1 to 5/Four of a kind"]
+layout_mode = 2
+texture = ExtResource("13_eb0bm")
+
+[node name="Ace3" type="TextureRect" parent="Hands/1 to 5/Four of a kind"]
+layout_mode = 2
+texture = ExtResource("14_8bp0j")
+
+[node name="Any card" type="TextureRect" parent="Hands/1 to 5/Four of a kind"]
+layout_mode = 2
+texture = ExtResource("15_xxh3p")
+
+[node name="Full house" type="HBoxContainer" parent="Hands/1 to 5"]
+layout_mode = 2
+
+[node name="Full house" type="Label" parent="Hands/1 to 5/Full house"]
+layout_mode = 2
+text = "4.
+Full House
+3 of a kind +
+2 pair
+_____________________
+"
+
+[node name="King" type="TextureRect" parent="Hands/1 to 5/Full house"]
+layout_mode = 2
+texture = ExtResource("3_i5ry7")
+
+[node name="King2" type="TextureRect" parent="Hands/1 to 5/Full house"]
+layout_mode = 2
+texture = ExtResource("16_70mjl")
+
+[node name="King3" type="TextureRect" parent="Hands/1 to 5/Full house"]
+layout_mode = 2
+texture = ExtResource("17_lmdwv")
+
+[node name="Jack" type="TextureRect" parent="Hands/1 to 5/Full house"]
+layout_mode = 2
+texture = ExtResource("5_vblhd")
+
+[node name="Jack2" type="TextureRect" parent="Hands/1 to 5/Full house"]
+layout_mode = 2
+texture = ExtResource("18_jsixo")
+
+[node name="Flush" type="HBoxContainer" parent="Hands/1 to 5"]
+layout_mode = 2
+
+[node name="Flush" type="Label" parent="Hands/1 to 5/Flush"]
+layout_mode = 2
+text = "5.
+Flush
+5 cards of 
+same suit
+_____________________
+"
+
+[node name="club" type="TextureRect" parent="Hands/1 to 5/Flush"]
+layout_mode = 2
+texture = ExtResource("19_4famu")
+
+[node name="club2" type="TextureRect" parent="Hands/1 to 5/Flush"]
+layout_mode = 2
+texture = ExtResource("20_6qxuj")
+
+[node name="club3" type="TextureRect" parent="Hands/1 to 5/Flush"]
+layout_mode = 2
+texture = ExtResource("4_udmta")
+
+[node name="club5" type="TextureRect" parent="Hands/1 to 5/Flush"]
+layout_mode = 2
+texture = ExtResource("21_f1crq")
+
+[node name="club4" type="TextureRect" parent="Hands/1 to 5/Flush"]
+layout_mode = 2
+texture = ExtResource("5_vblhd")
+
+[node name="6 to 10" type="VBoxContainer" parent="Hands"]
+layout_mode = 2
+
+[node name="Straight" type="HBoxContainer" parent="Hands/6 to 10"]
+layout_mode = 2
+
+[node name="Straight" type="Label" parent="Hands/6 to 10/Straight"]
+layout_mode = 2
+text = "6.
+Straight
+5 consecutive
+cards
+___________________"
+
+[node name="two" type="TextureRect" parent="Hands/6 to 10/Straight"]
+layout_mode = 2
+texture = ExtResource("22_3sv5v")
+
+[node name="three" type="TextureRect" parent="Hands/6 to 10/Straight"]
+layout_mode = 2
+texture = ExtResource("23_dqhas")
+
+[node name="four" type="TextureRect" parent="Hands/6 to 10/Straight"]
+layout_mode = 2
+texture = ExtResource("24_dad5x")
+
+[node name="five" type="TextureRect" parent="Hands/6 to 10/Straight"]
+layout_mode = 2
+texture = ExtResource("25_aspo1")
+
+[node name="six" type="TextureRect" parent="Hands/6 to 10/Straight"]
+layout_mode = 2
+texture = ExtResource("11_noyt0")
+
+[node name="Three of a kind" type="HBoxContainer" parent="Hands/6 to 10"]
+layout_mode = 2
+
+[node name="Three of a Kind" type="Label" parent="Hands/6 to 10/Three of a kind"]
+layout_mode = 2
+text = "7. 
+Three of a Kind
+3 of a number
+___________________"
+
+[node name="four" type="TextureRect" parent="Hands/6 to 10/Three of a kind"]
+layout_mode = 2
+texture = ExtResource("26_yy37l")
+
+[node name="four2" type="TextureRect" parent="Hands/6 to 10/Three of a kind"]
+layout_mode = 2
+texture = ExtResource("24_dad5x")
+
+[node name="four3" type="TextureRect" parent="Hands/6 to 10/Three of a kind"]
+layout_mode = 2
+texture = ExtResource("27_uwne1")
+
+[node name="Any card" type="TextureRect" parent="Hands/6 to 10/Three of a kind"]
+layout_mode = 2
+texture = ExtResource("15_xxh3p")
+
+[node name="Any card2" type="TextureRect" parent="Hands/6 to 10/Three of a kind"]
+layout_mode = 2
+texture = ExtResource("15_xxh3p")
+
+[node name="Two pair" type="HBoxContainer" parent="Hands/6 to 10"]
+layout_mode = 2
+
+[node name="2 Pair" type="Label" parent="Hands/6 to 10/Two pair"]
+layout_mode = 2
+text = "8.
+2 Pair
+Any 2 pairs
+___________________"
+
+[node name="seven" type="TextureRect" parent="Hands/6 to 10/Two pair"]
+layout_mode = 2
+texture = ExtResource("28_wxys0")
+
+[node name="seven2" type="TextureRect" parent="Hands/6 to 10/Two pair"]
+layout_mode = 2
+texture = ExtResource("10_qdsj1")
+
+[node name="nine2" type="TextureRect" parent="Hands/6 to 10/Two pair"]
+layout_mode = 2
+texture = ExtResource("29_wkgkx")
+
+[node name="nine" type="TextureRect" parent="Hands/6 to 10/Two pair"]
+layout_mode = 2
+texture = ExtResource("30_08340")
+
+[node name="Any card" type="TextureRect" parent="Hands/6 to 10/Two pair"]
+layout_mode = 2
+texture = ExtResource("15_xxh3p")
+
+[node name="Pair" type="HBoxContainer" parent="Hands/6 to 10"]
+layout_mode = 2
+
+[node name="Pair" type="Label" parent="Hands/6 to 10/Pair"]
+layout_mode = 2
+text = "9.
+Pair
+2 of a number
+___________________"
+
+[node name="Ace" type="TextureRect" parent="Hands/6 to 10/Pair"]
+layout_mode = 2
+texture = ExtResource("2_4lnyw")
+
+[node name="Ace2" type="TextureRect" parent="Hands/6 to 10/Pair"]
+layout_mode = 2
+texture = ExtResource("12_atonr")
+
+[node name="Any card" type="TextureRect" parent="Hands/6 to 10/Pair"]
+layout_mode = 2
+texture = ExtResource("15_xxh3p")
+
+[node name="Any card2" type="TextureRect" parent="Hands/6 to 10/Pair"]
+layout_mode = 2
+texture = ExtResource("15_xxh3p")
+
+[node name="Any card3" type="TextureRect" parent="Hands/6 to 10/Pair"]
+layout_mode = 2
+texture = ExtResource("15_xxh3p")
+
+[node name="High card" type="HBoxContainer" parent="Hands/6 to 10"]
+layout_mode = 2
+
+[node name="High card" type="Label" parent="Hands/6 to 10/High card"]
+layout_mode = 2
+text = "10.
+High Card
+A to 2 
+Highest card
+___________________"
+
+[node name="Ace" type="TextureRect" parent="Hands/6 to 10/High card"]
+layout_mode = 2
+texture = ExtResource("2_4lnyw")
+
+[node name="Any card" type="TextureRect" parent="Hands/6 to 10/High card"]
+layout_mode = 2
+texture = ExtResource("15_xxh3p")
+
+[node name="Any card2" type="TextureRect" parent="Hands/6 to 10/High card"]
+layout_mode = 2
+texture = ExtResource("15_xxh3p")
+
+[node name="Any card3" type="TextureRect" parent="Hands/6 to 10/High card"]
+layout_mode = 2
+texture = ExtResource("15_xxh3p")
+
+[node name="Any card4" type="TextureRect" parent="Hands/6 to 10/High card"]
+layout_mode = 2
+texture = ExtResource("15_xxh3p")
+
+[node name="Back" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1699.0
+offset_top = 951.0
+offset_right = 1879.0
+offset_bottom = 1011.0
+theme_override_font_sizes/font_size = 30
+text = "Back"
+
+[connection signal="pressed" from="Back" to="." method="_on_back_pressed"]
