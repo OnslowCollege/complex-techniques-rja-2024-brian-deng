@@ -8,6 +8,7 @@ func list_files_in_directory(path):
 	dir.list_dir_begin()
 	while true:
 		var file = dir.get_next()
+		print(file)
 		if file == "":
 			break
 		elif ".import" in file:
@@ -19,7 +20,7 @@ func list_files_in_directory(path):
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Dealing/Dealing2.play("Dealing")
-	(list_files_in_directory(
+	print(list_files_in_directory(
 		"res://Assets/Pixel Fantasy Playing Cards/Playing Cards/"))
 	for i in range(len(files)-1, -1, -1):
 		var file = files[i]
@@ -28,23 +29,41 @@ func _ready():
 			continue
 		else:
 			files.remove_at(i) 
+	print(files)
 
 	var count: int = 1
 	var suit = ""
 	for file in files:
 		if count <= 13:
 			suit = "clubs"
+			if (("-%s-" % [suit] in file) and ("-%d." % [count] in file)):
+				cards["%s %d" % [suit, count]] = file
+				print("Added to dictionary: ", cards["%s %d" % [suit, count]])
 		elif 13 < count and count <= 26:
 			suit = "diamonds"
+			if (("-%s-" % [suit] in file) and ("-%d." % [count-13] in file)):
+				cards["%s %d" % [suit, count-13]] = file
+				print("Added to dictionary: ", cards["%s %d" % [suit, count-13]])
 		elif 26 < count and count <= 39:
 			suit = "hearts"
+			if (("-%s-" % [suit] in file) and ("-%d." % [count-26] in file)):
+				cards["%s %d" % [suit, count-26]] = file
+				print("Added to dictionary: ", cards["%s %d" % [suit, count-26]])
 		elif 39 < count and count <= 52:
 			suit = "spades"
-		if (("%s" % [suit] in file) and ("%d" % [count] in file)):
-			cards["%s %d" % [suit, count]] = file
+			if (("-%s-" % [suit] in file) and ("-%d." % [count-39] in file)):
+				cards["%s %d" % [suit, count-39]] = file
+				print("Added to dictionary: ", cards["%s %d" % [suit, count-39]])
+		# Print the generated strings for debugging
+		print("Generated suit: ", suit)
+		print("Generated count string: ", "-%d.png" % [count])
+		
+
+
 		count += 1
 	print(cards)
 	print(cards.keys())
+	print(cards.values())
 	
 	#print(list_files_in_directory("res://Assets/Pixel Fantasy Playing Cards/Playing Cards/"))
 	# Reading from file to get flashcard data.
