@@ -1,9 +1,12 @@
 extends Node2D
 
+func dealing():
+	$Dealing/Dealing
+	$Dealing/Dealing2
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	$Dealing/Dealing2.play("Dealing")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
