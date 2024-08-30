@@ -2,6 +2,11 @@ extends Node2D
 
 var files = []
 var cards = {}
+var sorted_files = []
+var suited = []
+var suits = ["clubs", "spades", "hearts", "diamonds"] 
+var counter = 1
+## but the dir list into another list to sort with suits sorted
 
 func list_files_in_directory(path):
 	var dir = DirAccess.open(path)
@@ -15,12 +20,33 @@ func list_files_in_directory(path):
 			continue
 		elif not file.begins_with("."):
 			files.append(file)
+	#var suit_num = 0
+	#while true:
+		#for file in files:
+			#if suits[suit_num] in file:
+				#print(file)
+				#suited.append(file)
+				##for x in range(0, 14):
+					##if ("-%d.")% [x] in file:
+						##sorted_files.append(file)
+		#if suit_num < 3:
+			#suit_num += 1
+		#if suit_num == 3:
+			#break
+
+	for file in files:
+		if ("-%d.png" % [counter]) in file:
+			sorted_files.append(file)
+			if counter > 14:
+				counter += 1
+	print(suited)
+	print(sorted_files)
 	return files
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Dealing/Dealing2.play("Dealing")
-	print(list_files_in_directory(
+	(list_files_in_directory(
 		"res://Assets/Pixel Fantasy Playing Cards/Playing Cards/"))
 	for i in range(len(files)-1, -1, -1):
 		var file = files[i]
@@ -29,7 +55,7 @@ func _ready():
 			continue
 		else:
 			files.remove_at(i) 
-	print(files)
+	#print(files)
 
 	var count: int = 1
 	var suit = ""
@@ -55,8 +81,8 @@ func _ready():
 				cards["%s %d" % [suit, count-39]] = file
 				print("Added to dictionary: ", cards["%s %d" % [suit, count-39]])
 		# Print the generated strings for debugging
-		print("Generated suit: ", suit)
-		print("Generated count string: ", "-%d.png" % [count])
+		#print("Generated suit: ", suit)
+		#print("Generated count string: ", "-%d.png" % [count])
 		
 
 
