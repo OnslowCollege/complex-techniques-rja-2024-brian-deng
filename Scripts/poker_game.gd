@@ -113,11 +113,11 @@ func _on_button_pressed():
 		var player_card_right = files[randi_range(0, 51)]
 		print(player_card_left)
 		print(player_card_right)
-		if $Dealing/Dealing2.animation_finished:
-			card_img(player_card_left, 
-				$Dealing/player_left.position, $Dealing/player_left)
-			card_img(player_card_right, 
-				$Dealing/player_right.position, $Dealing/player_right)
+		await $Dealing/Dealing2.animation_finished
+		card_img(player_card_left, 
+			$Dealing/player_left.position, $Dealing/player_left)
+		card_img(player_card_right, 
+			$Dealing/player_right.position, $Dealing/player_right)
 		print(rand_num)
 		print(rand_num)
 		break
