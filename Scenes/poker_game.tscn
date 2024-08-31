@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b74uooyrcjjl1"]
+[gd_scene load_steps=17 format=3 uid="uid://b74uooyrcjjl1"]
 
 [ext_resource type="PackedScene" uid="uid://c0e6rchh8d7b" path="res://Scenes/Info/hand_button.tscn" id="1_rra4x"]
 [ext_resource type="Script" path="res://Scripts/poker_game.gd" id="1_vsng2"]
@@ -35,7 +35,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("card2:position")
+tracks/2/path = NodePath("player_right:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = false
 tracks/2/keys = {
@@ -47,7 +47,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("card2:rotation")
+tracks/3/path = NodePath("player_right:rotation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = false
 tracks/3/keys = {
@@ -179,7 +179,7 @@ tracks/13/keys = {
 tracks/14/type = "value"
 tracks/14/imported = false
 tracks/14/enabled = true
-tracks/14/path = NodePath("card8:position")
+tracks/14/path = NodePath("player_left:position")
 tracks/14/interp = 1
 tracks/14/loop_wrap = false
 tracks/14/keys = {
@@ -191,7 +191,7 @@ tracks/14/keys = {
 tracks/15/type = "value"
 tracks/15/imported = false
 tracks/15/enabled = true
-tracks/15/path = NodePath("card8:rotation")
+tracks/15/path = NodePath("player_left:rotation")
 tracks/15/interp = 1
 tracks/15/loop_wrap = false
 tracks/15/keys = {
@@ -278,7 +278,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("card2:position")
+tracks/2/path = NodePath("player_right:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -290,7 +290,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("card2:rotation")
+tracks/3/path = NodePath("player_right:rotation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -422,7 +422,7 @@ tracks/13/keys = {
 tracks/14/type = "value"
 tracks/14/imported = false
 tracks/14/enabled = true
-tracks/14/path = NodePath("card8:position")
+tracks/14/path = NodePath("player_left:position")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
@@ -434,7 +434,7 @@ tracks/14/keys = {
 tracks/15/type = "value"
 tracks/15/imported = false
 tracks/15/enabled = true
-tracks/15/path = NodePath("card8:rotation")
+tracks/15/path = NodePath("player_left:rotation")
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = {
@@ -522,7 +522,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(960, 72), Vector2(1257, 463)]
+"values": [Vector2(960, 72), Vector2(665, 463)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -570,7 +570,7 @@ tracks/5/keys = {
 "times": PackedFloat32Array(0.2, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(960, 72), Vector2(1257, 463)]
+"values": [Vector2(960, 72), Vector2(665, 463)]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
@@ -618,7 +618,7 @@ tracks/9/keys = {
 "times": PackedFloat32Array(0.4, 0.7),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(960, 72), Vector2(1257, 463)]
+"values": [Vector2(960, 72), Vector2(665, 463)]
 }
 tracks/10/type = "value"
 tracks/10/imported = false
@@ -798,6 +798,175 @@ _data = {
 "RESET": SubResource("Animation_y4t8o")
 }
 
+[sub_resource type="Animation" id="Animation_wcg6h"]
+resource_name = "Turn"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("card:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(960, 72), Vector2(1061, 463)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("card:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("card:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_y7vca"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("card:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(960, 72)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("card:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("card:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wk7ln"]
+_data = {
+"RESET": SubResource("Animation_y7vca"),
+"Turn": SubResource("Animation_wcg6h")
+}
+
+[sub_resource type="Animation" id="Animation_jnbnk"]
+resource_name = "river"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("card:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(960, 72), Vector2(1162, 463)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("card:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("card:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_syfcf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("card:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(960, 72)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("card:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("card:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nxsd0"]
+_data = {
+"RESET": SubResource("Animation_syfcf"),
+"river": SubResource("Animation_jnbnk")
+}
+
 [node name="Poker_game" type="Node2D"]
 script = ExtResource("1_vsng2")
 
@@ -892,7 +1061,7 @@ position = Vector2(960, 72)
 scale = Vector2(0.85, 0.85)
 texture = ExtResource("4_nt88o")
 
-[node name="card2" type="Sprite2D" parent="Dealing"]
+[node name="player_right" type="Sprite2D" parent="Dealing"]
 position = Vector2(960, 72)
 scale = Vector2(0.85, 0.85)
 texture = ExtResource("4_nt88o")
@@ -922,7 +1091,7 @@ position = Vector2(960, 72)
 scale = Vector2(0.85, 0.85)
 texture = ExtResource("4_nt88o")
 
-[node name="card8" type="Sprite2D" parent="Dealing"]
+[node name="player_left" type="Sprite2D" parent="Dealing"]
 position = Vector2(960, 72)
 scale = Vector2(0.85, 0.85)
 texture = ExtResource("4_nt88o")
@@ -962,6 +1131,9 @@ texture = ExtResource("4_nt88o")
 [node name="Turn" type="AnimatableBody2D" parent="."]
 
 [node name="Turning" type="AnimationPlayer" parent="Turn"]
+libraries = {
+"": SubResource("AnimationLibrary_wk7ln")
+}
 
 [node name="card" type="Sprite2D" parent="Turn"]
 position = Vector2(960, 72)
@@ -971,11 +1143,26 @@ texture = ExtResource("4_nt88o")
 [node name="River" type="AnimatableBody2D" parent="."]
 
 [node name="Rivering" type="AnimationPlayer" parent="River"]
+libraries = {
+"": SubResource("AnimationLibrary_nxsd0")
+}
 
 [node name="card" type="Sprite2D" parent="River"]
 position = Vector2(960, 72)
-rotation = 6.28319
 scale = Vector2(0.85, 0.85)
 texture = ExtResource("4_nt88o")
 
+[node name="Button" type="Button" parent="."]
+offset_left = 1232.0
+offset_top = 432.0
+offset_right = 1365.0
+offset_bottom = 495.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 25
+text = "Start"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
 [connection signal="pressed" from="Menu" to="." method="_on_menu_pressed"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

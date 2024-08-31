@@ -2,10 +2,11 @@ extends Node2D
 
 var files = []
 var cards = {}
-var sorted_files = []
+var sorted_files = Array()
 var suited = []
 var suits = ["clubs", "spades", "hearts", "diamonds"] 
 var counter = 1
+const card_path = "res://Assets/Pixel Fantasy Playing Cards/Playing Cards/"
 ## but the dir list into another list to sort with suits sorted
 
 func list_files_in_directory(path):
@@ -13,41 +14,22 @@ func list_files_in_directory(path):
 	dir.list_dir_begin()
 	while true:
 		var file = dir.get_next()
-		print(file)
 		if file == "":
 			break
 		elif ".import" in file:
 			continue
 		elif not file.begins_with("."):
 			files.append(file)
-	#var suit_num = 0
-	#while true:
-		#for file in files:
-			#if suits[suit_num] in file:
-				#print(file)
-				#suited.append(file)
-				##for x in range(0, 14):
-					##if ("-%d.")% [x] in file:
-						##sorted_files.append(file)
-		#if suit_num < 3:
-			#suit_num += 1
-		#if suit_num == 3:
-			#break
-
-	for file in files:
-		if ("-%d.png" % [counter]) in file:
-			sorted_files.append(file)
-			if counter > 14:
-				counter += 1
-	print(suited)
-	print(sorted_files)
+	dir.list_dir_end()
 	return files
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$Dealing/Dealing2.play("Dealing")
-	(list_files_in_directory(
-		"res://Assets/Pixel Fantasy Playing Cards/Playing Cards/"))
+	$Dealing.visible = false
+	$Flop.visible = false
+	$Turn.visible = false
+	$River.visible = false
+	(list_files_in_directory(card_path))
 	for i in range(len(files)-1, -1, -1):
 		var file = files[i]
 		if ("clubs" in file or "hearts" in file or 
@@ -55,58 +37,54 @@ func _ready():
 			continue
 		else:
 			files.remove_at(i) 
-	#print(files)
-
-	var count: int = 1
-	var suit = ""
 	for file in files:
-		if count <= 13:
-			suit = "clubs"
-			if (("-%s-" % [suit] in file) and ("-%d." % [count] in file)):
-				cards["%s %d" % [suit, count]] = file
-				print("Added to dictionary: ", cards["%s %d" % [suit, count]])
-		elif 13 < count and count <= 26:
-			suit = "diamonds"
-			if (("-%s-" % [suit] in file) and ("-%d." % [count-13] in file)):
-				cards["%s %d" % [suit, count-13]] = file
-				print("Added to dictionary: ", cards["%s %d" % [suit, count-13]])
-		elif 26 < count and count <= 39:
-			suit = "hearts"
-			if (("-%s-" % [suit] in file) and ("-%d." % [count-26] in file)):
-				cards["%s %d" % [suit, count-26]] = file
-				print("Added to dictionary: ", cards["%s %d" % [suit, count-26]])
-		elif 39 < count and count <= 52:
-			suit = "spades"
-			if (("-%s-" % [suit] in file) and ("-%d." % [count-39] in file)):
-				cards["%s %d" % [suit, count-39]] = file
-				print("Added to dictionary: ", cards["%s %d" % [suit, count-39]])
-		# Print the generated strings for debugging
-		#print("Generated suit: ", suit)
-		#print("Generated count string: ", "-%d.png" % [count])
-		
+		for x in range(1, 14):
+			if ("-" + str(x) + ".png") in file:
+				sorted_files.append(file)
+			if x != counter: continue
+			if counter > 14: counter += 1
+	#print(sorted_files)
 
-
-		count += 1
-	print(cards)
-	print(cards.keys())
-	print(cards.values())
-	
-	#print(list_files_in_directory("res://Assets/Pixel Fantasy Playing Cards/Playing Cards/"))
-	# Reading from file to get flashcard data.
-	#if let Menu: String = try? String(contentsOfFile: "facts.txt"): 
-		## Putting items in loop from the facts imported from facts.text
-		#for items in Menu.components(separatedBy: "\n"):
-			## Putting event and it's date
-			#var item = items.components(separatedBy: ",")
-			## Incase the there is a empty line in .txt file
-			#if item[0] == ""{ continue }
-			## To ensure no index out of range error
-			#item.append("")
-			## Adds the item and date to list in a struct
-			#var info = FlashCard(historicEvent: item[0], eventDate: item[1], bCE: item[2])
-			#flashCards.append(info)
-		#
-	#else: print("No such file")
+	#var count: int = 1
+	#var suit = ""
+	#for file in files:
+		#if count <= 13:
+			#suit = "clubs"
+			#if ((str(suit) in file) and (str(count) in file)):
+				#cards["%s %d" % [suit, count]] = file
+				#print("Added to dictionary: ", cards["%s %d" % [suit, count]])
+		#elif 13 < count and count <= 26:
+			#suit = "diamonds"
+			#if ((str(suit) in file) and (str(count-13) in file)):
+				#cards["%s %d" % [suit, count-13]] = file
+				#print("Added to dictionary: ", cards["%s %d" % [suit, count-13]])
+		#elif 26 < count and count <= 39:
+			#suit = "hearts"
+			#if ((str(suit) in file) and (str(count-26) in file)):
+				#cards["%s %d" % [suit, count-26]] = file
+				#print("Added to dictionary: ", cards["%s %d" % [suit, count-26]])
+		#elif 39 < count and count <= 52:
+			#suit = "spades"
+			#if ((str(suit) in file) and (str(count-39) in file)):
+				#cards["%s %d" % [suit, count-39]] = file
+				#print("Added to dictionary: ", cards["%s %d" % [suit, count-39]])
+		## Print the generated strings for debugging
+		##print("Generated suit: ", suit)
+		##print("Generated count string: ", "-%d.png" % [count])
+		#count += 1
+	#print(cards)
+	#var counter: int = 1
+	#var cards = {}  # Initialize the cards dictionary
+	#var suits = ["clubs", "diamonds", "hearts", "spades"]  # List of suits
+	#for file in files:
+		#var suit_index = ((counter - 1) / 13)  # Determine the suit index based on count
+		#if suit_index < suits.size():
+			#var suity = suits[suit_index]
+			#var rank = counter - suit_index * 13  # Determine the rank within the suit
+			#if (suity in file) and (str(rank) in file):
+				#cards["%s %d" % [suity, rank]] = file
+				#print("Added to dictionary: ", cards["%s %d" % [suity, rank]])
+	#print(cards)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -116,3 +94,33 @@ func _process(delta):
 func _on_menu_pressed():
 	get_tree().change_scene_to_file("res://Scenes/menu.tscn")
 
+func card_img(card, pos, replace):
+	var sprite = Sprite2D.new()
+	var texture = load(card_path + str(card))
+	sprite.texture = texture
+	sprite.position = pos
+	sprite.scale = Vector2(0.85, 0.85)
+	$".".add_child(sprite)
+
+func _on_button_pressed():
+	$Dealing.visible = true
+	#$Dealing/player_hand.visible = false
+	#$Dealing/player_hand2.visible = false
+	var rand_num = randi_range(1, 52)
+	while true:
+		$Dealing/Dealing2.play("Dealing")
+		var player_card_left = files[randi_range(0, 51)]
+		var player_card_right = files[randi_range(0, 51)]
+		print(player_card_left)
+		print(player_card_right)
+		if $Dealing/Dealing2.animation_finished:
+			card_img(player_card_left, 
+				$Dealing/player_left.position, $Dealing/player_left)
+			card_img(player_card_right, 
+				$Dealing/player_right.position, $Dealing/player_right)
+		print(rand_num)
+		print(rand_num)
+		break
+
+func _on_dealing_2_animation_finished(anim_name):
+	pass
