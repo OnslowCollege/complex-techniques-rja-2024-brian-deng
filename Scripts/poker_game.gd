@@ -29,6 +29,7 @@ func _ready():
 	$Flop.visible = false
 	$Turn.visible = false
 	$River.visible = false
+	$Button_bg.visible = false
 	(list_files_in_directory(card_path))
 	for i in range(len(files)-1, -1, -1):
 		var file = files[i]
@@ -103,11 +104,10 @@ func card_img(card, pos, replace):
 	$".".add_child(sprite)
 
 func _on_button_pressed():
-	$Dealing.visible = true
-	#$Dealing/player_hand.visible = false
-	#$Dealing/player_hand2.visible = false
+	$Button_bg.visible = true
 	var rand_num = randi_range(1, 52)
 	while true:
+		$Dealing.visible = true
 		$Dealing/Dealing2.play("Dealing")
 		var player_card_left = files[randi_range(0, 51)]
 		var player_card_right = files[randi_range(0, 51)]
@@ -118,9 +118,13 @@ func _on_button_pressed():
 			$Dealing/player_left.position, $Dealing/player_left)
 		card_img(player_card_right, 
 			$Dealing/player_right.position, $Dealing/player_right)
-		print(rand_num)
-		print(rand_num)
+		if $Button_bg/buttons/Fold.pressed:
+			print("okk")
+			
+			$Dealing.visible = false
+			break
 		break
+	print("ok")
 
 func _on_dealing_2_animation_finished(anim_name):
 	pass
