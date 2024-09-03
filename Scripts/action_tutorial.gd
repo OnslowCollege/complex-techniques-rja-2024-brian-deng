@@ -101,7 +101,7 @@ func _on_next_button_pressed():
 		
 	# For final press which leads back to main screen
 	elif button_presses == 4:
-		get_tree().change_scene_to_file("res://Scenes/menu.tscn")
+		get_tree().change_scene_to_file("res://Scenes/community_cards.tscn")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

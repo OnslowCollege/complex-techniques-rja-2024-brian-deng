@@ -85,3 +85,43 @@ offset_bottom = 764.0
 theme_override_font_sizes/font_size = 30
 text = "Next
 "
+
+[node name="Flop_text" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 720.0
+offset_top = 728.0
+offset_right = 1208.0
+offset_bottom = 763.0
+text = "The next round of betting is on the flop 
+which the first 3 cards to be dealt"
+
+[node name="Turn_text" type="Label" parent="."]
+visible = false
+offset_left = 716.0
+offset_top = 720.0
+offset_right = 1208.0
+offset_bottom = 755.0
+text = "The Next round of betting is on the turn 
+which is the fourth card to come out"
+
+[node name="River_text" type="Label" parent="."]
+visible = false
+offset_left = 758.0
+offset_top = 720.0
+offset_right = 1162.0
+offset_bottom = 755.0
+text = "The final card to come out is the 
+river which is the fifth card."
+
+[node name="Intro_text" type="Label" parent="."]
+layout_mode = 0
+offset_left = 682.0
+offset_top = 720.0
+offset_right = 1270.0
+offset_bottom = 774.0
+text = "In Poker there are 4 rounds of betting. First is 
+the preflop or before any cards come out and 
+your betting based on only your own 2 cards."
+
+[connection signal="pressed" from="Next_button2" to="." method="_on_next_button_2_pressed"]
