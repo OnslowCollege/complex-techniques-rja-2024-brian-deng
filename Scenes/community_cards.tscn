@@ -1,0 +1,87 @@
+[gd_scene load_steps=8 format=3 uid="uid://ck1fs0ltuijx0"]
+
+[ext_resource type="Script" path="res://Community cards.gd" id="1_hcb8c"]
+[ext_resource type="Texture2D" uid="uid://cx551k4civ2h7" path="res://Assets/Poker table.png" id="2_6w8gl"]
+[ext_resource type="Texture2D" uid="uid://nlci4mqx82iu" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-hearts-7.png" id="3_yds06"]
+[ext_resource type="Texture2D" uid="uid://dj6m4kfdwcvye" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-hearts-12.png" id="4_gpmpg"]
+[ext_resource type="Texture2D" uid="uid://dano3fjew00ax" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-diamonds-3.png" id="5_rqdw0"]
+[ext_resource type="Texture2D" uid="uid://s2gl3c0owbc2" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-clubs-2.png" id="6_7sxui"]
+[ext_resource type="Texture2D" uid="uid://djyvggwd1t5ha" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-spades-6.png" id="7_ut4ur"]
+
+[node name="Community cards" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hcb8c")
+
+[node name="Table" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -1776.0
+offset_top = -539.0
+offset_right = 144.0
+offset_bottom = 541.0
+grow_horizontal = 0
+grow_vertical = 2
+scale = Vector2(0.85, 0.85)
+texture = ExtResource("2_6w8gl")
+
+[node name="Flop" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 921.0
+offset_top = 404.0
+offset_right = 1249.0
+offset_bottom = 548.0
+scale = Vector2(0.85, 0.85)
+theme_override_constants/separation = 22
+
+[node name="7_hearts" type="TextureRect" parent="Flop"]
+layout_mode = 2
+texture = ExtResource("3_yds06")
+
+[node name="Q_hearts" type="TextureRect" parent="Flop"]
+layout_mode = 2
+texture = ExtResource("4_gpmpg")
+
+[node name="3_diamonds" type="TextureRect" parent="Flop"]
+layout_mode = 2
+texture = ExtResource("5_rqdw0")
+
+[node name="Turn" type="HBoxContainer" parent="."]
+offset_left = 821.0
+offset_top = 404.0
+offset_right = 917.0
+offset_bottom = 548.0
+scale = Vector2(0.85, 0.85)
+
+[node name="2_clubs" type="TextureRect" parent="Turn"]
+layout_mode = 2
+texture = ExtResource("6_7sxui")
+
+[node name="River" type="HBoxContainer" parent="."]
+offset_left = 719.0
+offset_top = 404.0
+offset_right = 815.0
+offset_bottom = 548.0
+scale = Vector2(0.85, 0.85)
+
+[node name="6_spades" type="TextureRect" parent="River"]
+layout_mode = 2
+texture = ExtResource("7_ut4ur")
+
+[node name="Next_button2" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1325.0
+offset_top = 725.0
+offset_right = 1464.0
+offset_bottom = 764.0
+theme_override_font_sizes/font_size = 30
+text = "Next
+"

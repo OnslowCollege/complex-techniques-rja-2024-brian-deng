@@ -11,6 +11,7 @@ var fold_pressed = false
 var started = false
 var show_hand = false
 var player_hand = []
+var sprites: Array = []
 ## but the dir list into another list to sort with suits sorted
 
 func list_files_in_directory(path):
@@ -42,12 +43,12 @@ func _ready():
 			continue
 		else:
 			files.remove_at(i) 
-	for file in files:
-		for x in range(1, 14):
-			if ("-" + str(x) + ".png") in file:
-				sorted_files.append(file)
-			if x != counter: continue
-			if counter > 14: counter += 1
+	#for file in files:
+		#for x in range(1, 14):
+			#if ("-" + str(x) + ".png") in file:
+				#sorted_files.append(file)
+			#if x != counter: continue
+			#if counter > 14: counter += 1
 	#print(sorted_files)
 
 	#var count: int = 1
@@ -102,6 +103,8 @@ func _process(delta):
 			fold_pressed = false
 			show_hand = false
 			player_hand.clear()
+			for sprite in sprites:
+				sprite.queue_free()
 			$Button.visible = true
 	if show_hand:
 		card_img(player_hand[0], 
@@ -121,6 +124,7 @@ func card_img(card, pos, replace):
 	sprite.texture = texture
 	sprite.position = pos
 	sprite.scale = Vector2(0.85, 0.85)
+	sprites.append(sprite)
 	$".".add_child(sprite)
 
 func _on_button_pressed():
