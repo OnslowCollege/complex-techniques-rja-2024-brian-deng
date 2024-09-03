@@ -7,6 +7,10 @@ var suited = []
 var suits = ["clubs", "spades", "hearts", "diamonds"] 
 var counter = 1
 const card_path = "res://Assets/Pixel Fantasy Playing Cards/Playing Cards/"
+var fold_pressed = false
+var started = false
+var show_hand = false
+var player_hand = []
 ## but the dir list into another list to sort with suits sorted
 
 func list_files_in_directory(path):
@@ -90,10 +94,26 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	if started:
+		if fold_pressed:
+			print("okk")
+			$Dealing.visible = false
+			started = false
+			fold_pressed = false
+			show_hand = false
+			player_hand.clear()
+			$Button.visible = true
+	if show_hand:
+		card_img(player_hand[0], 
+			$Dealing/player_left.position, $Dealing/player_left)
+		card_img(player_hand[1], 
+			$Dealing/player_right.position, $Dealing/player_right)
 
 func _on_menu_pressed():
 	get_tree().change_scene_to_file("res://Scenes/menu.tscn")
+
+func _on_fold_pressed():
+	fold_pressed = true
 
 func card_img(card, pos, replace):
 	var sprite = Sprite2D.new()
@@ -104,26 +124,19 @@ func card_img(card, pos, replace):
 	$".".add_child(sprite)
 
 func _on_button_pressed():
+	started = true
+	$Button.visible = false
 	$Button_bg.visible = true
 	var rand_num = randi_range(1, 52)
-	while true:
-		$Dealing.visible = true
-		$Dealing/Dealing2.play("Dealing")
-		var player_card_left = files[randi_range(0, 51)]
-		var player_card_right = files[randi_range(0, 51)]
-		print(player_card_left)
-		print(player_card_right)
-		await $Dealing/Dealing2.animation_finished
-		card_img(player_card_left, 
-			$Dealing/player_left.position, $Dealing/player_left)
-		card_img(player_card_right, 
-			$Dealing/player_right.position, $Dealing/player_right)
-		if $Button_bg/buttons/Fold.pressed:
-			print("okk")
-			
-			$Dealing.visible = false
-			break
-		break
+	#while true:
+	$Dealing.visible = true
+	$Dealing/Dealing2.play("Dealing")
+	player_hand.append(files[randi_range(0, 51)])
+	player_hand.append(files[randi_range(0, 51)])
+	print(player_hand[0])
+	print(player_hand[1])
+	await $Dealing/Dealing2.animation_finished
+	show_hand = true
 	print("ok")
 
 func _on_dealing_2_animation_finished(anim_name):
