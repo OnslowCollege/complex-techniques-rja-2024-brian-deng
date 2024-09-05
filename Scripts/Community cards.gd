@@ -14,22 +14,26 @@ func _process(delta):
 
 
 func _on_next_button_2_pressed():
+	# for the first click and shows flop tutorial and removes previous text
 	if next_counter == 0:
 		$Intro_text.visible = false
 		$Flop_text.visible = true
 		$Flop.visible = true
 		next_counter += 1
+	# for the second click and shows turn tutorial and removes previous text
 	elif next_counter == 1:
 		$Flop_text.visible = false
 		$Flop.modulate.a = 0.5
 		$Turn_text.visible = true
 		$Turn.visible = true 
 		next_counter += 1
+	# for the third click and shows river tutorial and removes previous text
 	elif next_counter == 2:
 		$Turn_text.visible = false
 		$Turn.modulate.a = 0.5
 		$River_text.visible = true
 		$River.visible = true
 		next_counter += 1
+	# for the fourth click and switches scenes to menu
 	elif next_counter == 3:
 		get_tree().change_scene_to_file("res://Scenes/menu.tscn")

@@ -397,6 +397,7 @@ offset_right = 884.0
 offset_bottom = 83.0
 theme_override_font_sizes/font_size = 20
 text = "The Hands below are the 10 hands possible in poker with 
-royal flush as the best and high card as the worst."
+royal flush as the best and high card as the worst. A 
+pair like Ace pair would beat a lower pair like King pair"
 
 [connection signal="pressed" from="Next" to="." method="_on_next_pressed"]

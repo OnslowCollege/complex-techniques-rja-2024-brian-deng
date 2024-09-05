@@ -12,6 +12,7 @@ var started = false
 var show_hand = false
 var player_hand = []
 var sprites: Array = []
+var awaited = false
 ## but the dir list into another list to sort with suits sorted
 
 func list_files_in_directory(path):
@@ -99,12 +100,14 @@ func _process(delta):
 		if fold_pressed:
 			print("okk")
 			$Dealing.visible = false
+			$Button_bg.visible = false
 			started = false
 			fold_pressed = false
 			show_hand = false
 			player_hand.clear()
 			for sprite in sprites:
-				sprite.queue_free()
+				if is_instance_valid(sprite):
+					sprite.queue_free()
 			$Button.visible = true
 	if show_hand:
 		card_img(player_hand[0], 
@@ -116,7 +119,8 @@ func _on_menu_pressed():
 	get_tree().change_scene_to_file("res://Scenes/menu.tscn")
 
 func _on_fold_pressed():
-	fold_pressed = true
+	if awaited:
+		fold_pressed = true
 
 func card_img(card, pos, replace):
 	var sprite = Sprite2D.new()
@@ -141,7 +145,10 @@ func _on_button_pressed():
 	print(player_hand[1])
 	await $Dealing/Dealing2.animation_finished
 	show_hand = true
+	awaited = true
 	print("ok")
 
-func _on_dealing_2_animation_finished(anim_name):
-	pass
+
+func _on_bet_pressed():
+	if awaited:
+		$Button_bg.visible = false
