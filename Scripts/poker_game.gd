@@ -31,6 +31,8 @@ func list_files_in_directory(path):
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	$Betting.visible = false
+	$settings.visible = false
 	$Dealing.visible = false
 	$Flop.visible = false
 	$Turn.visible = false
@@ -121,6 +123,7 @@ func _on_menu_pressed():
 func _on_fold_pressed():
 	if awaited:
 		fold_pressed = true
+		awaited = false
 
 func card_img(card, pos, replace):
 	var sprite = Sprite2D.new()
@@ -152,3 +155,15 @@ func _on_button_pressed():
 func _on_bet_pressed():
 	if awaited:
 		$Button_bg.visible = false
+		$Betting.visible = true
+		$settings.visible = true 
+
+
+func _on_settings_pressed():
+	pass
+
+
+func _on_back_pressed():
+	$Button_bg.visible = true
+	$Betting.visible = false
+	$settings.visible = false 
