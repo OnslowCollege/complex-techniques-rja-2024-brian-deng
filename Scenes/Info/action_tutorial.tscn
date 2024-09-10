@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://d0om3sbhbfxbi"]
 
 [ext_resource type="Script" path="res://Scripts/action_tutorial.gd" id="1_ls1u0"]
-[ext_resource type="Texture2D" uid="uid://cx551k4civ2h7" path="res://Assets/Poker table.png" id="1_wqxfc"]
+[ext_resource type="Texture2D" uid="uid://cx551k4civ2h7" path="res://Poker table.png" id="1_wqxfc"]
 
 [node name="Action_tutorial" type="Control"]
 layout_mode = 3

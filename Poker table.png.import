@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b62lr8vq6afa"
-path="res://.godot/imported/poker-table-removebg-removebg.png-32050d66bd6a3c3afc9de7e7c8995ac0.ctex"
+uid="uid://cx551k4civ2h7"
+path="res://.godot/imported/Poker table.png-685c6b9c88eefe472c40d3e9c2d4aacc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/poker-table-removebg-removebg.png"
-dest_files=["res://.godot/imported/poker-table-removebg-removebg.png-32050d66bd6a3c3afc9de7e7c8995ac0.ctex"]
+source_file="res://Poker table.png"
+dest_files=["res://.godot/imported/Poker table.png-685c6b9c88eefe472c40d3e9c2d4aacc.ctex"]
 
 [params]
 

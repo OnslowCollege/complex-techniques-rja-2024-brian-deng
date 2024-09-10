@@ -15,6 +15,7 @@ dest_files=["res://.godot/imported/PixelOperator.ttf-dc2fb58a0f4b98b6705fb0622f9
 Rendering=null
 antialiasing=1
 generate_mipmaps=false
+disable_embedded_bitmaps=true
 multichannel_signed_distance_field=false
 msdf_pixel_range=8
 msdf_size=48

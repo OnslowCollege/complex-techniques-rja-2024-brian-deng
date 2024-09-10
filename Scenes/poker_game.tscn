@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://c0e6rchh8d7b" path="res://Scenes/Info/hand_button.tscn" id="1_rra4x"]
 [ext_resource type="Script" path="res://Scripts/poker_game.gd" id="1_vsng2"]
-[ext_resource type="Texture2D" uid="uid://cx551k4civ2h7" path="res://Assets/Poker table.png" id="3_pdkpr"]
+[ext_resource type="Texture2D" uid="uid://cx551k4civ2h7" path="res://Poker table.png" id="3_pdkpr"]
 [ext_resource type="Texture2D" uid="uid://bb3l5d1iykl5u" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-back1.png" id="4_nt88o"]
 [ext_resource type="Texture2D" uid="uid://cwf2nmmdjidro" path="res://Assets/control_pressed_white.png" id="4_vv4jb"]
 [ext_resource type="Texture2D" uid="uid://bhhfrfp6farap" path="res://Assets/control_pressed_black.png" id="5_078bx"]
