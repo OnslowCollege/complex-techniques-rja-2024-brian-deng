@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://3erkxdj5bj1l"
-path="res://.godot/imported/pixil-frame-0.png-1e2e14a6fca0ab207413f8785ae4b7df.ctex"
+uid="uid://cx551k4civ2h7"
+path="res://.godot/imported/Poker table.png-695556644dc999a704abe7863b6b71bb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/pixil-frame-0.png"
-dest_files=["res://.godot/imported/pixil-frame-0.png-1e2e14a6fca0ab207413f8785ae4b7df.ctex"]
+source_file="res://Assets/Table/Poker table.png"
+dest_files=["res://.godot/imported/Poker table.png-695556644dc999a704abe7863b6b71bb.ctex"]
 
 [params]
 

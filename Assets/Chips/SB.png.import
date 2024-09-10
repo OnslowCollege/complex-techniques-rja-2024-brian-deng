@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bhhfrfp6farap"
-path="res://.godot/imported/control_pressed_black.png-30b0929eeb2bb8c99a757c70beea56e3.ctex"
+uid="uid://5n0b0il8yodw"
+path="res://.godot/imported/SB.png-9d22e289f90581d25208a44b892f1732.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/control_pressed_black.png"
-dest_files=["res://.godot/imported/control_pressed_black.png-30b0929eeb2bb8c99a757c70beea56e3.ctex"]
+source_file="res://Assets/Chips/SB.png"
+dest_files=["res://.godot/imported/SB.png-9d22e289f90581d25208a44b892f1732.ctex"]
 
 [params]
 

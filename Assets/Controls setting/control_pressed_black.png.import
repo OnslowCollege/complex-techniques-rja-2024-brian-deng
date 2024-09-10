@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://csw645ko8qtj"
-path="res://.godot/imported/control_pressed.png-90ed74c6d9b7004f8a33843d0509dea3.ctex"
+uid="uid://bhhfrfp6farap"
+path="res://.godot/imported/control_pressed_black.png-d4e73c528583cb3cd5eec8da6ad2b2d3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/control_pressed.png"
-dest_files=["res://.godot/imported/control_pressed.png-90ed74c6d9b7004f8a33843d0509dea3.ctex"]
+source_file="res://Assets/Controls setting/control_pressed_black.png"
+dest_files=["res://.godot/imported/control_pressed_black.png-d4e73c528583cb3cd5eec8da6ad2b2d3.ctex"]
 
 [params]
 
