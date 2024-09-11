@@ -167,3 +167,7 @@ func _on_back_pressed():
 	$Button_bg.visible = true
 	$Betting.visible = false
 	$settings.visible = false 
+
+
+func five_hundred_on__pressed() -> void:
+	pass # Replace with function body.
