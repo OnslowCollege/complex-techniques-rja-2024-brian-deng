@@ -13,6 +13,7 @@ var show_hand = false
 var player_hand = []
 var sprites: Array = []
 var awaited = false
+var player_bet = []
 ## but the dir list into another list to sort with suits sorted
 
 func list_files_in_directory(path):
@@ -38,6 +39,7 @@ func _ready():
 	$Turn.visible = false
 	$River.visible = false
 	$Button_bg.visible = false
+	$Table2/bg.visible = false
 	(list_files_in_directory(card_path))
 	for i in range(len(files)-1, -1, -1):
 		var file = files[i]
@@ -116,6 +118,10 @@ func _process(delta):
 			$Dealing/player_left.position, $Dealing/player_left)
 		card_img(player_hand[1], 
 			$Dealing/player_right.position, $Dealing/player_right)
+	var bet_total = 0
+	for num in player_bet:
+		bet_total += num
+	$Table2/bg/your_bet.text = ("Bet: %s" % [bet_total])
 
 func _on_menu_pressed():
 	get_tree().change_scene_to_file("res://Scenes/menu.tscn")
@@ -147,10 +153,9 @@ func _on_button_pressed():
 	print(player_hand[0])
 	print(player_hand[1])
 	await $Dealing/Dealing2.animation_finished
+	$Table2/bg.visible = true
 	show_hand = true
 	awaited = true
-	print("ok")
-
 
 func _on_bet_pressed():
 	if awaited:
@@ -168,8 +173,6 @@ func _on_back_pressed():
 	$Betting.visible = false
 	$settings.visible = false 
 
-var player_bet = []
-
 func five_hundred_on__pressed() -> void:
 	player_bet.append(500)
 
@@ -185,6 +188,5 @@ func twenty_on__pressed() -> void:
 func ten_on__pressed() -> void:
 	player_bet.append(10)
 
-
 func _on_undo_pressed() -> void:
-	pass # Replace with function body.
+	player_bet.pop_back()
