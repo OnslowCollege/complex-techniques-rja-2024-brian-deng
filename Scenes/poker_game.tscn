@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://b74uooyrcjjl1"]
+[gd_scene load_steps=29 format=3 uid="uid://b74uooyrcjjl1"]
 
 [ext_resource type="PackedScene" uid="uid://c0e6rchh8d7b" path="res://Scenes/Info/hand_button.tscn" id="1_rra4x"]
 [ext_resource type="Script" path="res://Scripts/poker_game.gd" id="1_vsng2"]
@@ -8,8 +8,11 @@
 [ext_resource type="Texture2D" path="res://Assets/control_pressed_white.png" id="4_vv4jb"]
 [ext_resource type="Texture2D" path="res://Assets/control_pressed_black.png" id="5_078bx"]
 [ext_resource type="Texture2D" uid="uid://c1ip7xi2wld0h" path="res://Assets/Chips/500.png" id="5_s68n3"]
+[ext_resource type="Texture2D" uid="uid://fjoi475xc2b5" path="res://Assets/Undo button/undo.png" id="5_tlvjo"]
 [ext_resource type="Texture2D" path="res://Assets/control_pressed.png" id="5_x5fg6"]
+[ext_resource type="Texture2D" uid="uid://cfyuatm3b2f8j" path="res://Assets/Undo button/undo_-_Copy__2_-removebg-preview.png" id="6_nxxvb"]
 [ext_resource type="Texture2D" uid="uid://crv0kwsfg8y0j" path="res://Assets/Chips/100.png" id="6_wc58v"]
+[ext_resource type="Texture2D" uid="uid://bjnajumhepa8n" path="res://Assets/Undo button/undo_-_Copy-removebg-preview.png" id="7_7ldr4"]
 [ext_resource type="Texture2D" uid="uid://cgh57m5xwyxo4" path="res://Assets/Chips/50.png" id="7_tgsla"]
 [ext_resource type="Texture2D" uid="uid://bxlxn1yfyef71" path="res://Assets/Chips/20.png" id="8_bbylq"]
 [ext_resource type="Texture2D" uid="uid://dr6ltxtc6276n" path="res://Assets/Chips/10.png" id="9_2vc1q"]
@@ -1033,19 +1036,37 @@ grow_horizontal = 2
 grow_vertical = 0
 
 [node name="Back" type="Button" parent="Betting"]
+layout_mode = 0
 offset_left = 21.0
 offset_top = 15.0
 offset_right = 121.0
 offset_bottom = 85.0
 text = "Back"
 
+[node name="Panel" type="Panel" parent="Betting"]
+layout_mode = 0
+offset_left = 801.0
+offset_top = 11.0
+offset_right = 881.0
+offset_bottom = 91.0
+
+[node name="Undo" type="TextureButton" parent="Betting/Panel"]
+layout_mode = 0
+offset_top = -9.0
+offset_right = 512.0
+offset_bottom = 503.0
+scale = Vector2(0.17, 0.17)
+texture_normal = ExtResource("6_nxxvb")
+texture_pressed = ExtResource("5_tlvjo")
+texture_hover = ExtResource("7_7ldr4")
+
 [node name="buttons" type="HBoxContainer" parent="Betting"]
 layout_mode = 1
-offset_left = 143.0
+offset_left = 162.0
 offset_top = 3.0
-offset_right = 2539.0
+offset_right = 2558.0
 offset_bottom = 380.0
-scale = Vector2(0.331, 0.25)
+scale = Vector2(0.25, 0.25)
 theme_override_constants/separation = 150
 
 [node name="500" type="TextureButton" parent="Betting/buttons"]
@@ -1252,6 +1273,10 @@ text = "Start"
 [connection signal="pressed" from="Menu" to="." method="_on_menu_pressed"]
 [connection signal="pressed" from="Betting/Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="Betting/buttons/500" to="." method="five_hundred_on__pressed"]
+[connection signal="pressed" from="Betting/buttons/100" to="." method="hundred_on__pressed"]
+[connection signal="pressed" from="Betting/buttons/50" to="." method="fifty_on__pressed"]
+[connection signal="pressed" from="Betting/buttons/20" to="." method="twenty_on__pressed"]
+[connection signal="pressed" from="Betting/buttons/10" to="." method="ten_on__pressed"]
 [connection signal="pressed" from="settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="Button_bg/buttons/Fold" to="." method="_on_fold_pressed"]
 [connection signal="pressed" from="Button_bg/buttons/Bet" to="." method="_on_bet_pressed"]

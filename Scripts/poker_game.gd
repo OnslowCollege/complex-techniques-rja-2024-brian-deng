@@ -168,6 +168,23 @@ func _on_back_pressed():
 	$Betting.visible = false
 	$settings.visible = false 
 
+var player_bet = []
 
 func five_hundred_on__pressed() -> void:
+	player_bet.append(500)
+
+func hundred_on__pressed() -> void:
+	player_bet.append(100)
+
+func fifty_on__pressed() -> void:
+	player_bet.append(50)
+
+func twenty_on__pressed() -> void:
+	player_bet.append(20)
+
+func ten_on__pressed() -> void:
+	player_bet.append(10)
+
+
+func _on_undo_pressed() -> void:
 	pass # Replace with function body.
