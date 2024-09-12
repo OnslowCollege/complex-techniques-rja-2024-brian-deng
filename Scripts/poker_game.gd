@@ -15,6 +15,9 @@ var sprites: Array = []
 var awaited = false
 var player_bet = []
 var balance = 1000
+var slider_value = 0
+var slider_used = false
+var chip_betting = false
 ## but the dir list into another list to sort with suits sorted
 
 func list_files_in_directory(path):
@@ -34,12 +37,12 @@ func list_files_in_directory(path):
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Betting.visible = false
-	$settings.visible = false
+	$Betting/settings.visible = false
 	$Dealing.visible = false
 	$Flop.visible = false
 	$Turn.visible = false
 	$River.visible = false
-	$Button_bg.visible = false
+	$action_bg.visible = false
 	$Table2/bg.visible = false
 	(list_files_in_directory(card_path))
 	for i in range(len(files)-1, -1, -1):
@@ -106,7 +109,7 @@ func _process(delta):
 		if fold_pressed:
 			print("okk")
 			$Dealing.visible = false
-			$Button_bg.visible = false
+			$action_bg.visible = false
 			started = false
 			fold_pressed = false
 			show_hand = false
@@ -120,11 +123,19 @@ func _process(delta):
 			$Dealing/player_left.position, $Dealing/player_left)
 		card_img(player_hand[1], 
 			$Dealing/player_right.position, $Dealing/player_right)
-	var bet_total = 0
-	for num in player_bet:
-		bet_total += num
-	$Table2/bg/your_bet.text = ("Bet: %s" % [bet_total])
-	$Table2/balance_bg/balance.text = ("Balance: %s" % [balance])
+
+	# Chip betting code for the betting text and balance
+	if chip_betting:
+		var bet_total = 0
+		for num in player_bet:
+			bet_total += num
+		$Table2/bg/your_bet.text = ("Bet: %s" % [bet_total])
+		$Table2/balance_bg/balance.text = ("Balance: %s" % [balance])
+
+	# Slider code
+	if slider_used:
+		$Betting_slider/HSlider.max_value = balance
+		$Table2/bg/your_bet.text = ("Bet: %s" % [slider_value])
 
 func _on_menu_pressed():
 	get_tree().change_scene_to_file("res://Scenes/menu.tscn")
@@ -146,7 +157,7 @@ func card_img(card, pos, replace):
 func _on_button_pressed():
 	started = true
 	$Button.visible = false
-	$Button_bg.visible = true
+	$action_bg.visible = true
 	var rand_num = randi_range(1, 52)
 	#while true:
 	$Dealing.visible = true
@@ -162,34 +173,68 @@ func _on_button_pressed():
 
 func _on_bet_pressed():
 	if awaited:
-		$Button_bg.visible = false
+		$action_bg.visible = false
 		$Betting.visible = true
-		$settings.visible = true 
-
+		$Betting/settings.visible = true 
+		chip_betting = true
 
 func _on_settings_pressed():
-	pass
-
+	$Betting_slider.visible = true
+	$Betting.visible = false
 
 func _on_back_pressed():
-	$Button_bg.visible = true
+	$action_bg.visible = true
 	$Betting.visible = false
-	$settings.visible = false 
+	$Betting/settings.visible = false 
+	chip_betting = false
+
+func betting(bet):
+	var bet_total = 0
+	for num in player_bet:
+		bet_total += num
+	if (bet_total + bet) > balance:
+		pass
+	else:
+		player_bet.append(bet)
 
 func five_hundred_on__pressed() -> void:
-	player_bet.append(500)
+	betting(500)
 
 func hundred_on__pressed() -> void:
-	player_bet.append(100)
+	betting(100)
 
 func fifty_on__pressed() -> void:
-	player_bet.append(50)
+	betting(50)
 
 func twenty_on__pressed() -> void:
-	player_bet.append(20)
+	betting(20)
 
 func ten_on__pressed() -> void:
-	player_bet.append(10)
+	betting(10)
 
 func _on_undo_pressed() -> void:
 	player_bet.pop_back()
+
+
+func _on_done_pressed() -> void:
+	$Betting.visible = false
+	$action_bg.visible = true
+	chip_betting = false
+
+
+func _on_h_slider_value_changed(value: float) -> void:
+	slider_value = $Betting_slider/HSlider.value
+	slider_used = true
+	chip_betting = false
+
+
+func _on_back_slider_pressed() -> void:
+	$Betting_slider.visible = false
+	$Betting.visible = true
+	chip_betting = true
+	slider_used = false
+
+
+func _on_undo_slider_pressed() -> void:
+	slider_value = 0
+	$Betting_slider/HSlider.value = 0
