@@ -1,30 +1,57 @@
 extends Node2D
 
-var files = []
-var cards = {}
+var files: Array = []
+var cards: Dictionary = {}
 var sorted_files = Array()
-var suited = []
-var suits = ["clubs", "spades", "hearts", "diamonds"] 
-var counter = 1
-const card_path = "res://Assets/Pixel Fantasy Playing Cards/Playing Cards/"
-var fold_pressed = false
-var started = false
-var show_hand = false
-var player_hand = []
+var suited: Array = []
+var suits: Array = ["clubs", "spades", "hearts", "diamonds"] 
+var counter: int = 1
+const card_path: String = "res://Assets/Pixel Fantasy Playing Cards/Playing Cards/"
+var fold_pressed: bool = false
+var started: bool = false
+var show_hand: bool = false
+var player_hand: Array = []
 var sprites: Array = []
-var awaited = false
-var player_bet = []
-var balance = 1000
-var slider_value = 0
-var slider_used = false
-var chip_betting = false
-## but the dir list into another list to sort with suits sorted
+var awaited: bool = false
+var player_bet: Array = []
+var balance: int = 1000
+var slider_value: int = 0
+var slider_used: bool = false
+var chip_betting: bool = false
 
+# putting the hands into an array for easy access
+var hands = ["Royal Flush", "Straight Flush", "Four of a Kind", "Full House", 
+	"Flush", "Straight", "Three of a Kind", "Two Pair", "Pair", "High Card"]
+
+
+## card-hearts-2.png
+## card-spades-11.png
+func rating_hand(p_hand):
+	var connected  = false
+	var suited = false
+	var card_nums = []
+	for item in p_hand:
+		print(item)
+		# Finds the numbers in the hand dealt
+		for letter in item:
+			if letter.is_digit():
+				pass
+		var regex = RegEx.new()
+		regex.compile(r"\d+")
+		var matches = regex.search_all(item)
+		print(matches)
+		card_nums.append(matches)
+	for num in card_nums:
+		print(num)
+
+
+
+# reads cards from assets file and puts in array
 func list_files_in_directory(path):
 	var dir = DirAccess.open(path)
 	dir.list_dir_begin()
 	while true:
-		var file = dir.get_next()
+		var file: String = dir.get_next()
 		if file == "":
 			break
 		elif ".import" in file:
@@ -36,6 +63,7 @@ func list_files_in_directory(path):
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	# Turning nodes not used yet invisible 
 	$Betting.visible = false
 	$Betting/settings.visible = false
 	$Dealing.visible = false
@@ -44,6 +72,8 @@ func _ready():
 	$River.visible = false
 	$action_bg.visible = false
 	$Table2/bg.visible = false
+	
+	# filters the cards read from file and removes non card strings
 	(list_files_in_directory(card_path))
 	for i in range(len(files)-1, -1, -1):
 		var file = files[i]
@@ -52,7 +82,10 @@ func _ready():
 			continue
 		else:
 			files.remove_at(i)
+	
+	# sets the starting balance
 	$Table2/balance_bg/balance.text = ("Balance: %s" % [balance])
+	
 	#for file in files:
 		#for x in range(1, 14):
 			#if ("-" + str(x) + ".png") in file:
@@ -155,11 +188,13 @@ func card_img(card, pos, replace):
 	$".".add_child(sprite)
 
 func _on_button_pressed():
+	rating_hand(player_hand)
+
 	started = true
 	$Button.visible = false
 	$action_bg.visible = true
 	var rand_num = randi_range(1, 52)
-	#while true:
+
 	$Dealing.visible = true
 	$Dealing/Dealing2.play("Dealing")
 	player_hand.append(files[randi_range(0, 51)])
