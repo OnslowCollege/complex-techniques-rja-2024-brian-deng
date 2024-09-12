@@ -18,6 +18,7 @@ var balance: int = 1000
 var slider_value: int = 0
 var slider_used: bool = false
 var chip_betting: bool = false
+var community_cards: Array = []
 
 # putting the hands into an array for easy access
 var hands = ["Royal Flush", "Straight Flush", "Four of a Kind", "Full House", 
@@ -33,9 +34,13 @@ func rating_hand(p_hand):
 	for item in p_hand:
 		print(item)
 		# Finds the numbers in the hand dealt
-		for letter in item:
-			if letter.is_digit():
+		var string_split = item.split("")
+		for char in string_split:
+			if int(char):
 				pass
+			else:
+				card_nums.append(char)
+				print(char)
 		var regex = RegEx.new()
 		regex.compile(r"\d+")
 		var matches = regex.search_all(item)
@@ -150,6 +155,8 @@ func _process(delta):
 			for sprite in sprites:
 				if is_instance_valid(sprite):
 					sprite.queue_free()
+					
+					
 			$Button.visible = true
 	if show_hand:
 		card_img(player_hand[0], 
@@ -188,8 +195,9 @@ func card_img(card, pos, replace):
 	$".".add_child(sprite)
 
 func _on_button_pressed():
-	rating_hand(player_hand)
-
+	for i in range(0, 5):
+		community_cards.append(randi_range(1, 52))
+		print(community_cards[i])
 	started = true
 	$Button.visible = false
 	$action_bg.visible = true
@@ -201,6 +209,8 @@ func _on_button_pressed():
 	player_hand.append(files[randi_range(0, 51)])
 	print(player_hand[0])
 	print(player_hand[1])
+
+	rating_hand(player_hand)
 	await $Dealing/Dealing2.animation_finished
 	$Table2/bg.visible = true
 	show_hand = true

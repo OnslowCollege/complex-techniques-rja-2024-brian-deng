@@ -1083,6 +1083,7 @@ offset_bottom = 85.0
 text = "Back"
 
 [node name="settings" type="TextureButton" parent="Betting"]
+layout_mode = 0
 offset_left = 910.0
 offset_top = 4.0
 offset_right = 1422.0
