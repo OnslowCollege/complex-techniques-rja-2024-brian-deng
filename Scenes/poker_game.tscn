@@ -1,21 +1,20 @@
-[gd_scene load_steps=29 format=3 uid="uid://b74uooyrcjjl1"]
+[gd_scene load_steps=28 format=3 uid="uid://b74uooyrcjjl1"]
 
 [ext_resource type="PackedScene" uid="uid://c0e6rchh8d7b" path="res://Scenes/Info/hand_button.tscn" id="1_rra4x"]
 [ext_resource type="Script" path="res://Scripts/poker_game.gd" id="1_vsng2"]
 [ext_resource type="Texture2D" uid="uid://cx551k4civ2h7" path="res://Assets/Table/Poker table.png" id="3_8o0bb"]
-[ext_resource type="Texture2D" path="res://Poker table.png" id="3_pdkpr"]
 [ext_resource type="Texture2D" uid="uid://bb3l5d1iykl5u" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-back1.png" id="4_nt88o"]
-[ext_resource type="Texture2D" path="res://Assets/control_pressed_white.png" id="4_vv4jb"]
-[ext_resource type="Texture2D" path="res://Assets/control_pressed_black.png" id="5_078bx"]
 [ext_resource type="Texture2D" uid="uid://c1ip7xi2wld0h" path="res://Assets/Chips/500.png" id="5_s68n3"]
 [ext_resource type="Texture2D" uid="uid://fjoi475xc2b5" path="res://Assets/Undo button/undo.png" id="5_tlvjo"]
-[ext_resource type="Texture2D" path="res://Assets/control_pressed.png" id="5_x5fg6"]
 [ext_resource type="Texture2D" uid="uid://cfyuatm3b2f8j" path="res://Assets/Undo button/undo_-_Copy__2_-removebg-preview.png" id="6_nxxvb"]
 [ext_resource type="Texture2D" uid="uid://crv0kwsfg8y0j" path="res://Assets/Chips/100.png" id="6_wc58v"]
 [ext_resource type="Texture2D" uid="uid://bjnajumhepa8n" path="res://Assets/Undo button/undo_-_Copy-removebg-preview.png" id="7_7ldr4"]
 [ext_resource type="Texture2D" uid="uid://cgh57m5xwyxo4" path="res://Assets/Chips/50.png" id="7_tgsla"]
 [ext_resource type="Texture2D" uid="uid://bxlxn1yfyef71" path="res://Assets/Chips/20.png" id="8_bbylq"]
 [ext_resource type="Texture2D" uid="uid://dr6ltxtc6276n" path="res://Assets/Chips/10.png" id="9_2vc1q"]
+[ext_resource type="Texture2D" uid="uid://csw645ko8qtj" path="res://Assets/Controls setting/control_pressed.png" id="12_xo5i5"]
+[ext_resource type="Texture2D" uid="uid://coagjqm2g6dbo" path="res://Assets/Controls setting/control.png" id="13_1rjid"]
+[ext_resource type="Texture2D" uid="uid://bhhfrfp6farap" path="res://Assets/Controls setting/control_pressed_black.png" id="14_n24oq"]
 
 [sub_resource type="Animation" id="Animation_gbqkb"]
 resource_name = "Dealing"
@@ -1022,6 +1021,26 @@ offset_bottom = 59.6471
 theme_override_font_sizes/font_size = 30
 text = "Bet: "
 
+[node name="balance_bg" type="Panel" parent="Table2"]
+layout_mode = 0
+offset_left = -122.353
+offset_top = 1094.12
+offset_right = 344.647
+offset_bottom = 1212.12
+
+[node name="balance" type="Label" parent="Table2/balance_bg"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 58.8235
+offset_top = -20.1766
+offset_right = 338.824
+offset_bottom = 19.8234
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+text = "Balance: "
+
 [node name="Table" type="TextureRect" parent="."]
 visible = false
 anchors_preset = 3
@@ -1035,7 +1054,6 @@ offset_bottom = 1080.0
 grow_horizontal = 0
 grow_vertical = 0
 scale = Vector2(0.85, 0.85)
-texture = ExtResource("3_pdkpr")
 metadata/_edit_use_anchors_ = true
 
 [node name="Betting" type="Panel" parent="."]
@@ -1059,14 +1077,14 @@ offset_right = 121.0
 offset_bottom = 85.0
 text = "Back"
 
-[node name="Panel" type="Panel" parent="Betting"]
+[node name="Undo_bg" type="Panel" parent="Betting"]
 layout_mode = 0
 offset_left = 801.0
 offset_top = 7.0
 offset_right = 891.0
 offset_bottom = 92.0
 
-[node name="Undo" type="TextureButton" parent="Betting/Panel"]
+[node name="Undo" type="TextureButton" parent="Betting/Undo_bg"]
 layout_mode = 0
 offset_left = 6.0
 offset_top = -5.0
@@ -1119,9 +1137,9 @@ offset_bottom = 1446.0
 scale = Vector2(0.18, 0.18)
 tooltip_text = "<a href=\"https://www.flaticon.com/free-icons/settings\" title=\"settings icons\">Settings icons created by Freepik - Flaticon</a>"
 action_mode = 0
-texture_normal = ExtResource("4_vv4jb")
-texture_pressed = ExtResource("5_078bx")
-texture_hover = ExtResource("5_x5fg6")
+texture_normal = ExtResource("12_xo5i5")
+texture_pressed = ExtResource("13_1rjid")
+texture_hover = ExtResource("14_n24oq")
 
 [node name="Button_bg" type="Panel" parent="."]
 visible = false
@@ -1289,7 +1307,7 @@ text = "Start"
 
 [connection signal="pressed" from="Menu" to="." method="_on_menu_pressed"]
 [connection signal="pressed" from="Betting/Back" to="." method="_on_back_pressed"]
-[connection signal="pressed" from="Betting/Panel/Undo" to="." method="_on_undo_pressed"]
+[connection signal="pressed" from="Betting/Undo_bg/Undo" to="." method="_on_undo_pressed"]
 [connection signal="pressed" from="Betting/buttons/500" to="." method="five_hundred_on__pressed"]
 [connection signal="pressed" from="Betting/buttons/100" to="." method="hundred_on__pressed"]
 [connection signal="pressed" from="Betting/buttons/50" to="." method="fifty_on__pressed"]

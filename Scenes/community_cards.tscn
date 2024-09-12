@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://ck1fs0ltuijx0"]
 
 [ext_resource type="Script" path="res://Scripts/Community cards.gd" id="1_hcb8c"]
-[ext_resource type="Texture2D" uid="uid://cx551k4civ2h7" path="res://Poker table.png" id="2_6w8gl"]
+[ext_resource type="Texture2D" uid="uid://cx551k4civ2h7" path="res://Assets/Table/Poker table.png" id="2_6w8gl"]
 [ext_resource type="Texture2D" uid="uid://nlci4mqx82iu" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-hearts-7.png" id="3_yds06"]
 [ext_resource type="Texture2D" uid="uid://dj6m4kfdwcvye" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-hearts-12.png" id="4_gpmpg"]
 [ext_resource type="Texture2D" uid="uid://dano3fjew00ax" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-diamonds-3.png" id="5_rqdw0"]

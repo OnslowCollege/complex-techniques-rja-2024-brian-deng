@@ -14,6 +14,7 @@ var player_hand = []
 var sprites: Array = []
 var awaited = false
 var player_bet = []
+var balance = 1000
 ## but the dir list into another list to sort with suits sorted
 
 func list_files_in_directory(path):
@@ -47,7 +48,8 @@ func _ready():
 			"spades" in file or "diamonds" in file):
 			continue
 		else:
-			files.remove_at(i) 
+			files.remove_at(i)
+	$Table2/balance_bg/balance.text = ("Balance: %s" % [balance])
 	#for file in files:
 		#for x in range(1, 14):
 			#if ("-" + str(x) + ".png") in file:
@@ -122,6 +124,7 @@ func _process(delta):
 	for num in player_bet:
 		bet_total += num
 	$Table2/bg/your_bet.text = ("Bet: %s" % [bet_total])
+	$Table2/balance_bg/balance.text = ("Balance: %s" % [balance])
 
 func _on_menu_pressed():
 	get_tree().change_scene_to_file("res://Scenes/menu.tscn")
