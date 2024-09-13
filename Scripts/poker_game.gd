@@ -31,23 +31,47 @@ func rating_hand(p_hand):
 	var connected  = false
 	var suited = false
 	var card_nums = []
+	var double_digit = []
 	for item in p_hand:
-		print(item)
+		var count = 0
 		# Finds the numbers in the hand dealt
 		var string_split = item.split("")
 		for char in string_split:
 			if int(char):
-				pass
-			else:
-				card_nums.append(char)
+				double_digit.append(char)
 				print(char)
-		var regex = RegEx.new()
-		regex.compile(r"\d+")
-		var matches = regex.search_all(item)
-		print(matches)
-		card_nums.append(matches)
-	for num in card_nums:
-		print(num)
+				count += 1
+			else:
+				pass
+		for num in range(0, count):
+			var second_digit = num + 0
+			card_nums.append(int("%d%d" % [double_digit[num], double_digit[second_digit]]))
+	for i in card_nums:
+		print()
+		#var regex = RegEx.new()
+		#regex.compile(r"\d+")
+		#var matches = regex.search_all(item)
+		#card_nums.append(matches)
+	var card_id = {}
+	var suit = ""
+	for card in community_cards:
+		if card <= 13:
+			suit = "clubs"
+			card_id[card] = ("%s %d" % [suit, card])
+			print(card_id[card])
+		elif 13 < card and card <= 26:
+			suit = "diamonds"
+			card_id[card] = ("%s %d" % [suit, card-13])
+			print(card_id[card])
+		elif 26 < card and card <= 39:
+			suit = "hearts"
+			card_id[card] = ("%s %d" % [suit, card-26])
+			print(card_id[card])
+		elif 39 < card and card <= 52:
+			suit = "spades"
+			card_id[card] = ("%s %d" % [suit, card-39])
+			print(card_id[card])
+		
 
 
 
