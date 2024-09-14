@@ -22,8 +22,9 @@ var chip_betting: bool = false
 var community_cards: Array = []
 
 # putting the hands into an array for easy access
-var hands = ["Royal Flush", "Straight Flush", "Four of a Kind", "Full House", 
-	"Flush", "Straight", "Three of a Kind", "Two Pair", "Pair", "High Card"]
+var hands = {"Royal Flush": 10, "Straight Flush": 9, "Four of a Kind": 8, 
+	"Full House": 7, "Flush": 6, "Straight": 5, "Three of a Kind": 4, 
+	"Two Pair": 3, "Pair": 2, "High Card": 1}
 
 func separate_int(list_of_strings) -> Array:
 	var card_nums = []
@@ -42,7 +43,7 @@ func separate_int(list_of_strings) -> Array:
 	return card_nums
 
 
-func if_straight(list1: Array, list2: Array) -> bool:
+func if_straight(list1: Array, list2: Array) -> Variant:
 	# Combine both lists, treat `1` as both `1` and `14`
 	var combined = (list1 + list2)
 	var unique_combined = []
@@ -55,19 +56,24 @@ func if_straight(list1: Array, list2: Array) -> bool:
 	unique_combined.sort()
 	
 	var count = 0
+	var straight = []
 	print()
-	for i in range(len(unique_combined)-1, -1, -1): 
-		print(i)
-		if unique_combined[i] < 1 or unique_combined[i] > 14: continue
-		if unique_combined[i] == 14 and unique_combined[i - 1] == 1: continue
-		if int(unique_combined[i]) - 1 == unique_combined[i - 1]:
+	for num in range(len(unique_combined)-1, -1, -1): 
+		print(num)
+		if unique_combined[num] < 1 or unique_combined[num] > 14: continue
+		if unique_combined[num] == 14 and unique_combined[num - 1] == 1: continue
+		if int(unique_combined[num]) - 1 == unique_combined[num - 1]:
 			count += 1
-			if count == 4: return true
-		else: count = 0  # Reset the count if they are not equal
+			straight.append(num)
+			if count == 4: 
+				return straight
+		else: 
+			count = 0  # Reset the count if they are not equal
+			straight.clear()
 	print(str(unique_combined) + "unique")
 	return false
 
-## ["card-hearts-5.png", "card-hearts-4.png"]
+
 func if_flush(p_hand, community_cards):
 	var player_suits = []
 	var community_suits = []
@@ -78,16 +84,34 @@ func if_flush(p_hand, community_cards):
 		for card in community_cards:
 			if suit in card:
 				community_suits.append(suit)
-	print(p_hand)
-	print(player_suits)
-	print(community_cards)
-	print(community_suits)
+	#print(p_hand)
+	#print(player_suits)
+	#print(community_cards)
+	#print(community_suits)
 	var total_suits = player_suits + community_suits
 	print(total_suits)
 	for suit in total_suits:
 		var suit_count = total_suits.count(suit)
 		if suit_count == 5:
 			return true
+
+
+func of_a_kind(player_list, community_list):
+	var total_list = player_list + community_list
+	var num_duplicates = []
+	for num in range(0, 13):
+		var dup_count = total_list.count(num)
+		if dup_count >= 2:
+			num_duplicates.append(dup_count)
+	#for num in player_list:
+		#if community_cards.count(num) >= 2:
+			#num_duplicates.append(community_list.count(num))
+	#for num in range(0, 13):
+		#if community_cards.count(num) >= 2:
+			#num_duplicates.append(community_list.count(num))
+		#if player_list.count(num) >= 2:
+			#num_duplicates.append(player_list.count(num))
+	print(num_duplicates)
 
 
 func rating_hand(p_hand):
@@ -117,12 +141,25 @@ func rating_hand(p_hand):
 	print(str(len(cards_per_game))+ "len")
 
 	var straight  = false
-	var flush = false
-	if if_straight(player_int_list,com_int_list):
+	var flush = false 
+	var straight_nums = if_straight(player_int_list,com_int_list)
+	if not straight_nums: 
+		print("hello")
+	else: 
 		straight = true
 	if if_flush(p_hand, card_id.values()):
-		print("keyyy")
+		flush = true
+	of_a_kind(player_int_list, com_int_list)
 	
+	var hand_value = 0
+	if straight and flush and (straight_nums.max() == 14):
+		hand_value = hands["Royal Flush"]
+	elif straight and flush and (straight_nums.max() != 14):
+		hand_value = hands["Straight Flush"]
+	elif straight:
+		hand_value = hands["Straight"]
+	elif flush:
+		hand_value = hands["Flush"]
 
 func card_img(card, pos, replace):
 	var sprite = Sprite2D.new()
