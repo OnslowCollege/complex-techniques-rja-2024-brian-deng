@@ -24,7 +24,7 @@ var community_cards: Array = []
 var hands = ["Royal Flush", "Straight Flush", "Four of a Kind", "Full House", 
 	"Flush", "Straight", "Three of a Kind", "Two Pair", "Pair", "High Card"]
 
-func separate_int(list_of_strings):
+func separate_int(list_of_strings) -> Array:
 	var card_nums = []
 	for item in list_of_strings:
 		var double_digit = []
@@ -33,8 +33,6 @@ func separate_int(list_of_strings):
 		for char in string_split:
 			if char >= '0' and char <= '9':
 				double_digit.append(char)
-				print(char)
-		print(double_digit)
 		if len(double_digit) >= 2:
 			card_nums.append(("%s%s" % [double_digit[0], double_digit[1]]))
 		else:
@@ -42,12 +40,44 @@ func separate_int(list_of_strings):
 	print(card_nums)
 	return card_nums
 
-## card-hearts-2.png
-## card-spades-11.png
+
+func if_straight(list1: Array, list2: Array) -> bool:
+	# Combine both lists, treat `1` as both `1` and `14`
+	var combined = (list1 + list2)
+	var unique_combined = []
+	for item in combined:
+		if item not in unique_combined: 
+			unique_combined.append(item)
+	# If `1` exists, treat it as both `1` and `14`
+	if 1 in unique_combined:
+		unique_combined.append(14)
+	# Sort the combined list
+	unique_combined.sort()
+	var count = 0
+	for i in range(len(unique_combined)): pass
+	for i in range(unique_combined.size()):
+		# Skip if the current number is outside the valid range
+		if unique_combined[i] < 1 or unique_combined[i] > 14: continue
+		# Check for consecutive numbers
+		if i > 0:
+			# If the current number is `14`, ensure it doesn't connect with `1`
+			if unique_combined[i] == 14 and unique_combined[i - 1] == 1: continue
+			# Check for standard consecutive numbers
+			if unique_combined[i] == unique_combined[i - 1] + 1:
+				count += 1
+				# If we have counted 5 consecutive numbers, return true
+				if count == 4:  return true # 4 gaps = 5 consecutive numbers
+			# Reset count if the sequence is broken
+			else: count = 0
+		# Start counting from the first element
+		else: count = 1  
+	print(unique_combined)
+	return false
+
+
 func rating_hand(p_hand):
 	var connected  = false
 	var suited = false
-	separate_int(p_hand)
 	# For the community cards and converting to suits and number
 	var card_id = {}
 	var suit = ""
@@ -68,10 +98,27 @@ func rating_hand(p_hand):
 			suit = "spades"
 			card_id[card] = ("%s %d" % [suit, card-39])
 			print(card_id[card])
-	separate_int(card_id.values())
+
+	var player_int_list = separate_int(p_hand).map(func(s): return int(s))
+	var com_int_list = separate_int(card_id.values()).map(func(s): return int(s))
 	print(len(files))
-	var min = 0
-	var max = 0
+	
+	if if_straight(player_int_list,com_int_list):
+		print("hey")
+
+	#var max = 0
+	#if (com_int_list.max()) > (player_int_list.max()):
+		#max = (com_int_list.max())
+	#else: 
+		#max = (player_int_list.max())
+#
+	#var min = 0
+	#if (com_int_list.min()) > (player_int_list.min()):
+		#min = (com_int_list.min())
+	#else: 
+		#min = (player_int_list.min())
+	#print(max, min)
+	
 
 func card_img(card, pos, replace):
 	var sprite = Sprite2D.new()
