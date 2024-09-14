@@ -24,34 +24,31 @@ var community_cards: Array = []
 var hands = ["Royal Flush", "Straight Flush", "Four of a Kind", "Full House", 
 	"Flush", "Straight", "Three of a Kind", "Two Pair", "Pair", "High Card"]
 
+func separate_int(list_of_strings):
+	var card_nums = []
+	for item in list_of_strings:
+		var double_digit = []
+		# Finds the numbers in the hand dealt
+		var string_split = item.split("")
+		for char in string_split:
+			if char >= '0' and char <= '9':
+				double_digit.append(char)
+				print(char)
+		print(double_digit)
+		if len(double_digit) >= 2:
+			card_nums.append(("%s%s" % [double_digit[0], double_digit[1]]))
+		else:
+			card_nums.append(double_digit[0])
+	print(card_nums)
+	return card_nums
 
 ## card-hearts-2.png
 ## card-spades-11.png
 func rating_hand(p_hand):
 	var connected  = false
 	var suited = false
-	var card_nums = []
-	var double_digit = []
-	for item in p_hand:
-		var count = 0
-		# Finds the numbers in the hand dealt
-		var string_split = item.split("")
-		for char in string_split:
-			if int(char):
-				double_digit.append(char)
-				print(char)
-				count += 1
-			else:
-				pass
-		for num in range(0, count):
-			var second_digit = num + 0
-			card_nums.append(int("%d%d" % [double_digit[num], double_digit[second_digit]]))
-	for i in card_nums:
-		print()
-		#var regex = RegEx.new()
-		#regex.compile(r"\d+")
-		#var matches = regex.search_all(item)
-		#card_nums.append(matches)
+	separate_int(p_hand)
+	# For the community cards and converting to suits and number
 	var card_id = {}
 	var suit = ""
 	for card in community_cards:
@@ -71,9 +68,19 @@ func rating_hand(p_hand):
 			suit = "spades"
 			card_id[card] = ("%s %d" % [suit, card-39])
 			print(card_id[card])
-		
+	separate_int(card_id.values())
+	print(len(files))
+	var min = 0
+	var max = 0
 
-
+func card_img(card, pos, replace):
+	var sprite = Sprite2D.new()
+	var texture = load(card_path + str(card))
+	sprite.texture = texture
+	sprite.position = pos
+	sprite.scale = Vector2(0.85, 0.85)
+	sprites.append(sprite)
+	$".".add_child(sprite)
 
 # reads cards from assets file and puts in array
 func list_files_in_directory(path):
@@ -169,7 +176,6 @@ func _ready():
 func _process(delta):
 	if started:
 		if fold_pressed:
-			print("okk")
 			$Dealing.visible = false
 			$action_bg.visible = false
 			started = false
@@ -209,19 +215,11 @@ func _on_fold_pressed():
 		fold_pressed = true
 		awaited = false
 
-func card_img(card, pos, replace):
-	var sprite = Sprite2D.new()
-	var texture = load(card_path + str(card))
-	sprite.texture = texture
-	sprite.position = pos
-	sprite.scale = Vector2(0.85, 0.85)
-	sprites.append(sprite)
-	$".".add_child(sprite)
-
 func _on_button_pressed():
 	for i in range(0, 5):
-		community_cards.append(randi_range(1, 52))
+		community_cards.append(randi_range(1, len(files)))
 		print(community_cards[i])
+		files.erase(files[i])
 	started = true
 	$Button.visible = false
 	$action_bg.visible = true
@@ -229,12 +227,15 @@ func _on_button_pressed():
 
 	$Dealing.visible = true
 	$Dealing/Dealing2.play("Dealing")
-	player_hand.append(files[randi_range(0, 51)])
-	player_hand.append(files[randi_range(0, 51)])
+	player_hand.append(files[randi_range(0, len(files))])
+	player_hand.append(files[randi_range(0, len(files))])
+	files.erase(player_hand[0])
+	files.erase(player_hand[1])
 	print(player_hand[0])
 	print(player_hand[1])
 
 	rating_hand(player_hand)
+
 	await $Dealing/Dealing2.animation_finished
 	$Table2/bg.visible = true
 	show_hand = true
