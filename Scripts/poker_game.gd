@@ -1,6 +1,7 @@
 extends Node2D
 
 var files: Array = []
+var cards_per_game = files
 var cards: Dictionary = {}
 var sorted_files = Array()
 var suited: Array = []
@@ -37,7 +38,7 @@ func separate_int(list_of_strings) -> Array:
 			card_nums.append(("%s%s" % [double_digit[0], double_digit[1]]))
 		else:
 			card_nums.append(double_digit[0])
-	print(card_nums)
+	print(str(card_nums) + "nums")
 	return card_nums
 
 
@@ -49,35 +50,47 @@ func if_straight(list1: Array, list2: Array) -> bool:
 		if item not in unique_combined: 
 			unique_combined.append(item)
 	# If `1` exists, treat it as both `1` and `14`
-	if 1 in unique_combined:
-		unique_combined.append(14)
+	if 1 in unique_combined: unique_combined.append(14)
 	# Sort the combined list
 	unique_combined.sort()
+	
 	var count = 0
-	for i in range(len(unique_combined)): pass
-	for i in range(unique_combined.size()):
-		# Skip if the current number is outside the valid range
+	print()
+	for i in range(len(unique_combined)-1, -1, -1): 
+		print(i)
 		if unique_combined[i] < 1 or unique_combined[i] > 14: continue
-		# Check for consecutive numbers
-		if i > 0:
-			# If the current number is `14`, ensure it doesn't connect with `1`
-			if unique_combined[i] == 14 and unique_combined[i - 1] == 1: continue
-			# Check for standard consecutive numbers
-			if unique_combined[i] == unique_combined[i - 1] + 1:
-				count += 1
-				# If we have counted 5 consecutive numbers, return true
-				if count == 4:  return true # 4 gaps = 5 consecutive numbers
-			# Reset count if the sequence is broken
-			else: count = 0
-		# Start counting from the first element
-		else: count = 1  
-	print(unique_combined)
+		if unique_combined[i] == 14 and unique_combined[i - 1] == 1: continue
+		if int(unique_combined[i]) - 1 == unique_combined[i - 1]:
+			count += 1
+			if count == 4: return true
+		else: count = 0  # Reset the count if they are not equal
+	print(str(unique_combined) + "unique")
 	return false
+
+## ["card-hearts-5.png", "card-hearts-4.png"]
+func if_flush(p_hand, community_cards):
+	var player_suits = []
+	var community_suits = []
+	for suit in suits:
+		for card in p_hand:
+			if suit in card:
+				player_suits.append(suit)
+		for card in community_cards:
+			if suit in card:
+				community_suits.append(suit)
+	print(p_hand)
+	print(player_suits)
+	print(community_cards)
+	print(community_suits)
+	var total_suits = player_suits + community_suits
+	print(total_suits)
+	for suit in total_suits:
+		var suit_count = total_suits.count(suit)
+		if suit_count == 5:
+			return true
 
 
 func rating_hand(p_hand):
-	var connected  = false
-	var suited = false
 	# For the community cards and converting to suits and number
 	var card_id = {}
 	var suit = ""
@@ -101,23 +114,14 @@ func rating_hand(p_hand):
 
 	var player_int_list = separate_int(p_hand).map(func(s): return int(s))
 	var com_int_list = separate_int(card_id.values()).map(func(s): return int(s))
-	print(len(files))
-	
-	if if_straight(player_int_list,com_int_list):
-		print("hey")
+	print(str(len(cards_per_game))+ "len")
 
-	#var max = 0
-	#if (com_int_list.max()) > (player_int_list.max()):
-		#max = (com_int_list.max())
-	#else: 
-		#max = (player_int_list.max())
-#
-	#var min = 0
-	#if (com_int_list.min()) > (player_int_list.min()):
-		#min = (com_int_list.min())
-	#else: 
-		#min = (player_int_list.min())
-	#print(max, min)
+	var straight  = false
+	var flush = false
+	if if_straight(player_int_list,com_int_list):
+		straight = true
+	if if_flush(p_hand, card_id.values()):
+		print("keyyy")
 	
 
 func card_img(card, pos, replace):
@@ -261,12 +265,15 @@ func _on_fold_pressed():
 	if awaited:
 		fold_pressed = true
 		awaited = false
+		cards_per_game = files
+		print(cards_per_game)
+		print(files)
 
 func _on_button_pressed():
 	for i in range(0, 5):
-		community_cards.append(randi_range(1, len(files)))
+		community_cards.append(randi_range(1, len(cards_per_game)))
 		print(community_cards[i])
-		files.erase(files[i])
+		cards_per_game.erase(cards_per_game[i])
 	started = true
 	$Button.visible = false
 	$action_bg.visible = true
@@ -274,12 +281,12 @@ func _on_button_pressed():
 
 	$Dealing.visible = true
 	$Dealing/Dealing2.play("Dealing")
-	player_hand.append(files[randi_range(0, len(files))])
-	player_hand.append(files[randi_range(0, len(files))])
-	files.erase(player_hand[0])
-	files.erase(player_hand[1])
-	print(player_hand[0])
-	print(player_hand[1])
+	player_hand.append(cards_per_game[randi_range(0, len(cards_per_game))])
+	player_hand.append(cards_per_game[randi_range(0, len(cards_per_game))])
+	cards_per_game.erase(player_hand[0])
+	cards_per_game.erase(player_hand[1])
+	print(cards_per_game[0])
+	print(cards_per_game[1])
 
 	rating_hand(player_hand)
 
