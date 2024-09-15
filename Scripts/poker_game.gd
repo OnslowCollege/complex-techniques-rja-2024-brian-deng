@@ -96,22 +96,30 @@ func if_flush(p_hand, community_cards):
 			return true
 
 
-func of_a_kind(player_list, community_list):
+func of_a_kind(player_list, community_list) -> String:
 	var total_list = player_list + community_list
 	var num_duplicates = []
 	for num in range(0, 13):
 		var dup_count = total_list.count(num)
 		if dup_count >= 2:
 			num_duplicates.append(dup_count)
-	#for num in player_list:
-		#if community_cards.count(num) >= 2:
-			#num_duplicates.append(community_list.count(num))
-	#for num in range(0, 13):
-		#if community_cards.count(num) >= 2:
-			#num_duplicates.append(community_list.count(num))
-		#if player_list.count(num) >= 2:
-			#num_duplicates.append(player_list.count(num))
-	print(num_duplicates)
+	# From here it labels the duplicate for the hands
+	# Check for Four of a Kind
+	if 4 in num_duplicates:
+		return "Four of a Kind"    
+	# Check for Full House: one triple and one pair
+	elif (3 in num_duplicates) and (2 in num_duplicates):
+		return "Full House"
+	# Check for Three of a Kind (but not Full )
+	elif 3 in num_duplicates:
+		return "Three of a Kind"
+	# Check for Two Pair (i.e., exactly two 2's in num_duplicates)
+	elif num_duplicates.count(2) >= 2:
+		return "Two Pair"
+	# Check for One Pair
+	elif 2 in num_duplicates:
+		return "Pair"
+	return ("")
 
 
 func rating_hand(p_hand):
@@ -149,17 +157,34 @@ func rating_hand(p_hand):
 		straight = true
 	if if_flush(p_hand, card_id.values()):
 		flush = true
-	of_a_kind(player_int_list, com_int_list)
-	
+
+	#print(of_a_kind([1,2], [1,1,3,4,5]))
+	#print(of_a_kind([1,2], [1,1,1,2,4]))
+	#print(of_a_kind([1,2], [1,1,2,4,4]))
+	#print(of_a_kind([1,2], [1,2,3,4,5]))
+	#print(of_a_kind([1,2], [1,6,3,4,5]))
+
 	var hand_value = 0
+	var high_card = 0
+	print(hands)
 	if straight and flush and (straight_nums.max() == 14):
 		hand_value = hands["Royal Flush"]
 	elif straight and flush and (straight_nums.max() != 14):
 		hand_value = hands["Straight Flush"]
-	elif straight:
-		hand_value = hands["Straight"]
 	elif flush:
 		hand_value = hands["Flush"]
+	elif straight:
+		hand_value = hands["Straight"]
+	elif true:
+		if of_a_kind(player_int_list, com_int_list) != "":
+			hand_value = hands[of_a_kind(player_int_list, com_int_list)]
+	else:
+		var total_list = player_int_list + com_int_list
+		high_card = total_list.max()
+		hand_value = hands["High Card"]
+	print(hand_value)
+	
+
 
 func card_img(card, pos, replace):
 	var sprite = Sprite2D.new()
@@ -318,12 +343,12 @@ func _on_button_pressed():
 
 	$Dealing.visible = true
 	$Dealing/Dealing2.play("Dealing")
-	player_hand.append(cards_per_game[randi_range(0, len(cards_per_game))])
-	player_hand.append(cards_per_game[randi_range(0, len(cards_per_game))])
+	player_hand.append(cards_per_game[randi_range(0, len(cards_per_game)-1)])
+	player_hand.append(cards_per_game[randi_range(0, len(cards_per_game)-1)])
 	cards_per_game.erase(player_hand[0])
 	cards_per_game.erase(player_hand[1])
-	print(cards_per_game[0])
-	print(cards_per_game[1])
+	print(player_hand[0])
+	print(player_hand[1])
 
 	rating_hand(player_hand)
 
