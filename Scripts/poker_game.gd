@@ -1,17 +1,30 @@
 extends Node2D
+## This node is the main functionality of the game
+##
+## This script can play the game including, animation, actions, cards, checking 
+## the cards value and winning
 
 var files: Array = []
 var cards_per_game = files
+var player_hand: Array = []
+var bot_hands: Dictionary = {}
+var hand_ratings: Dictionary = {}
+var community_cards: Array = []
+
+## This constant is for the path to the cards
+const card_path: String = "res://Assets/Pixel Fantasy Playing Cards/Playing Cards/"
+
+var winner: String = ""
+
 var cards: Dictionary = {}
 var sorted_files = Array()
 var suited: Array = []
 var suits: Array = ["clubs", "spades", "hearts", "diamonds"] 
 var counter: int = 1
-const card_path: String = "res://Assets/Pixel Fantasy Playing Cards/Playing Cards/"
+
 var fold_pressed: bool = false
 var started: bool = false
 var show_hand: bool = false
-var player_hand: Array = []
 var sprites: Array = []
 var awaited: bool = false
 var player_bet: Array = []
@@ -19,14 +32,13 @@ var balance: int = 1000
 var slider_value: int = 0
 var slider_used: bool = false
 var chip_betting: bool = false
-var community_cards: Array = []
 
 # putting the hands into an array for easy access
 var hands = {"Royal Flush": 10, "Straight Flush": 9, "Four of a Kind": 8, 
 	"Full House": 7, "Flush": 6, "Straight": 5, "Three of a Kind": 4, 
 	"Two Pair": 3, "Pair": 2, "High Card": 1}
 
-func separate_int(list_of_strings) -> Array:
+func separate_int(list_of_strings: Array) -> Array:
 	var card_nums = []
 	for item in list_of_strings:
 		var double_digit = []
@@ -57,9 +69,7 @@ func if_straight(list1: Array, list2: Array) -> Variant:
 	
 	var count = 0
 	var straight = []
-	print()
 	for num in range(len(unique_combined)-1, -1, -1): 
-		print(num)
 		if unique_combined[num] < 1 or unique_combined[num] > 14: continue
 		if unique_combined[num] == 14 and unique_combined[num - 1] == 1: continue
 		if int(unique_combined[num]) - 1 == unique_combined[num - 1]:
@@ -74,7 +84,7 @@ func if_straight(list1: Array, list2: Array) -> Variant:
 	return false
 
 
-func if_flush(p_hand, community_cards):
+func if_flush(p_hand: Array, community_cards: Array) -> bool:
 	var player_suits = []
 	var community_suits = []
 	for suit in suits:
@@ -89,14 +99,15 @@ func if_flush(p_hand, community_cards):
 	#print(community_cards)
 	#print(community_suits)
 	var total_suits = player_suits + community_suits
-	print(total_suits)
+	print(str(total_suits) + "total_suits")
 	for suit in total_suits:
 		var suit_count = total_suits.count(suit)
 		if suit_count == 5:
 			return true
+	return false
 
 
-func of_a_kind(player_list, community_list) -> String:
+func of_a_kind(player_list: Array, community_list: Array) -> String:
 	var total_list = player_list + community_list
 	var num_duplicates = []
 	for num in range(0, 13):
@@ -122,7 +133,7 @@ func of_a_kind(player_list, community_list) -> String:
 	return ("")
 
 
-func rating_hand(p_hand):
+func rating_hand(p_hand: Array) -> int:
 	# For the community cards and converting to suits and number
 	var card_id = {}
 	var suit = ""
@@ -130,19 +141,16 @@ func rating_hand(p_hand):
 		if card <= 13:
 			suit = "clubs"
 			card_id[card] = ("%s %d" % [suit, card])
-			print(card_id[card])
 		elif 13 < card and card <= 26:
 			suit = "diamonds"
 			card_id[card] = ("%s %d" % [suit, card-13])
-			print(card_id[card])
 		elif 26 < card and card <= 39:
 			suit = "hearts"
 			card_id[card] = ("%s %d" % [suit, card-26])
-			print(card_id[card])
 		elif 39 < card and card <= 52:
 			suit = "spades"
 			card_id[card] = ("%s %d" % [suit, card-39])
-			print(card_id[card])
+	print(card_id)
 
 	var player_int_list = separate_int(p_hand).map(func(s): return int(s))
 	var com_int_list = separate_int(card_id.values()).map(func(s): return int(s))
@@ -152,21 +160,15 @@ func rating_hand(p_hand):
 	var flush = false 
 	var straight_nums = if_straight(player_int_list,com_int_list)
 	if not straight_nums: 
-		print("hello")
+		pass
 	else: 
 		straight = true
 	if if_flush(p_hand, card_id.values()):
 		flush = true
 
-	#print(of_a_kind([1,2], [1,1,3,4,5]))
-	#print(of_a_kind([1,2], [1,1,1,2,4]))
-	#print(of_a_kind([1,2], [1,1,2,4,4]))
-	#print(of_a_kind([1,2], [1,2,3,4,5]))
-	#print(of_a_kind([1,2], [1,6,3,4,5]))
-
 	var hand_value = 0
 	var high_card = 0
-	print(hands)
+	# print(hands)
 	if straight and flush and (straight_nums.max() == 14):
 		hand_value = hands["Royal Flush"]
 	elif straight and flush and (straight_nums.max() != 14):
@@ -182,11 +184,11 @@ func rating_hand(p_hand):
 		var total_list = player_int_list + com_int_list
 		high_card = total_list.max()
 		hand_value = hands["High Card"]
-	print(hand_value)
-	
+	print(str(hand_value) + "value")
+	return hand_value
 
 
-func card_img(card, pos, replace):
+func card_img(card: String, pos: Vector2):
 	var sprite = Sprite2D.new()
 	var texture = load(card_path + str(card))
 	sprite.texture = texture
@@ -196,7 +198,7 @@ func card_img(card, pos, replace):
 	$".".add_child(sprite)
 
 # reads cards from assets file and puts in array
-func list_files_in_directory(path):
+func list_files_in_directory(path: String):
 	var dir = DirAccess.open(path)
 	dir.list_dir_begin()
 	while true:
@@ -212,7 +214,7 @@ func list_files_in_directory(path):
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	# Turning nodes not used yet invisible 
+	# Turning nodes not used yet to invisible 
 	$Betting.visible = false
 	$Betting/settings.visible = false
 	$Dealing.visible = false
@@ -287,6 +289,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	# For the fold button and resets the game incl the bools and visibility
 	if started:
 		if fold_pressed:
 			$Dealing.visible = false
@@ -295,17 +298,15 @@ func _process(delta):
 			fold_pressed = false
 			show_hand = false
 			player_hand.clear()
+			# removes the images of the player cards
 			for sprite in sprites:
 				if is_instance_valid(sprite):
 					sprite.queue_free()
-					
-					
 			$Button.visible = true
+	# for when to show the hands
 	if show_hand:
-		card_img(player_hand[0], 
-			$Dealing/player_left.position, $Dealing/player_left)
-		card_img(player_hand[1], 
-			$Dealing/player_right.position, $Dealing/player_right)
+		card_img(player_hand[0], $Dealing/player_left.position)
+		card_img(player_hand[1], $Dealing/player_right.position)
 
 	# Chip betting code for the betting text and balance
 	if chip_betting:
@@ -315,11 +316,12 @@ func _process(delta):
 		$Table2/bg/your_bet.text = ("Bet: %s" % [bet_total])
 		$Table2/balance_bg/balance.text = ("Balance: %s" % [balance])
 
-	# Slider code
+	# Slider code and updates the ui with the correct values and sets max
 	if slider_used:
 		$Betting_slider/HSlider.max_value = balance
 		$Table2/bg/your_bet.text = ("Bet: %s" % [slider_value])
 
+## For when menu button pressed and returns to menu
 func _on_menu_pressed():
 	get_tree().change_scene_to_file("res://Scenes/menu.tscn")
 
@@ -331,44 +333,84 @@ func _on_fold_pressed():
 		print(cards_per_game)
 		print(files)
 
+## Start button and starts the game and everything involved
 func _on_button_pressed():
+	# Clears the list for the next round
+	player_hand = []
+	bot_hands = {}
+	hand_ratings = {}
+	community_cards = []
+	cards_per_game = files
+	winner = ""
+
+	# Updating booleans, visiblity, and starting dealing animation
+	started = true
+	$Button.visible = false
+	$action_bg.visible = true
+	$Dealing.visible = true
+	$Dealing/Dealing2.play("Dealing")
+
+	# Deals the community cards and removes them from list so no repeats
 	for i in range(0, 5):
 		community_cards.append(randi_range(1, len(cards_per_game)))
 		print(community_cards[i])
 		cards_per_game.erase(cards_per_game[i])
-	started = true
-	$Button.visible = false
-	$action_bg.visible = true
-	var rand_num = randi_range(1, 52)
 
-	$Dealing.visible = true
-	$Dealing/Dealing2.play("Dealing")
-	player_hand.append(cards_per_game[randi_range(0, len(cards_per_game)-1)])
-	player_hand.append(cards_per_game[randi_range(0, len(cards_per_game)-1)])
-	cards_per_game.erase(player_hand[0])
-	cards_per_game.erase(player_hand[1])
-	print(player_hand[0])
-	print(player_hand[1])
+	# Deals the player cards and removes them from list so no repeats
+	for i in range(0, 2):
+		player_hand.append(cards_per_game[randi_range(0, len(cards_per_game)-1)])
+		cards_per_game.erase(player_hand[i])
+		print(player_hand[i])
 
-	rating_hand(player_hand)
+	# Deals the bot cards and removes them from list so no repeats
+	for num in range(0, 4):
+		var bot_list = []
+		# for the individual bot deals 2 cards
+		for i in range(0, 2):
+			bot_list.append(cards_per_game[randi_range(0, len(cards_per_game)-1)])
+			cards_per_game.erase(bot_list[i])
+		# adds the list of the cards to corresponding bot
+		bot_hands[num + 1] = bot_list
+	print(bot_hands)
+	
+	# Adds to hand rating dict the ratings of hands corresponding to the bot
+	for i in len(bot_hands.keys()):
+		hand_ratings[i + 1] = rating_hand(bot_hands[i + 1])
+	# Player hand rating in separate var
+	var p_hand_rating: int = rating_hand(player_hand)
+	print(hand_ratings)
+	print(p_hand_rating)
+	
+	if hand_ratings.values().max() <= p_hand_rating:
+		winner = "Player"
+	elif hand_ratings.values().max() == p_hand_rating:
+		winner = "High Card"
+	else:
+		winner = "Bot"
+	print(winner)
 
+	# Waits for the animation to finish before revealing cards
 	await $Dealing/Dealing2.animation_finished
 	$Table2/bg.visible = true
 	show_hand = true
 	awaited = true
 
 func _on_bet_pressed():
+	# For when the bet button pressed and only when the animation is finished
 	if awaited:
+		# changes the visibility to show the betting bar
 		$action_bg.visible = false
 		$Betting.visible = true
 		$Betting/settings.visible = true 
 		chip_betting = true
 
 func _on_settings_pressed():
+	# Changes visibility and shows the slider betting bar
 	$Betting_slider.visible = true
 	$Betting.visible = false
 
 func _on_back_pressed():
+	# changes visibility and goes back to the chip betting from slider
 	$action_bg.visible = true
 	$Betting.visible = false
 	$Betting/settings.visible = false 
