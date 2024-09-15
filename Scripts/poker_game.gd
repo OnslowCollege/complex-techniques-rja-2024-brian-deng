@@ -21,17 +21,19 @@ var sorted_files = Array()
 var suited: Array = []
 var suits: Array = ["clubs", "spades", "hearts", "diamonds"] 
 var counter: int = 1
-
 var fold_pressed: bool = false
 var started: bool = false
 var show_hand: bool = false
 var sprites: Array = []
 var awaited: bool = false
+
 var player_bet: Array = []
 var balance: int = 1000
 var slider_value: int = 0
 var slider_used: bool = false
 var chip_betting: bool = false
+var finalised_bet: Array = []
+var action_on: int = 1
 
 # putting the hands into an array for easy access
 var hands = {"Royal Flush": 10, "Straight Flush": 9, "Four of a Kind": 8, 
@@ -403,6 +405,7 @@ func _on_bet_pressed():
 		$Betting.visible = true
 		$Betting/settings.visible = true 
 		chip_betting = true
+		player_bet = []
 
 func _on_settings_pressed():
 	# Changes visibility and shows the slider betting bar
@@ -446,8 +449,12 @@ func _on_undo_pressed() -> void:
 
 func _on_done_pressed() -> void:
 	$Betting.visible = false
-	$action_bg.visible = true
+	$action_bg.visible = false
 	chip_betting = false
+	var bet_total = 0
+	for num in player_bet:
+		bet_total += num
+	finalised_bet.append(bet_total)
 
 
 func _on_h_slider_value_changed(value: float) -> void:
