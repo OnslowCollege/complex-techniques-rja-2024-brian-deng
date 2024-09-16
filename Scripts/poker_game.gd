@@ -118,6 +118,11 @@ func of_a_kind(player_list: Array, community_list: Array) -> String:
 		var dup_count = total_list.count(num)
 		if dup_count >= 2:
 			num_duplicates.append(dup_count)
+	# if there's more than 2 then impossible cause no 3 pair
+	if len(num_duplicates) >= 3:
+		# sorts in ascending order and removes lowest/first
+		num_duplicates.sort()
+		num_duplicates.pop_front()
 	# From here it labels the duplicate for the hands
 	# Check for Four of a Kind
 	if 4 in num_duplicates:
@@ -129,7 +134,7 @@ func of_a_kind(player_list: Array, community_list: Array) -> String:
 	elif 3 in num_duplicates:
 		return "Three of a Kind"
 	# Check for Two Pair (i.e., exactly two 2's in num_duplicates)
-	elif num_duplicates.count(2) >= 2:
+	elif num_duplicates.count(2) == 2:
 		return "Two Pair"
 	# Check for One Pair
 	elif 2 in num_duplicates:
@@ -137,11 +142,11 @@ func of_a_kind(player_list: Array, community_list: Array) -> String:
 	return ("")
 
 
-func rating_hand(p_hand: Array) -> int:
+func rating_hand(p_hand: Array, round: Array) -> int:
 	# For the community cards and converting to suits and number
 	var card_id = {}
 	var suit = ""
-	for card in community_cards:
+	for card in round:
 		if card <= 13:
 			suit = "clubs"
 			card_id[card] = ("%s %d" % [suit, card])
@@ -432,14 +437,16 @@ func _on_button_pressed():
 
 	# Deals the community cards and removes them from list so no repeats
 	for i in range(0, 5):
-		community_cards.append(randi_range(1, len(cards_per_game)))
+		var rand_card = (randi_range(0, len(cards_per_game)))
+		community_cards.append(cards_per_game[rand_card])
 		print(community_cards[i])
-		cards_per_game.erase(cards_per_game[i])
+		cards_per_game.erase(cards_per_game[rand_card])
 
 	# Deals the player cards and removes them from list so no repeats
 	for i in range(0, 2):
-		player_hand.append(cards_per_game[randi_range(0, len(cards_per_game)-1)])
-		cards_per_game.erase(player_hand[i])
+		var rand_card = randi_range(0, len(cards_per_game)-1)
+		player_hand.append(cards_per_game[rand_card])
+		cards_per_game.erase(player_hand[rand_card])
 		print(player_hand[i])
 
 	# Deals the bot cards and removes them from list so no repeats
@@ -455,18 +462,20 @@ func _on_button_pressed():
 	
 	# Adds to hand rating dict the ratings of hands corresponding to the bot
 	for i in len(bot_hands.keys()):
-		bot_hand_ratings[i + 1] = rating_hand(bot_hands[i + 1])
+		bot_hand_ratings[i + 1] = rating_hand(bot_hands[i + 1], community_cards)
 	# Player hand rating in separate var
-	var p_hand_rating: int = rating_hand(player_hand)
+	var p_hand_rating: int = rating_hand(player_hand, community_cards)
 	print(bot_hand_ratings)
 	print(p_hand_rating)
 	
+	# for winner overall
 	if bot_hand_ratings.values().max() <= p_hand_rating:
 		winner = "Player"
 	elif bot_hand_ratings.values().max() == p_hand_rating:
 		winner = "High Card"
 	else:
 		winner = "Bot"
+
 	print(winner)
 	print(str(preflop_action(1)) + "value")
 	# Waits for the animation to finish before revealing cards
