@@ -8,13 +8,16 @@ var files: Array = []
 var cards_per_game = files
 var player_hand: Array = []
 var bot_hands: Dictionary = {}
-var hand_ratings: Dictionary = {}
+var bot_hand_ratings: Dictionary = {}
 var community_cards: Array = []
 
 ## This constant is for the path to the cards
 const card_path: String = "res://Assets/Pixel Fantasy Playing Cards/Playing Cards/"
 
 var winner: String = ""
+
+var show_hand: bool = false
+var show_com_cards: Dictionary = {"flop": false, "turn": false, "river": false}
 
 var cards: Dictionary = {}
 var sorted_files = Array()
@@ -23,7 +26,6 @@ var suits: Array = ["clubs", "spades", "hearts", "diamonds"]
 var counter: int = 1
 var fold_pressed: bool = false
 var started: bool = false
-var show_hand: bool = false
 var sprites: Array = []
 var awaited: bool = false
 
@@ -190,15 +192,71 @@ func rating_hand(p_hand: Array) -> int:
 	return hand_value
 
 
-func action(action_on) -> Variant:
+func preflop_action(action_on) -> Variant:
+	var action_to_take = ""
 	var action_value = 0
+	var final_value = []
 	var bot_action = [1,2,4,5]
+	var pocket_pair = false
+	# If action on player then returns nothing
 	if action_on not in bot_action:
 		return null
+	# Checking if the action is on a bot
 	if action_on in bot_action:
-		pass
-	
-	return null
+		# if action on player 5 it shows bot 4 cause player is num 3
+		if action_on == 4 or action_on == 5:
+			action_on -= 1
+		var hand = bot_hands[action_on]
+		var action_int = separate_int(hand)
+		# If ace in cards then adds 13 to become 14 above King's 13.
+		action_int.sort()
+		if 1 in action_int:
+			action_int[0] += 13
+		# For pocket pairs
+		if action_int[0] == action_int[1]:
+			pocket_pair = true
+			if action_int[0] >= 12:
+				action_value = 10
+			elif action_int[0] == 11:
+				action_value = 9
+			elif action_int[0] <= 10 and action_int[0] >= 7:
+				action_value = 7
+			elif action_int[0] <= 6 and action_int[0] >= 4:
+				action_value = 6
+			elif action_int[0] <= 3:
+				action_value = 4
+			# Adds final action value to see later
+			final_value.append(action_value)
+		# for the non-pocket pairs
+		var hand_int_total = 0
+		for num in range(0,2):
+			hand_int_total += int(action_int[num])
+		if hand_int_total >= 23:
+			action_value = 9
+		elif hand_int_total <= 22 and hand_int_total >= 20:
+			action_value = 8
+		elif hand_int_total <= 19 and hand_int_total >= 15:
+			action_value = 7
+		elif hand_int_total <= 14 and hand_int_total >= 11:
+			action_value = 5
+		elif hand_int_total <= 11:
+			action_value = 2
+		# Adds final action value to see later
+		final_value.append(action_value)
+	# sees biggest final value and uses that to make actions
+	final_value = final_value.max()
+	if final_value <= 4:
+		action_to_take = "fold"
+	elif final_value >= 5 and final_value <=7:
+		action_to_take = "call"
+	elif final_value >= 8:
+		action_to_take = "raise"
+
+	return action_to_take
+
+
+func bot_play():
+	pass
 
 
 func card_img(card: String, pos: Vector2):
@@ -320,6 +378,15 @@ func _process(delta):
 	if show_hand:
 		card_img(player_hand[0], $Dealing/player_left.position)
 		card_img(player_hand[1], $Dealing/player_right.position)
+	
+	if show_com_cards["flop"]:
+		card_img(community_cards[0], $Flop/card.position)
+		card_img(community_cards[1], $Flop/card2.position)
+		card_img(community_cards[2], $Flop/card3.position)
+	if show_com_cards["turn"]:
+		card_img(community_cards[3], $Turn/card.position)
+	if show_com_cards["river"]:
+		card_img(community_cards[4], $River/card.position)
 
 	# Chip betting code for the betting text and balance
 	if chip_betting:
@@ -351,7 +418,7 @@ func _on_button_pressed():
 	# Clears the list for the next round
 	player_hand = []
 	bot_hands = {}
-	hand_ratings = {}
+	bot_hand_ratings = {}
 	community_cards = []
 	cards_per_game = files
 	winner = ""
@@ -388,20 +455,20 @@ func _on_button_pressed():
 	
 	# Adds to hand rating dict the ratings of hands corresponding to the bot
 	for i in len(bot_hands.keys()):
-		hand_ratings[i + 1] = rating_hand(bot_hands[i + 1])
+		bot_hand_ratings[i + 1] = rating_hand(bot_hands[i + 1])
 	# Player hand rating in separate var
 	var p_hand_rating: int = rating_hand(player_hand)
-	print(hand_ratings)
+	print(bot_hand_ratings)
 	print(p_hand_rating)
 	
-	if hand_ratings.values().max() <= p_hand_rating:
+	if bot_hand_ratings.values().max() <= p_hand_rating:
 		winner = "Player"
-	elif hand_ratings.values().max() == p_hand_rating:
+	elif bot_hand_ratings.values().max() == p_hand_rating:
 		winner = "High Card"
 	else:
 		winner = "Bot"
 	print(winner)
-
+	print(str(preflop_action(1)) + "value")
 	# Waits for the animation to finish before revealing cards
 	await $Dealing/Dealing2.animation_finished
 	$Table2/bg.visible = true
