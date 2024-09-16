@@ -190,6 +190,17 @@ func rating_hand(p_hand: Array) -> int:
 	return hand_value
 
 
+func action(action_on) -> Variant:
+	var action_value = 0
+	var bot_action = [1,2,4,5]
+	if action_on not in bot_action:
+		return null
+	if action_on in bot_action:
+		pass
+	
+	return null
+
+
 func card_img(card: String, pos: Vector2):
 	var sprite = Sprite2D.new()
 	var texture = load(card_path + str(card))
