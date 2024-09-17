@@ -73,7 +73,7 @@ func separate_int(list_of_strings: Array) -> Array:
 
 
 func if_straight(list1: Array, list2: Array) -> Variant:
-	# Combine both lists, treat `1` as both `1` and `14`
+	# Combine both lists
 	var combined = (list1 + list2)
 	var unique_combined = []
 	for item in combined:
@@ -127,31 +127,35 @@ func if_flush(p_hand: Array, community_cards: Array) -> bool:
 func of_a_kind(player_list: Array, community_list: Array) -> String:
 	var total_list = player_list + community_list
 	var num_duplicates = []
-	for num in range(0, 13):
+	
+	# Loops and checks for duplicates of the cards
+	for num in range(0, 15):
 		var dup_count = total_list.count(num)
 		if dup_count >= 2:
 			num_duplicates.append(dup_count)
-	# if there's more than 2 then impossible cause no 3 pair
+	# Sorts in ascending order and removes the lowest/first
 	if len(num_duplicates) >= 3:
-		# sorts in ascending order and removes lowest/first
 		num_duplicates.sort()
 		num_duplicates.pop_front()
-	# From here it labels the duplicate for the hands
 	# Check for Four of a Kind
 	if 4 in num_duplicates:
-		return "Four of a Kind"    
-	# Check for Full House: one triple and one pair
-	elif (3 in num_duplicates) and (2 in num_duplicates):
-		return "Full House"
-	# Check for Three of a Kind (but not Full )
-	elif 3 in num_duplicates:
-		return "Three of a Kind"
-	# Check for Two Pair (i.e., exactly two 2's in num_duplicates)
+		return "Four of a Kind"
+	# Check for Full House or Three of a Kind
+	elif num_duplicates.count(3) >= 1:
+		if num_duplicates.count(3) >= 2:
+			return "Full House"
+		elif num_duplicates.count(3) == 1 and num_duplicates.count(2) >= 1 :
+			return "Full House"
+		elif num_duplicates.count(3) == 1:
+			return "Three of a Kind"
+	# Check for Two Pair (exactly two pairs)
 	elif num_duplicates.count(2) == 2:
 		return "Two Pair"
 	# Check for One Pair
-	elif 2 in num_duplicates:
+	elif num_duplicates.count(2) == 1:
 		return "Pair"
+	else:
+		return "High Card"
 	return ("")
 
 
@@ -159,10 +163,11 @@ func rating_hand(p_hand: Array, round: Dictionary) -> int:
 	# For the community cards and converting to suits and number
 	var card_id = {}
 	var suit = ""
+	var round_int = separate_int(round.values())
 	print(round)
 	#var round_int = separate_int(round)  # Assuming this returns an array of card numbers
 
-	for card in round.keys():
+	for card in round.values():
 		print(card)
 		var card_number = int(card)  # Convert card to integer once for efficiency
 		if card_number <= 13:
@@ -286,6 +291,38 @@ func bot_play():
 	pass
 
 
+# Helper function to extract number and suit from the filename
+func extract_card_data(card: String) -> Dictionary:
+	var split_card = card.split("-") # Split by hyphen
+	var suit = split_card[1] # Get suit (clubs, diamonds, hearts, spades)
+	var num_str = split_card[2].replace(".png", "") # Get number, remove .png
+	var number = int(num_str) # Convert to integer
+	return { "suit": suit, "number": number, "card": card }
+
+# Function to sort cards by suit and number
+func sort_cards(cards: Array) -> Array:
+	# Extract the data for sorting
+	var card_data_array = []
+	for card in cards:
+		card_data_array.append(extract_card_data(card))
+
+	# Custom sort: first by suit, then by number
+	card_data_array.sort_custom(func(a, b):
+		var suit_order = ["clubs", "diamonds", "hearts", "spades"]
+		if a["suit"] == b["suit"]:
+			# Sort by number if suits are the same
+			return a["number"] - b["number"]
+		else:
+			# Sort by suit using the predefined suit order
+			return suit_order.find(a["suit"]) - suit_order.find(b["suit"])
+	)
+	# Return the sorted card filenames
+	var sorted_cards = []
+	for card_data in card_data_array:
+		sorted_cards.append(card_data["card"])
+	return sorted_cards
+
+
 func card_img(card: String, pos: Vector2):
 	var sprite = Sprite2D.new()
 	var texture = load(card_path + str(card))
@@ -310,6 +347,7 @@ func list_files_in_directory(path: String):
 	dir.list_dir_end()
 	return files
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# Turning nodes not used yet to invisible 
@@ -321,7 +359,7 @@ func _ready():
 	$River.visible = false
 	$action_bg.visible = false
 	$Table2/bg.visible = false
-	
+	print(list_files_in_directory(card_path))
 	# filters the cards read from file and removes non card strings
 	(list_files_in_directory(card_path))
 	for i in range(len(files)-1, -1, -1):
@@ -335,6 +373,16 @@ func _ready():
 	# sets the starting balance
 	$Table2/balance_bg/balance.text = ("Balance: %s" % [balance])
 	
+	var sorted_cards = sort_cards(files)
+	print(sorted_cards)
+
+	#print(of_a_kind([10, 10], [10, 1, 1,6,7])) 
+	#print(of_a_kind([2, 2], [3, 5, 5,8,8])) 
+	#print(of_a_kind([1, 1], [1, 2, 3,7,8]))  
+	#print(of_a_kind([3, 3], [3, 2, 2,2,6])) 
+	#print(of_a_kind([1, 1], [3, 4, 5,6,7])) 
+	#print(of_a_kind([1, 1], [1, 1, 3,3,3]))  
+
 	#for file in files:
 		#for x in range(1, 14):
 			#if ("-" + str(x) + ".png") in file:
@@ -462,6 +510,7 @@ func _on_button_pressed():
 		var rand_card = (randi_range(0, len(cards_per_game) - 1))
 		community_cards[rand_card] = (cards_per_game[rand_card])
 		cards_per_game.erase(cards_per_game[rand_card])
+		print(community_cards[rand_card])
 
 	# Deals the player cards and removes them from list so no repeats
 	for i in range(0, 2):
