@@ -9,7 +9,7 @@ var cards_per_game = files
 var player_hand: Array = []
 var bot_hands: Dictionary = {}
 var bot_hand_ratings: Dictionary = {}
-var community_cards: Array = []
+var community_cards: Dictionary = {}
 
 ## This constant is for the path to the cards
 const card_path: String = "res://Assets/Pixel Fantasy Playing Cards/Playing Cards/"
@@ -45,14 +45,27 @@ var hands = {"Royal Flush": 10, "Straight Flush": 9, "Four of a Kind": 8,
 func separate_int(list_of_strings: Array) -> Array:
 	var card_nums = []
 	for item in list_of_strings:
+		var num_list = []
 		var double_digit = []
 		# Finds the numbers in the hand dealt
-		var string_split = item.split("")
-		for char in string_split:
-			if char >= '0' and char <= '9':
+		var string_split = item.split("-")
+		if ".png" in string_split[-1]:
+			var png_split = Array(string_split[-1].split(""))
+			var png_slice = png_split.slice(-4)
+			for i in png_slice:
+				(png_split).erase(i)
+			num_list = png_split
+		else:
+			num_list = string_split[-1]
+		for char in num_list:
+			if char == "0":
+				double_digit.append(char)
+			elif int(char):
 				double_digit.append(char)
 		if len(double_digit) >= 2:
 			card_nums.append(("%s%s" % [double_digit[0], double_digit[1]]))
+		elif len(double_digit) == 0:
+			pass
 		else:
 			card_nums.append(double_digit[0])
 	print(str(card_nums) + "nums")
@@ -142,24 +155,29 @@ func of_a_kind(player_list: Array, community_list: Array) -> String:
 	return ("")
 
 
-func rating_hand(p_hand: Array, round: Array) -> int:
+func rating_hand(p_hand: Array, round: Dictionary) -> int:
 	# For the community cards and converting to suits and number
 	var card_id = {}
 	var suit = ""
-	for card in round:
-		if card <= 13:
+	print(round)
+	#var round_int = separate_int(round)  # Assuming this returns an array of card numbers
+
+	for card in round.keys():
+		print(card)
+		var card_number = int(card)  # Convert card to integer once for efficiency
+		if card_number <= 13:
 			suit = "clubs"
-			card_id[card] = ("%s %d" % [suit, card])
-		elif 13 < card and card <= 26:
+			card_id[card_number] = ("%s %d" % [suit, card_number])
+		elif card_number <= 26:
 			suit = "diamonds"
-			card_id[card] = ("%s %d" % [suit, card-13])
-		elif 26 < card and card <= 39:
+			card_id[card_number] = ("%s %d" % [suit, card_number - 13])
+		elif card_number <= 39:
 			suit = "hearts"
-			card_id[card] = ("%s %d" % [suit, card-26])
-		elif 39 < card and card <= 52:
+			card_id[card_number] = ("%s %d" % [suit, card_number - 26])
+		elif card_number <= 52:
 			suit = "spades"
-			card_id[card] = ("%s %d" % [suit, card-39])
-	print(card_id)
+			card_id[card_number] = ("%s %d" % [suit, card_number - 39])
+	print(str(card_id) + "card_id")
 
 	var player_int_list = separate_int(p_hand).map(func(s): return int(s))
 	var com_int_list = separate_int(card_id.values()).map(func(s): return int(s))
@@ -216,19 +234,23 @@ func preflop_action(action_on) -> Variant:
 		# If ace in cards then adds 13 to become 14 above King's 13.
 		action_int.sort()
 		if 1 in action_int:
-			action_int[0] += 13
+			action_int[0] = int(action_int[0]) + 13
+		# Ensuring the list is int
+		var action_int_numeric = []
+		for action in action_int:
+			action_int_numeric.append(int(action))
 		# For pocket pairs
-		if action_int[0] == action_int[1]:
+		if action_int_numeric[0] == action_int_numeric[1]:
 			pocket_pair = true
-			if action_int[0] >= 12:
+			if action_int_numeric[0] >= 12: ## Invalid operands 'String' and 'int' in operator '>='.
 				action_value = 10
-			elif action_int[0] == 11:
+			elif action_int_numeric[0] == 11:
 				action_value = 9
-			elif action_int[0] <= 10 and action_int[0] >= 7:
+			elif action_int_numeric[0] <= 10 and action_int_numeric[0] >= 7:
 				action_value = 7
-			elif action_int[0] <= 6 and action_int[0] >= 4:
+			elif action_int_numeric[0] <= 6 and action_int_numeric[0] >= 4:
 				action_value = 6
-			elif action_int[0] <= 3:
+			elif action_int_numeric[0] <= 3:
 				action_value = 4
 			# Adds final action value to see later
 			final_value.append(action_value)
@@ -309,7 +331,7 @@ func _ready():
 			continue
 		else:
 			files.remove_at(i)
-	
+
 	# sets the starting balance
 	$Table2/balance_bg/balance.text = ("Balance: %s" % [balance])
 	
@@ -424,8 +446,8 @@ func _on_button_pressed():
 	player_hand = []
 	bot_hands = {}
 	bot_hand_ratings = {}
-	community_cards = []
-	cards_per_game = files
+	community_cards = {}
+	cards_per_game = files.duplicate()
 	winner = ""
 
 	# Updating booleans, visiblity, and starting dealing animation
@@ -437,29 +459,29 @@ func _on_button_pressed():
 
 	# Deals the community cards and removes them from list so no repeats
 	for i in range(0, 5):
-		var rand_card = (randi_range(0, len(cards_per_game)))
-		community_cards.append(cards_per_game[rand_card])
-		print(community_cards[i])
+		var rand_card = (randi_range(0, len(cards_per_game) - 1))
+		community_cards[rand_card] = (cards_per_game[rand_card])
 		cards_per_game.erase(cards_per_game[rand_card])
 
 	# Deals the player cards and removes them from list so no repeats
 	for i in range(0, 2):
 		var rand_card = randi_range(0, len(cards_per_game)-1)
 		player_hand.append(cards_per_game[rand_card])
-		cards_per_game.erase(player_hand[rand_card])
-		print(player_hand[i])
+		cards_per_game.erase(cards_per_game[rand_card])
 
 	# Deals the bot cards and removes them from list so no repeats
 	for num in range(0, 4):
 		var bot_list = []
 		# for the individual bot deals 2 cards
 		for i in range(0, 2):
-			bot_list.append(cards_per_game[randi_range(0, len(cards_per_game)-1)])
-			cards_per_game.erase(bot_list[i])
+			var rand_card = randi_range(0, len(cards_per_game)-1)
+			bot_list.append(cards_per_game[rand_card])
+			cards_per_game.erase(cards_per_game[rand_card])
 		# adds the list of the cards to corresponding bot
 		bot_hands[num + 1] = bot_list
 	print(bot_hands)
-	
+	print(community_cards)
+	print(player_hand)
 	# Adds to hand rating dict the ratings of hands corresponding to the bot
 	for i in len(bot_hands.keys()):
 		bot_hand_ratings[i + 1] = rating_hand(bot_hands[i + 1], community_cards)
