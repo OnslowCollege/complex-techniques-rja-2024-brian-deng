@@ -163,25 +163,25 @@ func rating_hand(p_hand: Array, round: Dictionary) -> int:
 	# For the community cards and converting to suits and number
 	var card_id = {}
 	var suit = ""
-	var round_int = separate_int(round.values())
-	print(round)
 	#var round_int = separate_int(round)  # Assuming this returns an array of card numbers
-
 	for card in round.values():
-		print(card)
+		var card_squared = []
+		card_squared.append(card)
+		var card_int = separate_int(card_squared)
+		var split = card.split("-")
+		var key = int(card_int[0])
+		suit = split[1]
+
 		var card_number = int(card)  # Convert card to integer once for efficiency
-		if card_number <= 13:
-			suit = "clubs"
-			card_id[card_number] = ("%s %d" % [suit, card_number])
-		elif card_number <= 26:
-			suit = "diamonds"
-			card_id[card_number] = ("%s %d" % [suit, card_number - 13])
-		elif card_number <= 39:
-			suit = "hearts"
-			card_id[card_number] = ("%s %d" % [suit, card_number - 26])
-		elif card_number <= 52:
-			suit = "spades"
-			card_id[card_number] = ("%s %d" % [suit, card_number - 39])
+		if suit ==  "clubs":
+			card_id[key] = ("%s %s" % [suit, card_int[0]])
+		if suit ==  "diamonds":
+			card_id[key + 13] = ("%s %s" % [suit, card_int[0]])
+		if suit ==  "hearts":
+			card_id[key + 26] = ("%s %s" % [suit, card_int[0]])
+		if suit ==  "spades":
+			card_id[key + 39] = ("%s %s" % [suit, card_int[0]])
+		
 	print(str(card_id) + "card_id")
 
 	var player_int_list = separate_int(p_hand).map(func(s): return int(s))
@@ -283,44 +283,11 @@ func preflop_action(action_on) -> Variant:
 		action_to_take = "call"
 	elif final_value >= 8:
 		action_to_take = "raise"
-
 	return action_to_take
 
 
 func bot_play():
 	pass
-
-
-# Helper function to extract number and suit from the filename
-func extract_card_data(card: String) -> Dictionary:
-	var split_card = card.split("-") # Split by hyphen
-	var suit = split_card[1] # Get suit (clubs, diamonds, hearts, spades)
-	var num_str = split_card[2].replace(".png", "") # Get number, remove .png
-	var number = int(num_str) # Convert to integer
-	return { "suit": suit, "number": number, "card": card }
-
-# Function to sort cards by suit and number
-func sort_cards(cards: Array) -> Array:
-	# Extract the data for sorting
-	var card_data_array = []
-	for card in cards:
-		card_data_array.append(extract_card_data(card))
-
-	# Custom sort: first by suit, then by number
-	card_data_array.sort_custom(func(a, b):
-		var suit_order = ["clubs", "diamonds", "hearts", "spades"]
-		if a["suit"] == b["suit"]:
-			# Sort by number if suits are the same
-			return a["number"] - b["number"]
-		else:
-			# Sort by suit using the predefined suit order
-			return suit_order.find(a["suit"]) - suit_order.find(b["suit"])
-	)
-	# Return the sorted card filenames
-	var sorted_cards = []
-	for card_data in card_data_array:
-		sorted_cards.append(card_data["card"])
-	return sorted_cards
 
 
 func card_img(card: String, pos: Vector2):
@@ -359,7 +326,7 @@ func _ready():
 	$River.visible = false
 	$action_bg.visible = false
 	$Table2/bg.visible = false
-	print(list_files_in_directory(card_path))
+	
 	# filters the cards read from file and removes non card strings
 	(list_files_in_directory(card_path))
 	for i in range(len(files)-1, -1, -1):
@@ -373,8 +340,8 @@ func _ready():
 	# sets the starting balance
 	$Table2/balance_bg/balance.text = ("Balance: %s" % [balance])
 	
-	var sorted_cards = sort_cards(files)
-	print(sorted_cards)
+	#var sorted_cards = sort_cards(files)
+	#print(sorted_cards)
 
 	#print(of_a_kind([10, 10], [10, 1, 1,6,7])) 
 	#print(of_a_kind([2, 2], [3, 5, 5,8,8])) 
@@ -382,14 +349,25 @@ func _ready():
 	#print(of_a_kind([3, 3], [3, 2, 2,2,6])) 
 	#print(of_a_kind([1, 1], [3, 4, 5,6,7])) 
 	#print(of_a_kind([1, 1], [1, 1, 3,3,3]))  
-
+	
+	#var count = 1
 	#for file in files:
+		#var split = file.split("-")
+		#var num_index = split.find(("%s.png" % [count]))
+		#print(num_index)
+		#if count <= 13:
+			#if "clubs" in split and (("%s.png" % [count]) in split):
+				#sorted_files.append(files[num_index])
+				#count += 1
+			#else: continue
+	#print(sorted_files)
+		
 		#for x in range(1, 14):
 			#if ("-" + str(x) + ".png") in file:
 				#sorted_files.append(file)
 			#if x != counter: continue
 			#if counter > 14: counter += 1
-	#print(sorted_files)
+
 
 	#var count: int = 1
 	#var suit = ""
