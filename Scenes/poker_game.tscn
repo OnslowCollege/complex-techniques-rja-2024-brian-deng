@@ -1186,23 +1186,23 @@ offset_right = 121.0
 offset_bottom = 85.0
 text = "Back"
 
+[node name="Undo_slider" type="TextureButton" parent="Betting_slider"]
+layout_mode = 0
+offset_left = 918.0
+offset_top = 2.0
+offset_right = 1430.0
+offset_bottom = 514.0
+scale = Vector2(0.17, 0.17)
+texture_normal = ExtResource("6_nxxvb")
+texture_pressed = ExtResource("5_tlvjo")
+texture_hover = ExtResource("7_7ldr4")
+
 [node name="Undo_silder_bg" type="Panel" parent="Betting_slider"]
 layout_mode = 0
 offset_left = 912.0
 offset_top = 7.0
 offset_right = 1002.0
 offset_bottom = 92.0
-
-[node name="Undo_slider" type="TextureButton" parent="Betting_slider/Undo_silder_bg"]
-layout_mode = 0
-offset_left = 6.0
-offset_top = -5.0
-offset_right = 518.0
-offset_bottom = 507.0
-scale = Vector2(0.17, 0.17)
-texture_normal = ExtResource("6_nxxvb")
-texture_pressed = ExtResource("5_tlvjo")
-texture_hover = ExtResource("7_7ldr4")
 
 [node name="action_bg" type="Panel" parent="."]
 visible = false
@@ -1358,6 +1358,82 @@ text = "Start"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 
+[node name="Bot4" type="Panel" parent="."]
+visible = false
+offset_left = 262.0
+offset_top = 275.0
+offset_right = 584.0
+offset_bottom = 343.0
+
+[node name="action" type="Label" parent="Bot4"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 200.0
+offset_bottom = 20.0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "Bot 4: "
+
+[node name="Bot3" type="Panel" parent="."]
+visible = false
+offset_left = 322.0
+offset_top = 555.0
+offset_right = 644.0
+offset_bottom = 623.0
+
+[node name="action" type="Label" parent="Bot3"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 200.0
+offset_bottom = 20.0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "Bot 3: "
+
+[node name="Bot2" type="Panel" parent="."]
+visible = false
+offset_left = 1273.0
+offset_top = 553.0
+offset_right = 1595.0
+offset_bottom = 621.0
+
+[node name="action" type="Label" parent="Bot2"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 200.0
+offset_bottom = 20.0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "Bot 2: "
+
+[node name="Bot1" type="Panel" parent="."]
+visible = false
+offset_left = 1338.0
+offset_top = 275.0
+offset_right = 1660.0
+offset_bottom = 343.0
+
+[node name="action" type="Label" parent="Bot1"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 200.0
+offset_bottom = 20.0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "Bot 1: "
+
 [connection signal="pressed" from="Menu" to="." method="_on_menu_pressed"]
 [connection signal="pressed" from="Betting/Done" to="." method="_on_done_pressed"]
 [connection signal="pressed" from="Betting/Back" to="." method="_on_back_pressed"]
@@ -1370,7 +1446,7 @@ text = "Start"
 [connection signal="pressed" from="Betting/chips/10" to="." method="ten_on__pressed"]
 [connection signal="value_changed" from="Betting_slider/HSlider" to="." method="_on_h_slider_value_changed"]
 [connection signal="pressed" from="Betting_slider/Back_slider" to="." method="_on_back_slider_pressed"]
-[connection signal="pressed" from="Betting_slider/Undo_silder_bg/Undo_slider" to="." method="_on_undo_slider_pressed"]
+[connection signal="pressed" from="Betting_slider/Undo_slider" to="." method="_on_undo_slider_pressed"]
 [connection signal="pressed" from="action_bg/buttons/Fold" to="." method="_on_fold_pressed"]
 [connection signal="pressed" from="action_bg/buttons/Bet" to="." method="_on_bet_pressed"]
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

@@ -18,6 +18,8 @@ var winner: String = ""
 
 var show_hand: bool = false
 var show_com_cards: Dictionary = {"flop": false, "turn": false, "river": false}
+var show_winner = false
+
 
 var cards: Dictionary = {}
 var sorted_files = Array()
@@ -36,6 +38,7 @@ var slider_used: bool = false
 var chip_betting: bool = false
 var finalised_bet: Array = []
 var action_on: int = 1
+var all_in: bool = false
 
 # putting the hands into an array for easy access
 var hands = {"Royal Flush": 10, "Straight Flush": 9, "Four of a Kind": 8, 
@@ -44,6 +47,8 @@ var hands = {"Royal Flush": 10, "Straight Flush": 9, "Four of a Kind": 8,
 
 func separate_int(list_of_strings: Array) -> Array:
 	var card_nums = []
+	if list_of_strings == ["", ""]:
+		return []
 	for item in list_of_strings:
 		var num_list = []
 		var double_digit = []
@@ -286,9 +291,20 @@ func preflop_action(action_on) -> Variant:
 	return action_to_take
 
 
-func bot_play():
-	pass
+func bot_play(action_on):
+	var action = preflop_action(action_on)
+	if show_com_cards["flop"]:
+		pass
+	if show_com_cards["turn"]:
+		pass
+	if show_com_cards["river"]:
+		pass
 
+	var text_node = get_node("Bot%s/action" % [action_on])
+	text_node.text = ("Bot%s: %s" % [action_on, action])
+	get_node("Bot%s" % [action_on]).visible = true
+	if action == "fold":
+		bot_hands[action_on] = ["", ""]
 
 func card_img(card: String, pos: Vector2):
 	var sprite = Sprite2D.new()
@@ -349,66 +365,6 @@ func _ready():
 	#print(of_a_kind([3, 3], [3, 2, 2,2,6])) 
 	#print(of_a_kind([1, 1], [3, 4, 5,6,7])) 
 	#print(of_a_kind([1, 1], [1, 1, 3,3,3]))  
-	
-	#var count = 1
-	#for file in files:
-		#var split = file.split("-")
-		#var num_index = split.find(("%s.png" % [count]))
-		#print(num_index)
-		#if count <= 13:
-			#if "clubs" in split and (("%s.png" % [count]) in split):
-				#sorted_files.append(files[num_index])
-				#count += 1
-			#else: continue
-	#print(sorted_files)
-		
-		#for x in range(1, 14):
-			#if ("-" + str(x) + ".png") in file:
-				#sorted_files.append(file)
-			#if x != counter: continue
-			#if counter > 14: counter += 1
-
-
-	#var count: int = 1
-	#var suit = ""
-	#for file in files:
-		#if count <= 13:
-			#suit = "clubs"
-			#if ((str(suit) in file) and (str(count) in file)):
-				#cards["%s %d" % [suit, count]] = file
-				#print("Added to dictionary: ", cards["%s %d" % [suit, count]])
-		#elif 13 < count and count <= 26:
-			#suit = "diamonds"
-			#if ((str(suit) in file) and (str(count-13) in file)):
-				#cards["%s %d" % [suit, count-13]] = file
-				#print("Added to dictionary: ", cards["%s %d" % [suit, count-13]])
-		#elif 26 < count and count <= 39:
-			#suit = "hearts"
-			#if ((str(suit) in file) and (str(count-26) in file)):
-				#cards["%s %d" % [suit, count-26]] = file
-				#print("Added to dictionary: ", cards["%s %d" % [suit, count-26]])
-		#elif 39 < count and count <= 52:
-			#suit = "spades"
-			#if ((str(suit) in file) and (str(count-39) in file)):
-				#cards["%s %d" % [suit, count-39]] = file
-				#print("Added to dictionary: ", cards["%s %d" % [suit, count-39]])
-		## Print the generated strings for debugging
-		##print("Generated suit: ", suit)
-		##print("Generated count string: ", "-%d.png" % [count])
-		#count += 1
-	#print(cards)
-	#var counter: int = 1
-	#var cards = {}  # Initialize the cards dictionary
-	#var suits = ["clubs", "diamonds", "hearts", "spades"]  # List of suits
-	#for file in files:
-		#var suit_index = ((counter - 1) / 13)  # Determine the suit index based on count
-		#if suit_index < suits.size():
-			#var suity = suits[suit_index]
-			#var rank = counter - suit_index * 13  # Determine the rank within the suit
-			#if (suity in file) and (str(rank) in file):
-				#cards["%s %d" % [suity, rank]] = file
-				#print("Added to dictionary: ", cards["%s %d" % [suity, rank]])
-	#print(cards)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -447,12 +403,18 @@ func _process(delta):
 		for num in player_bet:
 			bet_total += num
 		$Table2/bg/your_bet.text = ("Bet: %s" % [bet_total])
-		$Table2/balance_bg/balance.text = ("Balance: %s" % [balance])
 
 	# Slider code and updates the ui with the correct values and sets max
 	if slider_used:
 		$Betting_slider/HSlider.max_value = balance
 		$Table2/bg/your_bet.text = ("Bet: %s" % [slider_value])
+	
+	$Table2/balance_bg/balance.text = ("Bet: %s" % [balance])
+	var total
+	for bet in finalised_bet:
+		total += bet
+	if balance == total:
+		all_in = true
 
 ## For when menu button pressed and returns to menu
 func _on_menu_pressed():
@@ -509,29 +471,13 @@ func _on_button_pressed():
 	print(bot_hands)
 	print(community_cards)
 	print(player_hand)
-	# Adds to hand rating dict the ratings of hands corresponding to the bot
-	for i in len(bot_hands.keys()):
-		bot_hand_ratings[i + 1] = rating_hand(bot_hands[i + 1], community_cards)
-	# Player hand rating in separate var
-	var p_hand_rating: int = rating_hand(player_hand, community_cards)
-	print(bot_hand_ratings)
-	print(p_hand_rating)
 	
-	# for winner overall
-	if bot_hand_ratings.values().max() <= p_hand_rating:
-		winner = "Player"
-	elif bot_hand_ratings.values().max() == p_hand_rating:
-		winner = "High Card"
-	else:
-		winner = "Bot"
-
-	print(winner)
-	print(str(preflop_action(1)) + "value")
 	# Waits for the animation to finish before revealing cards
 	await $Dealing/Dealing2.animation_finished
 	$Table2/bg.visible = true
 	show_hand = true
 	awaited = true
+	bot_play(1)
 
 func _on_bet_pressed():
 	# For when the bet button pressed and only when the animation is finished
@@ -582,15 +528,38 @@ func ten_on__pressed() -> void:
 func _on_undo_pressed() -> void:
 	player_bet.pop_back()
 
-
+var count = 0
 func _on_done_pressed() -> void:
-	$Betting.visible = false
-	$action_bg.visible = false
-	chip_betting = false
-	var bet_total = 0
-	for num in player_bet:
-		bet_total += num
-	finalised_bet.append(bet_total)
+	count += 1
+	if count == 1 or count == 2:
+		$Betting.visible = false
+		$action_bg.visible = false
+		chip_betting = false
+		var bet_total = 0
+		for num in player_bet:
+			bet_total += num
+		finalised_bet.append(bet_total)
+		player_bet.clear()
+		balance -= bet_total
+	if count == 2:
+		pass
+	if count == 3:
+		# Adds to hand rating dict the ratings of hands corresponding to the bot
+		for i in len(bot_hands.keys()):
+			bot_hand_ratings[i + 1] = rating_hand(bot_hands[i + 1], community_cards)
+		# Player hand rating in separate var
+		var p_hand_rating: int = rating_hand(player_hand, community_cards)
+		print(bot_hand_ratings)
+		print(p_hand_rating)
+		
+		# for winner overall
+		if bot_hand_ratings.values().max() <= p_hand_rating:
+			winner = "Player"
+		elif bot_hand_ratings.values().max() == p_hand_rating:
+			winner = "High Card"
+		else:
+			winner = "Bot"
+		show_winner = true
 
 
 func _on_h_slider_value_changed(value: float) -> void:
