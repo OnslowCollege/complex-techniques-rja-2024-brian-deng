@@ -1476,4 +1476,6 @@ text = "Bot 1: "
 [connection signal="pressed" from="Betting_slider/Undo_slider" to="." method="_on_undo_slider_pressed"]
 [connection signal="pressed" from="action_bg/buttons/Fold" to="." method="_on_fold_pressed"]
 [connection signal="pressed" from="action_bg/buttons/Bet" to="." method="_on_bet_pressed"]
+[connection signal="pressed" from="action_bg/buttons/Check" to="." method="_on_check_pressed"]
+[connection signal="pressed" from="action_bg/buttons/Call" to="." method="_on_call_pressed"]
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

@@ -235,16 +235,13 @@ func preflop_action(action_on) -> Variant:
 	var action_to_take = ""
 	var action_value = 0
 	var final_value = []
-	var bot_action = [1,2,4,5]
+	var bot_action = [1,2,3,4]
 	var pocket_pair = false
 	# If action on player then returns nothing
 	if action_on not in bot_action:
 		return null
 	# Checking if the action is on a bot
 	if action_on in bot_action:
-		# if action on player 5 it shows bot 4 cause player is num 3
-		if action_on == 4 or action_on == 5:
-			action_on -= 1
 		var hand = bot_hands[action_on]
 		var action_int = separate_int(hand)
 		# If ace in cards then adds 13 to become 14 above King's 13.
@@ -299,64 +296,97 @@ func preflop_action(action_on) -> Variant:
 	return action_to_take
 
 
+var raise_count_bot = {1: 0, 2: 0,3: 0, 4: 0}
+var bot_betting_per = {1: [], 2: [],3: [], 4: []}
+
+
 func bot_play(action_on):
 	if all_bets["preflop"].size() != 0:
 		all_bets["preflop"].append_array(finalised_bet)
 	else:
-		all_bets["preflop"] = (finalised_bet)
+		all_bets["preflop"] = finalised_bet
 	var flop = []
-	var text_node = get_node("Bot%s/action" % [action_on])
-	max_bot_bet = balance/2 
+	var text_node = get_node_or_null("Bot%s/action" % [action_on])
+	var max_bot_bet = balance / 2
 	var action = ""
-	var raise_count = 0
 	bot_betting = []
+	var raise_count = raise_count_bot[action_on]
+	# Check if text_node exists before proceeding
+	if text_node == null:
+		print("Error: Bot%s/action node not found" % [action_on])
+		return
 	if round_of_betting["preflop"]:
-		action = preflop_action(action_on)
-		if action == "call" and all_bets["preflop"].is_empty():
-			all_bets["preflop"].append(20)
-			bot_betting.append(20)
-			action = "bet"
-			text_node.text = ("Bot%s: %s 20" % [action_on, action])
-		if action == "call":
-			all_bets["preflop"].append(all_bets["preflop"].max())
-			bot_betting.append(all_bets["preflop"].max())
-			text_node.text = ("Bot%s: %s %s" % [action_on, action, all_bets["preflop"].max()])
-		if action == "raise":
-			var raise = 0
-			if raise_count == 0:
-				if all_bets["preflop"].is_empty():
-					action = "bet"
-					all_bets["preflop"].append(20)
-					bot_betting.append(20)
-					text_node.text = ("Bot%s: %s 20" % [action_on, action])
-				else:
-					raise = all_bets["preflop"][-1] * randi_range(0, 6)
-				if raise >= balance:
-					raise = balance
-				if bot_betting.size() != 0:
-					var prev_bet = sum(bot_betting)
-					raise -= prev_bet
-				all_bets["preflop"].append(raise)
-				bot_betting.append(raise)
-				text_node.text = ("Bot%s: %s %s" % [action_on, action, raise])
-			if raise_count == 1:
-				action = "call"
-				text_node.text = ("Bot%s: %s" % [action_on, action])
-			raise += 1
-		if action == "fold":
-			bot_hands[action_on] = ["", ""]
-			text_node.text = ("Bot%s: %s" % [action_on, action])
-	if show_com_cards["flop"]:
+		if not bot_hands[action_on] == ["", ""]:
+			action = preflop_action(action_on)
+			if action == "call" and all_bets["preflop"].is_empty():
+				all_bets["preflop"].append(20)
+				bot_betting_per[action_on].append(20)
+				action = "bet"
+				text_node.text = "Bot%s: %s 20" % [action_on, action]
+			elif action == "call":
+				var last_bet = 0
+				if bot_betting_per[action_on].size() != 0:
+					last_bet = bot_betting_per[action_on][-1]
+				all_bets["preflop"].append(all_bets["preflop"].max())
+				bot_betting_per[action_on].append(all_bets["preflop"].max())
+				all_bets["preflop"].erase(last_bet)
+				bot_betting_per[action_on].erase(last_bet)
+				text_node.text = "Bot%s: %s %s" % [action_on, action, all_bets["preflop"].max()]
+			elif action == "raise":
+				var raise = 0
+				if raise_count == 0:
+					if all_bets["preflop"].is_empty():
+						action = "bet"
+						all_bets["preflop"].append(20)
+						bot_betting_per[action_on].append(20)
+						text_node.text = "Bot%s: %s 20" % [action_on, action]
+					elif not all_bets["preflop"].is_empty():
+						raise = all_bets["preflop"][-1] * randi_range(1, 6)
+						raise -= sum(bot_betting_per[action_on])
+						bot_betting_per[action_on].append(raise)
+						raise = sum(bot_betting_per[action_on])
+						text_node.text = "Bot%s: %s to %s" % [action_on, action, raise]
+					if raise >= balance:
+						raise = balance
+						all_bets["preflop"].append(raise)
+						bot_betting_per[action_on].append(raise)
+						text_node.text = "Bot%s: %s to %s" % [action_on, action, raise]
+					elif bot_betting_per[action_on].size() != 0:
+						var prev_bet = sum(bot_betting_per[action_on])
+						raise -= prev_bet
+						if raise <= 0:
+							action = "call"
+
+				elif raise_count == 1:
+					action = "call"
+					text_node.text = "Bot%s: %s" % [action_on, action]
+				raise_count += 1
+			elif action == "fold":
+				bot_hands[action_on] = ["", ""]
+				text_node.text = "Bot%s: %s" % [action_on, action]
+			print(bot_betting_per)
+			print(all_bets)
+	if bot_betting_per[action_on].size() != 0:
+		var total = sum(bot_betting_per[action_on])
+		bot_betting_per[action_on].clear()
+		bot_betting_per[action_on].append(total)
+		print(bot_betting_per)
+	# Handle other stages like the flop, turn, and river
+	elif show_com_cards["flop"]:
+		if bot_betting_per[action_on].size() != 0:
+			var total = sum(bot_betting_per[action_on])
+			bot_betting_per[action_on].clear()
+			bot_betting_per[action_on].append(total)
 		flop = []
 		for i in range(0, 3):
 			flop.append(community_cards[i])
 		rating_hand(bot_hands[action_on], flop)
-	if show_com_cards["turn"]:
+	elif show_com_cards["turn"]:
 		flop.append(community_cards[3])
-	if show_com_cards["river"]:
+	elif show_com_cards["river"]:
 		flop.append(community_cards[4])
-	
-	text_node.add_theme_font_size_override("font_size",30)
+	# Setting font size and making the bot label visible
+	text_node.add_theme_font_size_override("font_size", 30)
 	get_node("Bot%s" % [action_on]).visible = true
 
 
@@ -448,15 +478,17 @@ func _process(delta):
 	if show_hand:
 		card_img(player_hand[0], $Dealing/player_left.position)
 		card_img(player_hand[1], $Dealing/player_right.position)
-	
+	var com_cards = []
+	for i in community_cards.values():
+		com_cards.append(i)
 	if show_com_cards["flop"]:
-		card_img(community_cards[0], $Flop/card.position)
-		card_img(community_cards[1], $Flop/card2.position)
-		card_img(community_cards[2], $Flop/card3.position)
+		card_img(com_cards[0], $Flop/card.position)
+		card_img(com_cards[1], $Flop/card2.position)
+		card_img(com_cards[2], $Flop/card3.position)
 	if show_com_cards["turn"]:
-		card_img(community_cards[3], $Turn/card.position)
+		card_img(com_cards[3], $Turn/card.position)
 	if show_com_cards["river"]:
-		card_img(community_cards[4], $River/card.position)
+		card_img(com_cards[4], $River/card.position)
 
 	# Chip betting code for the betting text and balance
 	if chip_betting:
@@ -614,15 +646,47 @@ func _on_done_pressed() -> void:
 		bot_play(4)
 		bot_play(1)
 		bot_play(2)
+		$Betting.visible = true
+		$action_bg.visible = true
 		if sum(all_bets["preflop"])/len(all_bets["preflop"]) == all_bets["preflop"].max():
-			pot += sum(all_bets["preflop"])
-			show_com_cards["flop"] = true
+			pot = sum(all_bets["preflop"])
+			print(all_bets["preflop"])
 			round_of_betting["preflop"] = false
 			round_of_betting["flop"] = true
+			$Betting.visible = false
+			$action_bg.visible = false
+			awaited = false
 	if round_of_betting["flop"]:
-		pass
+		$Flop.visible = true
+		$Flop/Flopping.play("Flop")
+		await $Flop/Flopping.animation_finished
+		awaited = true
+		show_com_cards["flop"] = true
+		$Betting.visible = true
+		$action_bg.visible = true
+		if all_bets["flop"].size() != 0:
+			if sum(all_bets["flop"])/len(all_bets["flop"]) == all_bets["flop"].max():
+				pot += sum(all_bets["flop"])
+				round_of_betting["flop"] = false
+				round_of_betting["turn"] = true
+				$Betting.visible = false
+				$action_bg.visible = false
+				awaited = false
 	if round_of_betting["turn"]:
-		pass
+		$Turn.visible = true
+		$Turn/Turning.play("Turn")
+		await $Turn/Turning.animation_finished
+		awaited = true
+		show_com_cards["turn"] = true
+		$Betting.visible = true
+		$action_bg.visible = true
+		if sum(all_bets["turn"])/len(all_bets["turn"]) == all_bets["turn"].max():
+			pot += sum(all_bets["turn"])
+			round_of_betting["turn"] = false
+			round_of_betting["river"] = true
+			$Betting.visible = false
+			$action_bg.visible = false
+			awaited = false
 	if round_of_betting["river"]:
 		# Adds to hand rating dict the ratings of hands corresponding to the bot
 		for i in len(bot_hands.keys()):
@@ -658,3 +722,16 @@ func _on_back_slider_pressed() -> void:
 func _on_undo_slider_pressed() -> void:
 	slider_value = 0
 	$Betting_slider/HSlider.value = 0
+
+
+func _on_check_pressed() -> void:
+	var key_needed = 0
+	for key in round_of_betting.keys():
+		if round_of_betting[key]:
+			key_needed = key
+	if all_bets[key_needed].size() != 0:
+		$action_bg/buttons/Check.disabled = true
+
+
+func _on_call_pressed() -> void:
+	pass # Replace with function body.
