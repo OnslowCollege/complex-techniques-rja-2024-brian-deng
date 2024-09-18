@@ -18,6 +18,7 @@ var winner: String = ""
 
 var show_hand: bool = false
 var show_com_cards: Dictionary = {"flop": false, "turn": false, "river": false}
+var round_of_betting = {"flop": false, "turn": false, "river": false, "preflop": false}
 var show_winner = false
 
 
@@ -39,6 +40,11 @@ var chip_betting: bool = false
 var finalised_bet: Array = []
 var action_on: int = 1
 var all_in: bool = false
+var bot_betting = []
+const min_bot_bet = 20
+var max_bot_bet = balance/2 
+var pot = 0
+var all_bets = {"preflop": [], "flop": [], "turn": [], "river": []}
 
 # putting the hands into an array for easy access
 var hands = {"Royal Flush": 10, "Straight Flush": 9, "Four of a Kind": 8, 
@@ -250,7 +256,9 @@ func preflop_action(action_on) -> Variant:
 		for action in action_int:
 			action_int_numeric.append(int(action))
 		# For pocket pairs
-		if action_int_numeric[0] == action_int_numeric[1]:
+		if action_int_numeric.size() == 0:
+			return "fold"
+		elif action_int_numeric[0] == action_int_numeric[1]:
 			pocket_pair = true
 			if action_int_numeric[0] >= 12: ## Invalid operands 'String' and 'int' in operator '>='.
 				action_value = 10
@@ -292,19 +300,72 @@ func preflop_action(action_on) -> Variant:
 
 
 func bot_play(action_on):
-	var action = preflop_action(action_on)
-	if show_com_cards["flop"]:
-		pass
-	if show_com_cards["turn"]:
-		pass
-	if show_com_cards["river"]:
-		pass
-
+	if all_bets["preflop"].size() != 0:
+		all_bets["preflop"].append_array(finalised_bet)
+	else:
+		all_bets["preflop"] = (finalised_bet)
+	var flop = []
 	var text_node = get_node("Bot%s/action" % [action_on])
-	text_node.text = ("Bot%s: %s" % [action_on, action])
+	max_bot_bet = balance/2 
+	var action = ""
+	var raise_count = 0
+	bot_betting = []
+	if round_of_betting["preflop"]:
+		action = preflop_action(action_on)
+		if action == "call" and all_bets["preflop"].is_empty():
+			all_bets["preflop"].append(20)
+			bot_betting.append(20)
+			action = "bet"
+			text_node.text = ("Bot%s: %s 20" % [action_on, action])
+		if action == "call":
+			all_bets["preflop"].append(all_bets["preflop"].max())
+			bot_betting.append(all_bets["preflop"].max())
+			text_node.text = ("Bot%s: %s %s" % [action_on, action, all_bets["preflop"].max()])
+		if action == "raise":
+			var raise = 0
+			if raise_count == 0:
+				if all_bets["preflop"].is_empty():
+					action = "bet"
+					all_bets["preflop"].append(20)
+					bot_betting.append(20)
+					text_node.text = ("Bot%s: %s 20" % [action_on, action])
+				else:
+					raise = all_bets["preflop"][-1] * randi_range(0, 6)
+				if raise >= balance:
+					raise = balance
+				if bot_betting.size() != 0:
+					var prev_bet = sum(bot_betting)
+					raise -= prev_bet
+				all_bets["preflop"].append(raise)
+				bot_betting.append(raise)
+				text_node.text = ("Bot%s: %s %s" % [action_on, action, raise])
+			if raise_count == 1:
+				action = "call"
+				text_node.text = ("Bot%s: %s" % [action_on, action])
+			raise += 1
+		if action == "fold":
+			bot_hands[action_on] = ["", ""]
+			text_node.text = ("Bot%s: %s" % [action_on, action])
+	if show_com_cards["flop"]:
+		flop = []
+		for i in range(0, 3):
+			flop.append(community_cards[i])
+		rating_hand(bot_hands[action_on], flop)
+	if show_com_cards["turn"]:
+		flop.append(community_cards[3])
+	if show_com_cards["river"]:
+		flop.append(community_cards[4])
+	
+	text_node.add_theme_font_size_override("font_size",30)
 	get_node("Bot%s" % [action_on]).visible = true
-	if action == "fold":
-		bot_hands[action_on] = ["", ""]
+
+
+func sum(list: Array) -> Variant:
+	var total = 0
+	for num in list:
+		total += num
+	return total
+
 
 func card_img(card: String, pos: Vector2):
 	var sprite = Sprite2D.new()
@@ -410,11 +471,13 @@ func _process(delta):
 		$Table2/bg/your_bet.text = ("Bet: %s" % [slider_value])
 	
 	$Table2/balance_bg/balance.text = ("Bet: %s" % [balance])
-	var total
+	var total = 0
 	for bet in finalised_bet:
 		total += bet
 	if balance == total:
 		all_in = true
+		
+	$Table2/pot/pot.text = ("Pot: %s" % [pot])
 
 ## For when menu button pressed and returns to menu
 func _on_menu_pressed():
@@ -427,6 +490,10 @@ func _on_fold_pressed():
 		cards_per_game = files
 		print(cards_per_game)
 		print(files)
+		$Bot4.visible = false
+		$Bot3.visible = false
+		$Bot2.visible = false
+		$Bot1.visible = false
 
 ## Start button and starts the game and everything involved
 func _on_button_pressed():
@@ -474,10 +541,13 @@ func _on_button_pressed():
 	
 	# Waits for the animation to finish before revealing cards
 	await $Dealing/Dealing2.animation_finished
+	round_of_betting["preflop"] = true
 	$Table2/bg.visible = true
+	$Table2/pot.visible = true
 	show_hand = true
 	awaited = true
 	bot_play(1)
+	bot_play(2)
 
 func _on_bet_pressed():
 	# For when the bet button pressed and only when the animation is finished
@@ -528,10 +598,9 @@ func ten_on__pressed() -> void:
 func _on_undo_pressed() -> void:
 	player_bet.pop_back()
 
-var count = 0
+
 func _on_done_pressed() -> void:
-	count += 1
-	if count == 1 or count == 2:
+	if round_of_betting["preflop"]:
 		$Betting.visible = false
 		$action_bg.visible = false
 		chip_betting = false
@@ -541,9 +610,20 @@ func _on_done_pressed() -> void:
 		finalised_bet.append(bet_total)
 		player_bet.clear()
 		balance -= bet_total
-	if count == 2:
+		bot_play(3)
+		bot_play(4)
+		bot_play(1)
+		bot_play(2)
+		if sum(all_bets["preflop"])/len(all_bets["preflop"]) == all_bets["preflop"].max():
+			pot += sum(all_bets["preflop"])
+			show_com_cards["flop"] = true
+			round_of_betting["preflop"] = false
+			round_of_betting["flop"] = true
+	if round_of_betting["flop"]:
 		pass
-	if count == 3:
+	if round_of_betting["turn"]:
+		pass
+	if round_of_betting["river"]:
 		# Adds to hand rating dict the ratings of hands corresponding to the bot
 		for i in len(bot_hands.keys()):
 			bot_hand_ratings[i + 1] = rating_hand(bot_hands[i + 1], community_cards)
