@@ -1019,10 +1019,10 @@ metadata/_edit_use_anchors_ = true
 
 [node name="bg" type="Panel" parent="Table2"]
 layout_mode = 0
-offset_left = 820.0
-offset_top = 673.294
-offset_right = 1100.0
-offset_bottom = 748.294
+offset_left = 620.0
+offset_top = 673.0
+offset_right = 900.0
+offset_bottom = 748.0
 
 [node name="your_bet" type="Label" parent="Table2/bg"]
 layout_mode = 0
@@ -1385,6 +1385,15 @@ text = "Start"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 
+[node name="Button2" type="Button" parent="."]
+offset_left = 920.0
+offset_top = 572.0
+offset_right = 1258.0
+offset_bottom = 636.0
+theme_override_font_sizes/font_size = 25
+text = "Past bet:"
+alignment = 0
+
 [node name="Bot4" type="Panel" parent="."]
 visible = false
 offset_left = 262.0
@@ -1460,6 +1469,16 @@ offset_bottom = 20.0
 grow_vertical = 2
 theme_override_font_sizes/font_size = 40
 text = "Bot 1: "
+
+[node name="arrow" type="Sprite2D" parent="."]
+visible = false
+
+[node name="Line" type="Line2D" parent="arrow"]
+points = PackedVector2Array(10, 10, 130, 53)
+
+[node name="head" type="Polygon2D" parent="arrow"]
+position = Vector2(133, 55)
+polygon = PackedVector2Array(1, 9, 10, -13, 22, 3)
 
 [connection signal="pressed" from="Menu" to="." method="_on_menu_pressed"]
 [connection signal="pressed" from="Betting/Done" to="." method="_on_done_pressed"]
