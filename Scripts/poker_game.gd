@@ -175,7 +175,6 @@ func rating_hand(p_hand: Array, round: Dictionary) -> Dictionary:
 		var key = int(card_int[0])
 		suit = split[1]
 
-		var card_number = int(card)
 		if suit ==  "clubs":
 			card_id[key] = ("%s %s" % [suit, card_int[0]])
 		if suit ==  "diamonds":
@@ -210,9 +209,8 @@ func rating_hand(p_hand: Array, round: Dictionary) -> Dictionary:
 		hand_value = hands["Flush"]
 	elif straight:
 		hand_value = hands["Straight"]
-	elif true:
-		if of_a_kind(player_int_list, com_int_list) != "":
-			hand_value = hands[of_a_kind(player_int_list, com_int_list)]
+	elif of_a_kind(player_int_list, com_int_list) != "":
+		hand_value = hands[of_a_kind(player_int_list, com_int_list)]
 	else:
 		hand_value = hands["High Card"]
 	return {"value": hand_value, "high_card": high_card}
@@ -227,13 +225,17 @@ func preflop_action(action_on) -> Variant:
 		return null
 	if action_on in bot_action:
 		var hand = bot_hands[action_on]
-		var action_int = separate_int(hand)
+		var action_int = separate_int(hand).map(func(s): return int(s))
+		print(action_int)
+		print(";ll")
 		action_int.sort()
 		if 1 in action_int:
 			action_int[0] = int(action_int[0]) + 13
 		var action_int_numeric = []
 		for action in action_int:
 			action_int_numeric.append(int(action))
+		print(action_int_numeric)
+		print(";oo")
 		if action_int_numeric.size() == 0:
 			return "fold"
 		elif action_int_numeric[0] == action_int_numeric[1]:
@@ -705,6 +707,8 @@ func _on_button_pressed():
 	print(bot_hands)
 	print(community_cards)
 	print(player_hand)
+	print(rating_hand(player_hand, community_cards))
+	preflop_action(1)
 	
 	await $Dealing/Dealing2.animation_finished
 	round_of_betting["preflop"] = true
@@ -712,8 +716,8 @@ func _on_button_pressed():
 	$Table2/pot.visible = true
 	show_hand = true
 	awaited = true
-	bot_play(1)
-	bot_play(2)
+	preflop_action(1)
+	preflop_action(2)
 
 func _on_bet_pressed():
 	if awaited:

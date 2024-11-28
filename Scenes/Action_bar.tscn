@@ -1,0 +1,109 @@
+[gd_scene load_steps=12 format=3 uid="uid://b2koulovkaa24"]
+
+[ext_resource type="Texture2D" uid="uid://csw645ko8qtj" path="res://Assets/Controls setting/control_pressed.png" id="1_v0xt6"]
+[ext_resource type="Texture2D" uid="uid://coagjqm2g6dbo" path="res://Assets/Controls setting/control.png" id="2_cxcv0"]
+[ext_resource type="Texture2D" uid="uid://bhhfrfp6farap" path="res://Assets/Controls setting/control_pressed_black.png" id="3_gek5y"]
+[ext_resource type="Texture2D" uid="uid://cfyuatm3b2f8j" path="res://Assets/Undo button/undo_-_Copy__2_-removebg-preview.png" id="4_p4ctw"]
+[ext_resource type="Texture2D" uid="uid://fjoi475xc2b5" path="res://Assets/Undo button/undo.png" id="5_6dntq"]
+[ext_resource type="Texture2D" uid="uid://bjnajumhepa8n" path="res://Assets/Undo button/undo_-_Copy-removebg-preview.png" id="6_frncr"]
+[ext_resource type="Texture2D" uid="uid://c1ip7xi2wld0h" path="res://Assets/Chips/500.png" id="7_4jycf"]
+[ext_resource type="Texture2D" uid="uid://crv0kwsfg8y0j" path="res://Assets/Chips/100.png" id="8_o0t8d"]
+[ext_resource type="Texture2D" uid="uid://cgh57m5xwyxo4" path="res://Assets/Chips/50.png" id="9_cjs7r"]
+[ext_resource type="Texture2D" uid="uid://bxlxn1yfyef71" path="res://Assets/Chips/20.png" id="10_k4p1i"]
+[ext_resource type="Texture2D" uid="uid://dr6ltxtc6276n" path="res://Assets/Chips/10.png" id="11_1yt48"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Betting" type="Panel" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 455.0
+offset_top = 930.0
+offset_right = 1465.0
+offset_bottom = 1030.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Done" type="Button" parent="Betting"]
+layout_mode = 0
+offset_left = 132.0
+offset_top = 15.0
+offset_right = 232.0
+offset_bottom = 85.0
+text = "Done"
+
+[node name="Back" type="Button" parent="Betting"]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 15.0
+offset_right = 121.0
+offset_bottom = 85.0
+text = "Back"
+
+[node name="settings" type="TextureButton" parent="Betting"]
+layout_mode = 0
+offset_left = 910.0
+offset_top = 4.0
+offset_right = 1422.0
+offset_bottom = 516.0
+scale = Vector2(0.18, 0.18)
+tooltip_text = "<a href=\"https://www.flaticon.com/free-icons/settings\" title=\"settings icons\">Settings icons created by Freepik - Flaticon</a>"
+action_mode = 0
+texture_normal = ExtResource("1_v0xt6")
+texture_pressed = ExtResource("2_cxcv0")
+texture_hover = ExtResource("3_gek5y")
+
+[node name="Undo_bg" type="Panel" parent="Betting"]
+layout_mode = 0
+offset_left = 801.0
+offset_top = 7.0
+offset_right = 891.0
+offset_bottom = 92.0
+
+[node name="Undo" type="TextureButton" parent="Betting/Undo_bg"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = -5.0
+offset_right = 518.0
+offset_bottom = 507.0
+scale = Vector2(0.17, 0.17)
+texture_normal = ExtResource("4_p4ctw")
+texture_pressed = ExtResource("5_6dntq")
+texture_hover = ExtResource("6_frncr")
+
+[node name="chips" type="HBoxContainer" parent="Betting"]
+layout_mode = 1
+offset_left = 252.0
+offset_top = 3.0
+offset_right = 2648.0
+offset_bottom = 380.0
+scale = Vector2(0.25, 0.25)
+theme_override_constants/separation = 130
+
+[node name="500" type="TextureButton" parent="Betting/chips"]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+texture_normal = ExtResource("7_4jycf")
+stretch_mode = 3
+
+[node name="100" type="TextureButton" parent="Betting/chips"]
+layout_mode = 2
+texture_normal = ExtResource("8_o0t8d")
+stretch_mode = 3
+
+[node name="50" type="TextureButton" parent="Betting/chips"]
+layout_mode = 2
+texture_normal = ExtResource("9_cjs7r")
+
+[node name="20" type="TextureButton" parent="Betting/chips"]
+layout_mode = 2
+texture_normal = ExtResource("10_k4p1i")
+stretch_mode = 5
+
+[node name="10" type="TextureButton" parent="Betting/chips"]
+layout_mode = 2
+texture_normal = ExtResource("11_1yt48")
+stretch_mode = 3
