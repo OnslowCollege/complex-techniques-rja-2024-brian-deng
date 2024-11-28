@@ -658,6 +658,7 @@ func _on_call_pressed():
 	await get_tree().create_timer(1.0).timeout
 	continue_betting(current_stage)
 
+
 func _on_check_pressed():
 	if not awaited:
 		return
@@ -710,41 +711,44 @@ func show_river():
 	
 
 func continue_betting(current_stage):
+	# More comprehensive betting round check
 	var bets = all_bets[current_stage]
-	if bets.size() >= 4:
-		var max_bet = bets.max()
-		var all_bets_equal = true
-		for bet in bets:
-			if bet != max_bet:
-				all_bets_equal = false
-				break
-		if all_bets_equal:
-			pot += sum(all_bets[current_stage])
-			round_of_betting[current_stage] = false
-			all_bets[current_stage].clear()
-			past_player_bet_total = 0
+	var max_bet = bets.max() if bets else 0
+	var all_bets_equal = true
 
-			match current_stage:
-				"preflop":
-					show_flop()
-				"flop":
-					show_turn()
-				"turn":
-					show_river()
-				"river":
-					determine_winner()
+	# Check if all non-zero bets are equal and at least one player has bet
+	for bet in bets:
+		if bet != 0 and bet != max_bet:
+			all_bets_equal = false
+			break
+
+	if all_bets_equal and max_bet > 0:
+		pot += sum(all_bets[current_stage])
+		round_of_betting[current_stage] = false
+		all_bets[current_stage].clear()
+		past_player_bet_total = 0
+		previous_round_bets[current_stage] = 0
+
+		match current_stage:
+			"preflop":
+				show_flop()
+			"flop":
+				show_turn()
+			"turn":
+				show_river()
+			"river":
+				determine_winner()
 
 func start_betting_round(stage):
 	round_of_betting[stage] = true
 	action_on = 1
+	previous_round_bets[stage] = 0
+
 	if action_on == 1:
 		awaited = true
 		$action_bg.visible = true
 	else:
 		bot_play(action_on)
-
-
-
 
 
 # This function is used to determine the winner

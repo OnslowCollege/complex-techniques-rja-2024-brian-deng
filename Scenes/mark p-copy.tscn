@@ -1,20 +1,20 @@
 [gd_scene load_steps=28 format=3 uid="uid://bvy7ehiin37he"]
 
-[ext_resource type="PackedScene" uid="uid://c0e6rchh8d7b" path="res://Scenes/Info/hand_button.tscn" id="1_rra4x"]
-[ext_resource type="Script" path="res://Scripts/poker_game.gd" id="1_vsng2"]
-[ext_resource type="Texture2D" uid="uid://cx551k4civ2h7" path="res://Assets/Table/Poker table.png" id="3_8o0bb"]
-[ext_resource type="Texture2D" uid="uid://bb3l5d1iykl5u" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-back1.png" id="4_nt88o"]
-[ext_resource type="Texture2D" uid="uid://c1ip7xi2wld0h" path="res://Assets/Chips/500.png" id="5_s68n3"]
-[ext_resource type="Texture2D" uid="uid://fjoi475xc2b5" path="res://Assets/Undo button/undo.png" id="5_tlvjo"]
-[ext_resource type="Texture2D" uid="uid://cfyuatm3b2f8j" path="res://Assets/Undo button/undo_-_Copy__2_-removebg-preview.png" id="6_nxxvb"]
-[ext_resource type="Texture2D" uid="uid://crv0kwsfg8y0j" path="res://Assets/Chips/100.png" id="6_wc58v"]
-[ext_resource type="Texture2D" uid="uid://bjnajumhepa8n" path="res://Assets/Undo button/undo_-_Copy-removebg-preview.png" id="7_7ldr4"]
-[ext_resource type="Texture2D" uid="uid://cgh57m5xwyxo4" path="res://Assets/Chips/50.png" id="7_tgsla"]
-[ext_resource type="Texture2D" uid="uid://bxlxn1yfyef71" path="res://Assets/Chips/20.png" id="8_bbylq"]
-[ext_resource type="Texture2D" uid="uid://dr6ltxtc6276n" path="res://Assets/Chips/10.png" id="9_2vc1q"]
-[ext_resource type="Texture2D" uid="uid://csw645ko8qtj" path="res://Assets/Controls setting/control_pressed.png" id="12_xo5i5"]
-[ext_resource type="Texture2D" uid="uid://coagjqm2g6dbo" path="res://Assets/Controls setting/control.png" id="13_1rjid"]
-[ext_resource type="Texture2D" uid="uid://bhhfrfp6farap" path="res://Assets/Controls setting/control_pressed_black.png" id="14_n24oq"]
+[ext_resource type="Script" path="res://Scripts/mark p-copy.gd" id="1_5vpgd"]
+[ext_resource type="Texture2D" uid="uid://bb3l5d1iykl5u" path="res://Assets/Pixel Fantasy Playing Cards/Playing Cards/card-back1.png" id="2_sc270"]
+[ext_resource type="PackedScene" uid="uid://c0e6rchh8d7b" path="res://Scenes/Info/hand_button.tscn" id="3_dsqy1"]
+[ext_resource type="Texture2D" uid="uid://cx551k4civ2h7" path="res://Assets/Table/Poker table.png" id="4_r8rtm"]
+[ext_resource type="Texture2D" uid="uid://csw645ko8qtj" path="res://Assets/Controls setting/control_pressed.png" id="5_qu16t"]
+[ext_resource type="Texture2D" uid="uid://coagjqm2g6dbo" path="res://Assets/Controls setting/control.png" id="6_6dfo2"]
+[ext_resource type="Texture2D" uid="uid://bhhfrfp6farap" path="res://Assets/Controls setting/control_pressed_black.png" id="7_pbloo"]
+[ext_resource type="Texture2D" uid="uid://cfyuatm3b2f8j" path="res://Assets/Undo button/undo_-_Copy__2_-removebg-preview.png" id="8_ia4eg"]
+[ext_resource type="Texture2D" uid="uid://fjoi475xc2b5" path="res://Assets/Undo button/undo.png" id="9_l1xmj"]
+[ext_resource type="Texture2D" uid="uid://bjnajumhepa8n" path="res://Assets/Undo button/undo_-_Copy-removebg-preview.png" id="10_826nr"]
+[ext_resource type="Texture2D" uid="uid://c1ip7xi2wld0h" path="res://Assets/Chips/500.png" id="11_wvyd1"]
+[ext_resource type="Texture2D" uid="uid://crv0kwsfg8y0j" path="res://Assets/Chips/100.png" id="12_r046r"]
+[ext_resource type="Texture2D" uid="uid://cgh57m5xwyxo4" path="res://Assets/Chips/50.png" id="13_d24nq"]
+[ext_resource type="Texture2D" uid="uid://bxlxn1yfyef71" path="res://Assets/Chips/20.png" id="14_jyqpq"]
+[ext_resource type="Texture2D" uid="uid://dr6ltxtc6276n" path="res://Assets/Chips/10.png" id="15_u1hyp"]
 
 [sub_resource type="Animation" id="Animation_gbqkb"]
 resource_name = "Dealing"
@@ -522,7 +522,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0.018871),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("4_nt88o")]
+"values": [ExtResource("2_sc270")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -570,7 +570,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0.2),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("4_nt88o")]
+"values": [ExtResource("2_sc270")]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -618,7 +618,7 @@ tracks/8/keys = {
 "times": PackedFloat32Array(0.4),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("4_nt88o")]
+"values": [ExtResource("2_sc270")]
 }
 tracks/9/type = "value"
 tracks/9/imported = false
@@ -741,7 +741,7 @@ tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("4_nt88o")]
+"values": [ExtResource("2_sc270")]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
@@ -789,7 +789,7 @@ tracks/10/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("4_nt88o")]
+"values": [ExtResource("2_sc270")]
 }
 tracks/11/type = "value"
 tracks/11/imported = false
@@ -801,7 +801,7 @@ tracks/11/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("4_nt88o")]
+"values": [ExtResource("2_sc270")]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ttxgx"]
@@ -980,7 +980,7 @@ _data = {
 }
 
 [node name="Poker_game" type="Node2D"]
-script = ExtResource("1_vsng2")
+script = ExtResource("1_5vpgd")
 
 [node name="Card_back" type="TextureRect" parent="."]
 visible = false
@@ -991,9 +991,9 @@ offset_left = 912.0
 offset_right = 1008.0
 offset_bottom = 144.0
 grow_horizontal = 2
-texture = ExtResource("4_nt88o")
+texture = ExtResource("2_sc270")
 
-[node name="hand_button" parent="." instance=ExtResource("1_rra4x")]
+[node name="hand_button" parent="." instance=ExtResource("3_dsqy1")]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_bottom = 0.0
@@ -1014,7 +1014,7 @@ offset_left = 144.0
 offset_right = 2064.0
 offset_bottom = 1080.0
 scale = Vector2(0.85, 0.85)
-texture = ExtResource("3_8o0bb")
+texture = ExtResource("4_r8rtm")
 metadata/_edit_use_anchors_ = true
 
 [node name="bg" type="Panel" parent="Table2"]
@@ -1119,9 +1119,9 @@ offset_bottom = 516.0
 scale = Vector2(0.18, 0.18)
 tooltip_text = "<a href=\"https://www.flaticon.com/free-icons/settings\" title=\"settings icons\">Settings icons created by Freepik - Flaticon</a>"
 action_mode = 0
-texture_normal = ExtResource("12_xo5i5")
-texture_pressed = ExtResource("13_1rjid")
-texture_hover = ExtResource("14_n24oq")
+texture_normal = ExtResource("5_qu16t")
+texture_pressed = ExtResource("6_6dfo2")
+texture_hover = ExtResource("7_pbloo")
 
 [node name="Undo_bg" type="Panel" parent="Betting"]
 layout_mode = 0
@@ -1137,9 +1137,9 @@ offset_top = -5.0
 offset_right = 518.0
 offset_bottom = 507.0
 scale = Vector2(0.17, 0.17)
-texture_normal = ExtResource("6_nxxvb")
-texture_pressed = ExtResource("5_tlvjo")
-texture_hover = ExtResource("7_7ldr4")
+texture_normal = ExtResource("8_ia4eg")
+texture_pressed = ExtResource("9_l1xmj")
+texture_hover = ExtResource("10_826nr")
 
 [node name="chips" type="HBoxContainer" parent="Betting"]
 layout_mode = 1
@@ -1153,26 +1153,26 @@ theme_override_constants/separation = 130
 [node name="500" type="TextureButton" parent="Betting/chips"]
 layout_mode = 2
 size_flags_stretch_ratio = 0.0
-texture_normal = ExtResource("5_s68n3")
+texture_normal = ExtResource("11_wvyd1")
 stretch_mode = 3
 
 [node name="100" type="TextureButton" parent="Betting/chips"]
 layout_mode = 2
-texture_normal = ExtResource("6_wc58v")
+texture_normal = ExtResource("12_r046r")
 stretch_mode = 3
 
 [node name="50" type="TextureButton" parent="Betting/chips"]
 layout_mode = 2
-texture_normal = ExtResource("7_tgsla")
+texture_normal = ExtResource("13_d24nq")
 
 [node name="20" type="TextureButton" parent="Betting/chips"]
 layout_mode = 2
-texture_normal = ExtResource("8_bbylq")
+texture_normal = ExtResource("14_jyqpq")
 stretch_mode = 5
 
 [node name="10" type="TextureButton" parent="Betting/chips"]
 layout_mode = 2
-texture_normal = ExtResource("9_2vc1q")
+texture_normal = ExtResource("15_u1hyp")
 stretch_mode = 3
 
 [node name="Betting_slider" type="Panel" parent="."]
@@ -1220,9 +1220,9 @@ offset_top = 2.0
 offset_right = 1430.0
 offset_bottom = 514.0
 scale = Vector2(0.17, 0.17)
-texture_normal = ExtResource("6_nxxvb")
-texture_pressed = ExtResource("5_tlvjo")
-texture_hover = ExtResource("7_7ldr4")
+texture_normal = ExtResource("8_ia4eg")
+texture_pressed = ExtResource("9_l1xmj")
+texture_hover = ExtResource("10_826nr")
 
 [node name="Undo_silder_bg" type="Panel" parent="Betting_slider"]
 layout_mode = 0
@@ -1279,52 +1279,52 @@ libraries = {
 [node name="card" type="Sprite2D" parent="Dealing"]
 position = Vector2(960, 72)
 scale = Vector2(0.85, 0.85)
-texture = ExtResource("4_nt88o")
+texture = ExtResource("2_sc270")
 
 [node name="player_right" type="Sprite2D" parent="Dealing"]
 position = Vector2(960, 72)
 scale = Vector2(0.85, 0.85)
-texture = ExtResource("4_nt88o")
+texture = ExtResource("2_sc270")
 
 [node name="card3" type="Sprite2D" parent="Dealing"]
 position = Vector2(960, 72)
 scale = Vector2(0.85, 0.85)
-texture = ExtResource("4_nt88o")
+texture = ExtResource("2_sc270")
 
 [node name="card4" type="Sprite2D" parent="Dealing"]
 position = Vector2(960, 72)
 scale = Vector2(0.85, 0.85)
-texture = ExtResource("4_nt88o")
+texture = ExtResource("2_sc270")
 
 [node name="card5" type="Sprite2D" parent="Dealing"]
 position = Vector2(960, 72)
 scale = Vector2(0.85, 0.85)
-texture = ExtResource("4_nt88o")
+texture = ExtResource("2_sc270")
 
 [node name="card6" type="Sprite2D" parent="Dealing"]
 position = Vector2(960, 72)
 scale = Vector2(0.85, 0.85)
-texture = ExtResource("4_nt88o")
+texture = ExtResource("2_sc270")
 
 [node name="card7" type="Sprite2D" parent="Dealing"]
 position = Vector2(960, 72)
 scale = Vector2(0.85, 0.85)
-texture = ExtResource("4_nt88o")
+texture = ExtResource("2_sc270")
 
 [node name="player_left" type="Sprite2D" parent="Dealing"]
 position = Vector2(960, 72)
 scale = Vector2(0.85, 0.85)
-texture = ExtResource("4_nt88o")
+texture = ExtResource("2_sc270")
 
 [node name="card9" type="Sprite2D" parent="Dealing"]
 position = Vector2(960, 72)
 scale = Vector2(0.85, 0.85)
-texture = ExtResource("4_nt88o")
+texture = ExtResource("2_sc270")
 
 [node name="card10" type="Sprite2D" parent="Dealing"]
 position = Vector2(960, 72)
 scale = Vector2(0.85, 0.85)
-texture = ExtResource("4_nt88o")
+texture = ExtResource("2_sc270")
 
 [node name="Flop" type="AnimatableBody2D" parent="."]
 
@@ -1336,17 +1336,17 @@ libraries = {
 [node name="card" type="Sprite2D" parent="Flop"]
 position = Vector2(960, 72)
 scale = Vector2(0.85, 0.85)
-texture = ExtResource("4_nt88o")
+texture = ExtResource("2_sc270")
 
 [node name="card2" type="Sprite2D" parent="Flop"]
 position = Vector2(960, 72)
 scale = Vector2(0.85, 0.85)
-texture = ExtResource("4_nt88o")
+texture = ExtResource("2_sc270")
 
 [node name="card3" type="Sprite2D" parent="Flop"]
 position = Vector2(960, 72)
 scale = Vector2(0.85, 0.85)
-texture = ExtResource("4_nt88o")
+texture = ExtResource("2_sc270")
 
 [node name="Turn" type="AnimatableBody2D" parent="."]
 
@@ -1358,7 +1358,7 @@ libraries = {
 [node name="card" type="Sprite2D" parent="Turn"]
 position = Vector2(960, 72)
 scale = Vector2(0.85, 0.85)
-texture = ExtResource("4_nt88o")
+texture = ExtResource("2_sc270")
 
 [node name="River" type="AnimatableBody2D" parent="."]
 
@@ -1370,7 +1370,7 @@ libraries = {
 [node name="card" type="Sprite2D" parent="River"]
 position = Vector2(960, 72)
 scale = Vector2(0.85, 0.85)
-texture = ExtResource("4_nt88o")
+texture = ExtResource("2_sc270")
 
 [node name="Button" type="Button" parent="."]
 offset_left = 1232.0
