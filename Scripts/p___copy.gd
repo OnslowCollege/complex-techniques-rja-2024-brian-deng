@@ -43,6 +43,8 @@ var max_bot_bet = balance/2
 var pot = 0
 var all_bets = {"preflop": [], "flop": [], "turn": [], "river": []}
 var past_player_bet_total: int = 0
+var previous_round_bets: Dictionary = {"preflop": 0, "flop": 0, "turn": 0, "river": 0}
+
 
 var hands = {"Royal Flush": 10, "Straight Flush": 9, "Four of a Kind": 8, 
 	"Full House": 7, "Flush": 6, "Straight": 5, "Three of a Kind": 4, 
@@ -145,7 +147,6 @@ func bot_play(action_on):
 		if round_of_betting[stage]:
 			current_stage = stage
 
-
 	# var action = decide_bot_action(action_on, current_stage)
 	var action = ""
 
@@ -163,11 +164,11 @@ func bot_play(action_on):
 
 		var hand_rating = hand_value.rating_hand(bot_hands[action_on], current_community_cards)
 
-		if hand_rating >= 3:
+		if hand_rating["value"] >= 3:
 			action = "raise"
-		elif hand_rating == 2:
+		elif hand_rating["value"] == 2:
 			action = "call"
-		elif hand_rating == 1:
+		elif hand_rating["value"] == 1:
 			var rand_num = randi_range(0, 1)
 			if rand_num == 0: 
 				action = "call"
@@ -181,20 +182,13 @@ func bot_play(action_on):
 
 	match action:
 		"call":
-			var bet_amount = 0
-			# If first to bet or no previous bets then check as call 0 is checking
-			if all_bets[current_stage].is_empty():
-				text_node.text = "Bot%s: check" % [action_on]
-				# If there is previous bet the calls
-			elif not all_bets[current_stage].is_empty():
-				bet_amount = all_bets[current_stage].max()
-
-			all_bets[current_stage].append(bet_amount)
-			bot_betting_per[action_on].append(bet_amount)
-			text_node.text = "Bot%s: call %s" % [action_on, bet_amount]
+			bot_call(current_stage, text_node, action_on)
 
 		"raise":
-			if raise_count_bot[action_on] <= 1:
+			var randnum = randi_range(1, 4)
+			if randnum == 1:
+				bot_call(current_stage, text_node, action_on)
+			elif raise_count_bot[action_on] <= 1:
 				var current_bet = 0
 				if not all_bets[current_stage].is_empty():
 					current_bet = all_bets[current_stage].max()
@@ -202,7 +196,7 @@ func bot_play(action_on):
 				var raise_amount = current_bet * raise_factor
 				var min_bet = (20 * raise_factor)
 				# ensures that the raise amount is not more than the player balance and not 0
-				raise_amount = min(raise_amount, balance)
+				raise_amount = min(raise_amount, balance + sum(player_bet))
 				if raise_amount != balance:
 					raise_amount = max(raise_amount, min_bet)
 
@@ -224,17 +218,7 @@ func bot_play(action_on):
 					text_node.text = "Bot%s: raise to %s" % [action_on, raise_amount]
 					raise_count_bot[action_on] += 1
 			else:
-				var bet_amount = 0
-				# If first to bet or no previous bets then check as call 0 is checking
-				if all_bets[current_stage].is_empty():
-					text_node.text = "Bot%s: check" % [action_on]
-				# If there is previous bet the calls
-				elif not all_bets[current_stage].is_empty():
-					bet_amount = all_bets[current_stage].max()
-
-				all_bets[current_stage].append(bet_amount)
-				bot_betting_per[action_on].append(bet_amount)
-				text_node.text = "Bot%s: call %s" % [action_on, bet_amount]
+				bot_call(current_stage, text_node, action_on)
 		"fold":
 			bot_hands[action_on] = ["", ""]
 			text_node.text = "Bot%s: fold" % [action_on]
@@ -250,6 +234,22 @@ func bot_play(action_on):
 	
 	await get_tree().create_timer(1.0).timeout
 
+func bot_call(current_stage, text_node, action_on):
+	var bet_amount = 0
+	# If first to bet or no previous bets then check as call 0 is checking
+	if all_bets[current_stage].is_empty():
+		text_node.text = "Bot%s: check" % [action_on]
+	# If there is previous bet then calls
+	elif not all_bets[current_stage].is_empty():
+		bet_amount = all_bets[current_stage].max()
+		if not bot_betting_per[action_on].is_empty():
+			var previous_bet = bot_betting_per[action_on][-1]
+			all_bets[current_stage].erase(previous_bet)
+			bot_betting_per[action_on].erase(previous_bet)
+
+	all_bets[current_stage].append(bet_amount)
+	bot_betting_per[action_on].append(bet_amount)
+	text_node.text = "Bot%s: call %s" % [action_on, bet_amount]
 
 
 # This function is for adding lists together
@@ -448,18 +448,36 @@ func _on_button_pressed():
 	await $Dealing/Dealing2.animation_finished
 	round_of_betting["preflop"] = true
 	
-	(await bot_play(1))
-	(await bot_play(2))
+	## First two bot actions before player
+	#(await bot_play(1))
+	#(await bot_play(2))
+	#
+	#$Table2/bet_bg.visible = true
+	#$Table2/pot.visible = true
+	#show_hand = true
 	
-	$Table2/bet_bg.visible = true
-	$Table2/pot.visible = true
-	show_hand = true
-	awaited = true
+	gameplay()
 
+var done_pressed: bool = false
+
+func gameplay():
+	if round_of_betting["preflop"]:
+		# First two bot actions before player
+		(await bot_play(1))
+		(await bot_play(2))
+		
+		$Table2/bet_bg.visible = true
+		$Table2/pot.visible = true
+		show_hand = true
+		awaited = true
+		# if done_pressed:
+			
 
 
 # This function is for when the player clicks done when betting so bet is finalised
 func _on_done_pressed() -> void:
+	print("clicked")
+	done_pressed = true
 	var current_stage = "preflop"
 	for stage in ["preflop", "flop", "turn", "river"]:
 		if round_of_betting[stage]:
@@ -476,13 +494,20 @@ func _on_done_pressed() -> void:
 	player_bet.clear()
 	balance -= bet_total
 
-	bot_play(3)
-	bot_play(4)
+	await bot_play(3)
+	await bot_play(4)
 
 	$Betting.visible = true
 	$action_bg.visible = true
-
-	if all_bets[current_stage].size() >= 5 and sum(all_bets[current_stage]) / len(all_bets[current_stage]) == all_bets[current_stage].max():
+	
+	
+	var max_bet = all_bets[current_stage].max()
+	var all_players_matched = true
+	for bet in all_bets[current_stage]:
+		if bet != max_bet:
+			all_players_matched = false
+			break
+	if all_players_matched:
 		pot += sum(all_bets[current_stage])
 		round_of_betting[current_stage] = false
 		awaited = false
@@ -510,9 +535,11 @@ func _on_done_pressed() -> void:
 			"river":
 				show_winner = true
 				update_balance_after_winner()
-	awaited = true
-	bot_play(1)
-	bot_play(2)
+		awaited = true
+	else:
+		# awaited = true
+		await bot_play(1)
+		await bot_play(2)
 
 
 func _on_menu_pressed():
@@ -591,33 +618,6 @@ func _on_undo_slider_pressed() -> void:
 	slider_value = 0
 	$Betting_slider/HSlider.value = 0
 
-
-func show_flop():
-	round_of_betting["flop"] = true
-	$Flop.visible = true
-	$Flop/Flopping.play("Flop")
-	await $Flop/Flopping.animation_finished
-	show_com_cards["flop"] = true
-	start_betting_round("flop")
-
-func show_turn():
-	round_of_betting["turn"] = true
-	$Turn.visible = true
-	$Turn/Turning.play("Turn")
-	await $Turn/Turning.animation_finished
-	show_com_cards["turn"] = true
-	start_betting_round("turn")
-
-func show_river():
-	round_of_betting["river"] = true
-	$River.visible = true
-	$River/Rivering.play("River")
-	await $River/Rivering.animation_finished
-	show_com_cards["river"] = true
-	start_betting_round("river")
-
-
-
 func update_balance_after_winner():
 	if winner == "Player":
 		balance += pot
@@ -634,8 +634,10 @@ func _on_call_pressed():
 		if round_of_betting[stage]:
 			current_stage = stage
 			break
+
 	var highest_bet = all_bets[current_stage].max() if all_bets[current_stage] else 0
-	var call_amount = highest_bet - past_player_bet_total
+	var current_round_previous_bet = previous_round_bets[current_stage]
+	var call_amount = highest_bet - current_round_previous_bet
 
 	if call_amount > balance:
 		call_amount = balance
@@ -645,6 +647,7 @@ func _on_call_pressed():
 	all_bets[current_stage].append(highest_bet)
 	balance -= call_amount
 	past_player_bet_total += call_amount
+	previous_round_bets[current_stage] = highest_bet
 
 	$Table2/balance_bg/balance.text = "Balance: %s" % balance
 	$Table2/bet_bg/your_bet.text = "Bet: %s" % highest_bet
@@ -678,7 +681,33 @@ func _on_check_pressed():
 	await get_tree().create_timer(1.0).timeout
 	continue_betting(current_stage)
 
+func show_flop():
+	bot_betting_per = {1: [], 2: [], 3: [], 4: []}
+	round_of_betting["flop"] = true
+	$Flop.visible = true
+	$Flop/Flopping.play("Flop")
+	await $Flop/Flopping.animation_finished
+	show_com_cards["flop"] = true
+	start_betting_round("flop")
 
+func show_turn():
+	bot_betting_per = {1: [], 2: [], 3: [], 4: []}
+	round_of_betting["turn"] = true
+	$Turn.visible = true
+	$Turn/Turning.play("Turn")
+	await $Turn/Turning.animation_finished
+	show_com_cards["turn"] = true
+	start_betting_round("turn")
+
+func show_river():
+	bot_betting_per = {1: [], 2: [], 3: [], 4: []}
+	round_of_betting["river"] = true
+	$River.visible = true
+	$River/Rivering.play("River")
+	await $River/Rivering.animation_finished
+	show_com_cards["river"] = true
+	start_betting_round("river")
+	
 
 func continue_betting(current_stage):
 	var bets = all_bets[current_stage]

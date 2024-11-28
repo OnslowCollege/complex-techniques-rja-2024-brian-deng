@@ -164,7 +164,8 @@ static func rating_hand(p_hand: Array, round: Dictionary) -> Dictionary:
 			card_id[key + 26] = ("%s %s" % [suit, card_int[0]])
 		if suit ==  "spades":
 			card_id[key + 39] = ("%s %s" % [suit, card_int[0]])
-	print((card_id) + "card_id")
+	print((card_id))
+	print("card_id dict")
 
 	# Gets list of integers of p_hand and round and converts the elements to int
 	var player_int_list = separate_int(p_hand).map(func(s): return int(s))

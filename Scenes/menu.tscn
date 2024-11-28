@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://d2eprpbq8ariu"]
+[gd_scene load_steps=4 format=3 uid="uid://d2eprpbq8ariu"]
 
 [ext_resource type="Script" path="res://Scripts/menu.gd" id="1_chb3v"]
 [ext_resource type="FontFile" uid="uid://c44he3ib5c4bx" path="res://Assets/vcr_osd_mono/VCR_OSD_MONO_1.001.ttf" id="2_li1uv"]
+[ext_resource type="Texture2D" uid="uid://chh02c5hdu105" path="res://Assets/onslowlogo.jpeg" id="3_45tl8"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -62,6 +63,13 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("2_li1uv")
 theme_override_font_sizes/font_size = 100
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 2000.0
+offset_bottom = 1067.0
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("3_45tl8")
 
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/OptionButton" to="." method="_on_option_button_pressed"]
